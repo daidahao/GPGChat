@@ -24,7 +24,7 @@ class SigninFrame ( wx.Frame ):
 		
 		bSizer1 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.m_bitmap1 = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"C:\\lab\\computer-networks\\project\\night2_resize.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.Size( 300,500 ), 0 )
+		self.m_bitmap1 = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap( u"night2_resize.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.Size( 300,500 ), 0 )
 		bSizer1.Add( self.m_bitmap1, 0, wx.ALL, 0 )
 		
 		self.m_panel3 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
@@ -34,7 +34,7 @@ class SigninFrame ( wx.Frame ):
 		
 		self.m_staticText2 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Sign up", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText2.Wrap( -1 )
-		self.m_staticText2.SetFont( wx.Font( 14, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "微软雅黑" ) )
+		self.m_staticText2.SetFont( wx.Font( 16, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "微软雅黑" ) )
 		
 		bSizer4.Add( self.m_staticText2, 0, wx.ALL, 5 )
 		
@@ -254,5 +254,96 @@ class LockDialog ( wx.Dialog ):
 	# Virtual event handlers, overide them in your derived class
 	def OnLockButton( self, event ):
 		event.Skip()
+	
+
+###########################################################################
+## Class MyPanel1
+###########################################################################
+
+class MyPanel1 ( wx.Panel ):
+	
+	def __init__( self, parent ):
+		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.TAB_TRAVERSAL )
+		
+	
+	def __del__( self ):
+		pass
+	
+
+###########################################################################
+## Class MainFrame
+###########################################################################
+
+class MainFrame ( wx.Frame ):
+	
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"GPGChat", pos = wx.DefaultPosition, size = wx.Size( 693,401 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		
+		sizer = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_panel6 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer25 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_panel13 = wx.Panel( self.m_panel6, wx.ID_ANY, wx.DefaultPosition, wx.Size( 100,-1 ), wx.TAB_TRAVERSAL )
+		self.m_panel13.SetMaxSize( wx.Size( 100,-1 ) )
+		
+		bSizer31 = wx.BoxSizer( wx.VERTICAL )
+		
+		
+		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.m_button13 = wx.Button( self.m_panel13, wx.ID_ANY, u"联系人", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		bSizer31.Add( self.m_button13, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		
+		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.m_button14 = wx.Button( self.m_panel13, wx.ID_ANY, u"最近聊天", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		bSizer31.Add( self.m_button14, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		
+		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.m_button15 = wx.Button( self.m_panel13, wx.ID_ANY, u"黑名单", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		bSizer31.Add( self.m_button15, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		
+		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		
+		self.m_panel13.SetSizer( bSizer31 )
+		self.m_panel13.Layout()
+		bSizer25.Add( self.m_panel13, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		self.m_panel14 = wx.Panel( self.m_panel6, wx.ID_ANY, wx.DefaultPosition, wx.Size( 200,-1 ), wx.TAB_TRAVERSAL )
+		bSizer34 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.list = wx.ListCtrl( self.m_panel14, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_REPORT|wx.SUNKEN_BORDER )
+		bSizer34.Add( self.list, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		self.m_panel14.SetSizer( bSizer34 )
+		self.m_panel14.Layout()
+		bSizer25.Add( self.m_panel14, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		self.m_panel15 = wx.Panel( self.m_panel6, wx.ID_ANY, wx.DefaultPosition, wx.Size( 300,-1 ), wx.TAB_TRAVERSAL )
+		bSizer25.Add( self.m_panel15, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		
+		self.m_panel6.SetSizer( bSizer25 )
+		self.m_panel6.Layout()
+		bSizer25.Fit( self.m_panel6 )
+		sizer.Add( self.m_panel6, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		
+		self.SetSizer( sizer )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+	
+	def __del__( self ):
+		pass
 	
 
