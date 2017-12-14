@@ -76,9 +76,6 @@ class SignupFrame ( wx.Frame ):
 		
 		panelSizer.Add( self.signupLabel, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
-		
-		panelSizer.Add( ( 0, 0), 1, wx.EXPAND, 5 )
-		
 		subSizer = wx.BoxSizer( wx.HORIZONTAL )
 		
 		subsubSizer = wx.BoxSizer( wx.VERTICAL )
@@ -147,13 +144,31 @@ class SignupFrame ( wx.Frame ):
 		
 		subsubSizer.Add( nameSIzer, 1, wx.EXPAND, 5 )
 		
-		signupSizer = wx.BoxSizer( wx.VERTICAL )
+		bottomSizer = wx.BoxSizer( wx.HORIZONTAL )
+		
+		signupButtonSizer = wx.BoxSizer( wx.VERTICAL )
 		
 		self.signupButton = wx.Button( self.panel, wx.ID_ANY, u"Signup", wx.DefaultPosition, wx.DefaultSize, 0 )
-		signupSizer.Add( self.signupButton, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
+		self.signupButton.SetDefault() 
+		signupButtonSizer.Add( self.signupButton, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.ALIGN_RIGHT, 5 )
 		
 		
-		subsubSizer.Add( signupSizer, 1, wx.EXPAND, 5 )
+		bottomSizer.Add( signupButtonSizer, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.space = wx.StaticText( self.panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 10,-1 ), 0 )
+		self.space.Wrap( -1 )
+		bottomSizer.Add( self.space, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		quitButtonSizer = wx.BoxSizer( wx.VERTICAL )
+		
+		self.quitButton = wx.Button( self.panel, wx.ID_ANY, u"Quit", wx.DefaultPosition, wx.DefaultSize, 0 )
+		quitButtonSizer.Add( self.quitButton, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_LEFT|wx.ALL, 5 )
+		
+		
+		bottomSizer.Add( quitButtonSizer, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		subsubSizer.Add( bottomSizer, 1, wx.BOTTOM|wx.EXPAND, 10 )
 		
 		
 		subSizer.Add( subsubSizer, 1, wx.EXPAND|wx.LEFT|wx.RIGHT, 40 )
@@ -165,7 +180,7 @@ class SignupFrame ( wx.Frame ):
 		self.panel.SetSizer( panelSizer )
 		self.panel.Layout()
 		panelSizer.Fit( self.panel )
-		frameSizer.Add( self.panel, 1, wx.EXPAND |wx.ALL, 20 )
+		frameSizer.Add( self.panel, 1, wx.EXPAND|wx.LEFT|wx.RIGHT|wx.TOP, 20 )
 		
 		
 		self.SetSizer( frameSizer )
@@ -175,6 +190,7 @@ class SignupFrame ( wx.Frame ):
 		
 		# Connect Events
 		self.signupButton.Bind( wx.EVT_BUTTON, self.OnSignup )
+		self.quitButton.Bind( wx.EVT_BUTTON, self.OnQuit )
 	
 	def __del__( self ):
 		pass
@@ -182,6 +198,9 @@ class SignupFrame ( wx.Frame ):
 	
 	# Virtual event handlers, overide them in your derived class
 	def OnSignup( self, event ):
+		event.Skip()
+	
+	def OnQuit( self, event ):
 		event.Skip()
 	
 
@@ -206,10 +225,11 @@ class LockDialog ( wx.Dialog ):
 		self.lockLabel.Wrap( -1 )
 		subsubSizer.Add( self.lockLabel, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
-		self.lockText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), 0 )
+		self.lockText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), wx.TE_PASSWORD )
 		subsubSizer.Add( self.lockText, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		self.lockButton = wx.Button( self, wx.ID_ANY, u"Confirm", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.lockButton.SetDefault() 
 		subsubSizer.Add( self.lockButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
