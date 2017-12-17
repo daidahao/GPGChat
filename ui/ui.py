@@ -277,7 +277,7 @@ class MyPanel1 ( wx.Panel ):
 class MainFrame ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"GPGChat", pos = wx.DefaultPosition, size = wx.Size( 693,401 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"GPGChat", pos = wx.DefaultPosition, size = wx.Size( 832,401 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
@@ -317,19 +317,111 @@ class MainFrame ( wx.Frame ):
 		self.m_panel13.Layout()
 		bSizer25.Add( self.m_panel13, 1, wx.EXPAND |wx.ALL, 5 )
 		
-		self.m_panel14 = wx.Panel( self.m_panel6, wx.ID_ANY, wx.DefaultPosition, wx.Size( 200,-1 ), wx.TAB_TRAVERSAL )
-		bSizer34 = wx.BoxSizer( wx.HORIZONTAL )
+		self.m_panel14 = wx.Panel( self.m_panel6, wx.ID_ANY, wx.DefaultPosition, wx.Size( 300,-1 ), wx.TAB_TRAVERSAL )
+		bSizer34 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.list = wx.ListCtrl( self.m_panel14, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_REPORT|wx.SUNKEN_BORDER )
-		bSizer34.Add( self.list, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer37 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.list = wx.ListCtrl( self.m_panel14, wx.ID_ANY, wx.DefaultPosition, wx.Size( 300,300 ), wx.LC_REPORT|wx.SUNKEN_BORDER )
+		bSizer37.Add( self.list, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer34.Add( bSizer37, 1, wx.EXPAND, 5 )
+		
+		bSizer36 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer38 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_button16 = wx.Button( self.m_panel14, wx.ID_ANY, u"添加", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer38.Add( self.m_button16, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT, 5 )
+		
+		
+		bSizer36.Add( bSizer38, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		bSizer39 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_button17 = wx.Button( self.m_panel14, wx.ID_ANY, u"删除", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer39.Add( self.m_button17, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		
+		bSizer36.Add( bSizer39, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		bSizer40 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_button18 = wx.Button( self.m_panel14, wx.ID_ANY, u"屏蔽", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer40.Add( self.m_button18, 0, wx.ALL, 5 )
+		
+		
+		bSizer36.Add( bSizer40, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer34.Add( bSizer36, 1, wx.EXPAND, 5 )
 		
 		
 		self.m_panel14.SetSizer( bSizer34 )
 		self.m_panel14.Layout()
 		bSizer25.Add( self.m_panel14, 1, wx.EXPAND |wx.ALL, 5 )
 		
-		self.m_panel15 = wx.Panel( self.m_panel6, wx.ID_ANY, wx.DefaultPosition, wx.Size( 300,-1 ), wx.TAB_TRAVERSAL )
-		bSizer25.Add( self.m_panel15, 1, wx.EXPAND |wx.ALL, 5 )
+		self.m_panel15 = wx.Panel( self.m_panel6, wx.ID_ANY, wx.DefaultPosition, wx.Size( 400,-1 ), wx.TAB_TRAVERSAL )
+		flexSizer = wx.FlexGridSizer( 2, 0, 0, 0 )
+		flexSizer.SetFlexibleDirection( wx.BOTH )
+		flexSizer.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+		
+		flexSizer.SetMinSize( wx.Size( -1,250 ) ) 
+		self.m_scrolledWindow1 = wx.ScrolledWindow( self.m_panel15, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), wx.HSCROLL|wx.VSCROLL )
+		self.m_scrolledWindow1.SetScrollRate( 5, 5 )
+		self.m_scrolledWindow1.SetMinSize( wx.Size( -1,220 ) )
+		self.m_scrolledWindow1.SetMaxSize( wx.Size( -1,220 ) )
+		
+		wrapSizer = wx.WrapSizer( wx.VERTICAL )
+		
+		wrapSizer.SetMinSize( wx.Size( -1,220 ) ) 
+		self.emptyText = wx.StaticText( self.m_scrolledWindow1, wx.ID_ANY, u" ", wx.DefaultPosition, wx.Size( 300,-1 ), 0 )
+		self.emptyText.Wrap( -1 )
+		wrapSizer.Add( self.emptyText, 0, wx.ALL, 5 )
+		
+		self.sendText = wx.StaticText( self.m_scrolledWindow1, wx.ID_ANY, u"Ha ha ha", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.sendText.Wrap( 250 )
+		self.sendText.SetForegroundColour( wx.Colour( 255, 255, 255 ) )
+		self.sendText.SetBackgroundColour( wx.Colour( 0, 128, 255 ) )
+		self.sendText.Hide()
+		
+		wrapSizer.Add( self.sendText, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+		
+		self.recvText = wx.StaticText( self.m_scrolledWindow1, wx.ID_ANY, u"Label", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.recvText.Wrap( 250 )
+		self.recvText.SetForegroundColour( wx.Colour( 255, 255, 255 ) )
+		self.recvText.SetBackgroundColour( wx.Colour( 0, 128, 255 ) )
+		self.recvText.Hide()
+		
+		wrapSizer.Add( self.recvText, 0, wx.ALL, 5 )
+		
+		
+		self.m_scrolledWindow1.SetSizer( wrapSizer )
+		self.m_scrolledWindow1.Layout()
+		wrapSizer.Fit( self.m_scrolledWindow1 )
+		flexSizer.Add( self.m_scrolledWindow1, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		bSizer49 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer42 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.inputText = wx.TextCtrl( self.m_panel15, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 270,100 ), wx.TE_MULTILINE )
+		bSizer42.Add( self.inputText, 0, wx.ALL|wx.ALIGN_BOTTOM, 5 )
+		
+		self.sendButton = wx.Button( self.m_panel15, wx.ID_ANY, u"SEND", wx.DefaultPosition, wx.DefaultSize, wx.BU_EXACTFIT )
+		bSizer42.Add( self.sendButton, 0, wx.ALL|wx.ALIGN_BOTTOM, 5 )
+		
+		
+		bSizer49.Add( bSizer42, 1, wx.EXPAND, 5 )
+		
+		
+		flexSizer.Add( bSizer49, 1, wx.EXPAND, 5 )
+		
+		
+		self.m_panel15.SetSizer( flexSizer )
+		self.m_panel15.Layout()
+		bSizer25.Add( self.m_panel15, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		
 		self.m_panel6.SetSizer( bSizer25 )
@@ -342,6 +434,46 @@ class MainFrame ( wx.Frame ):
 		self.Layout()
 		
 		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.sendButton.Bind( wx.EVT_BUTTON, self.OnSend )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def OnSend( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class sendPanel
+###########################################################################
+
+class sendPanel ( wx.Panel ):
+	
+	def __init__( self, parent ):
+		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.TAB_TRAVERSAL )
+		
+		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_HIGHLIGHT ) )
+		
+		fgSizer7 = wx.FlexGridSizer( 0, 2, 0, 0 )
+		fgSizer7.SetFlexibleDirection( wx.BOTH )
+		fgSizer7.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+		
+		self.m_staticText32 = wx.StaticText( self, wx.ID_ANY, u"MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel ", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText32.Wrap( 200 )
+		fgSizer7.Add( self.m_staticText32, 0, wx.ALL, 5 )
+		
+		self.m_staticText33 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 40,-1 ), 0 )
+		self.m_staticText33.Wrap( -1 )
+		fgSizer7.Add( self.m_staticText33, 0, wx.ALL, 5 )
+		
+		
+		self.SetSizer( fgSizer7 )
+		self.Layout()
+		fgSizer7.Fit( self )
 	
 	def __del__( self ):
 		pass
