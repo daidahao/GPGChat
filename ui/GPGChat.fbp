@@ -2659,7 +2659,7 @@
                                                 <property name="minimize_button">0</property>
                                                 <property name="minimum_size"></property>
                                                 <property name="moveable">1</property>
-                                                <property name="name">m_button13</property>
+                                                <property name="name">contactButton</property>
                                                 <property name="pane_border">1</property>
                                                 <property name="pane_position"></property>
                                                 <property name="pane_size"></property>
@@ -2757,7 +2757,7 @@
                                                 <property name="minimize_button">0</property>
                                                 <property name="minimum_size"></property>
                                                 <property name="moveable">1</property>
-                                                <property name="name">m_button14</property>
+                                                <property name="name">recentButton</property>
                                                 <property name="pane_border">1</property>
                                                 <property name="pane_position"></property>
                                                 <property name="pane_size"></property>
@@ -2855,7 +2855,7 @@
                                                 <property name="minimize_button">0</property>
                                                 <property name="minimum_size"></property>
                                                 <property name="moveable">1</property>
-                                                <property name="name">m_button15</property>
+                                                <property name="name">blacklistButton</property>
                                                 <property name="pane_border">1</property>
                                                 <property name="pane_position"></property>
                                                 <property name="pane_size"></property>
@@ -3173,7 +3173,7 @@
                                                                 <property name="minimize_button">0</property>
                                                                 <property name="minimum_size"></property>
                                                                 <property name="moveable">1</property>
-                                                                <property name="name">m_button16</property>
+                                                                <property name="name">addContactButton</property>
                                                                 <property name="pane_border">1</property>
                                                                 <property name="pane_position"></property>
                                                                 <property name="pane_size"></property>
@@ -3272,7 +3272,7 @@
                                                                 <property name="minimize_button">0</property>
                                                                 <property name="minimum_size"></property>
                                                                 <property name="moveable">1</property>
-                                                                <property name="name">m_button17</property>
+                                                                <property name="name">removeContactButton</property>
                                                                 <property name="pane_border">1</property>
                                                                 <property name="pane_position"></property>
                                                                 <property name="pane_size"></property>
@@ -3371,7 +3371,7 @@
                                                                 <property name="minimize_button">0</property>
                                                                 <property name="minimum_size"></property>
                                                                 <property name="moveable">1</property>
-                                                                <property name="name">m_button18</property>
+                                                                <property name="name">blockContactButton</property>
                                                                 <property name="pane_border">1</property>
                                                                 <property name="pane_position"></property>
                                                                 <property name="pane_size"></property>
@@ -3549,10 +3549,10 @@
                                                 <property name="id">wxID_ANY</property>
                                                 <property name="max_size"></property>
                                                 <property name="maximize_button">0</property>
-                                                <property name="maximum_size">-1,250</property>
+                                                <property name="maximum_size">-1,220</property>
                                                 <property name="min_size"></property>
                                                 <property name="minimize_button">0</property>
-                                                <property name="minimum_size">-1,250</property>
+                                                <property name="minimum_size">-1,220</property>
                                                 <property name="moveable">1</property>
                                                 <property name="name">m_scrolledWindow1</property>
                                                 <property name="pane_border">1</property>
@@ -3565,7 +3565,7 @@
                                                 <property name="scroll_rate_x">5</property>
                                                 <property name="scroll_rate_y">5</property>
                                                 <property name="show">1</property>
-                                                <property name="size">-1,250</property>
+                                                <property name="size">-1,-1</property>
                                                 <property name="subclass">; forward_declare</property>
                                                 <property name="toolbar_pane">0</property>
                                                 <property name="tooltip"></property>
@@ -3596,7 +3596,7 @@
                                                 <event name="OnSize"></event>
                                                 <event name="OnUpdateUI"></event>
                                                 <object class="wxWrapSizer" expanded="1">
-                                                    <property name="minimum_size">-1,250</property>
+                                                    <property name="minimum_size">-1,220</property>
                                                     <property name="name">wrapSizer</property>
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">public</property>
@@ -3685,7 +3685,7 @@
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
                                                         <property name="border">5</property>
-                                                        <property name="flag">wxALL|wxALIGN_RIGHT</property>
+                                                        <property name="flag">wxALIGN_RIGHT|wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
                                                             <property name="BottomDockable">1</property>
@@ -3852,20 +3852,20 @@
                                                 </object>
                                             </object>
                                         </object>
-                                        <object class="sizeritem" expanded="0">
+                                        <object class="sizeritem" expanded="1">
                                             <property name="border">5</property>
                                             <property name="flag">wxEXPAND</property>
                                             <property name="proportion">1</property>
-                                            <object class="wxBoxSizer" expanded="0">
+                                            <object class="wxBoxSizer" expanded="1">
                                                 <property name="minimum_size"></property>
                                                 <property name="name">bSizer49</property>
                                                 <property name="orient">wxVERTICAL</property>
                                                 <property name="permission">none</property>
-                                                <object class="sizeritem" expanded="0">
+                                                <object class="sizeritem" expanded="1">
                                                     <property name="border">5</property>
                                                     <property name="flag">wxEXPAND</property>
                                                     <property name="proportion">1</property>
-                                                    <object class="wxBoxSizer" expanded="0">
+                                                    <object class="wxBoxSizer" expanded="1">
                                                         <property name="minimum_size">-1,-1</property>
                                                         <property name="name">bSizer42</property>
                                                         <property name="orient">wxHORIZONTAL</property>

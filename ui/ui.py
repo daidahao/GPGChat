@@ -294,20 +294,20 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.m_button13 = wx.Button( self.m_panel13, wx.ID_ANY, u"联系人", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
-		bSizer31.Add( self.m_button13, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.contactButton = wx.Button( self.m_panel13, wx.ID_ANY, u"联系人", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		bSizer31.Add( self.contactButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
 		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.m_button14 = wx.Button( self.m_panel13, wx.ID_ANY, u"最近聊天", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
-		bSizer31.Add( self.m_button14, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.recentButton = wx.Button( self.m_panel13, wx.ID_ANY, u"最近聊天", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		bSizer31.Add( self.recentButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
 		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.m_button15 = wx.Button( self.m_panel13, wx.ID_ANY, u"黑名单", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
-		bSizer31.Add( self.m_button15, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.blacklistButton = wx.Button( self.m_panel13, wx.ID_ANY, u"黑名单", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		bSizer31.Add( self.blacklistButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
 		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
@@ -332,24 +332,24 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer38 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_button16 = wx.Button( self.m_panel14, wx.ID_ANY, u"添加", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer38.Add( self.m_button16, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT, 5 )
+		self.addContactButton = wx.Button( self.m_panel14, wx.ID_ANY, u"添加", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer38.Add( self.addContactButton, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT, 5 )
 		
 		
 		bSizer36.Add( bSizer38, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		bSizer39 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_button17 = wx.Button( self.m_panel14, wx.ID_ANY, u"删除", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer39.Add( self.m_button17, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.removeContactButton = wx.Button( self.m_panel14, wx.ID_ANY, u"删除", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer39.Add( self.removeContactButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
 		bSizer36.Add( bSizer39, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		bSizer40 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_button18 = wx.Button( self.m_panel14, wx.ID_ANY, u"屏蔽", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer40.Add( self.m_button18, 0, wx.ALL, 5 )
+		self.blockContactButton = wx.Button( self.m_panel14, wx.ID_ANY, u"屏蔽", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer40.Add( self.blockContactButton, 0, wx.ALL, 5 )
 		
 		
 		bSizer36.Add( bSizer40, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
