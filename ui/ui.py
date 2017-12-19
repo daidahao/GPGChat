@@ -277,7 +277,7 @@ class MyPanel1 ( wx.Panel ):
 class MainFrame ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"GPGChat", pos = wx.DefaultPosition, size = wx.Size( 832,401 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"GPGChat", pos = wx.DefaultPosition, size = wx.Size( 832,401 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
@@ -376,7 +376,7 @@ class MainFrame ( wx.Frame ):
 		wrapSizer = wx.WrapSizer( wx.VERTICAL )
 		
 		wrapSizer.SetMinSize( wx.Size( -1,220 ) ) 
-		self.emptyText = wx.StaticText( self.m_scrolledWindow1, wx.ID_ANY, u" ", wx.DefaultPosition, wx.Size( 300,-1 ), 0 )
+		self.emptyText = wx.StaticText( self.m_scrolledWindow1, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 300,-1 ), 0 )
 		self.emptyText.Wrap( -1 )
 		wrapSizer.Add( self.emptyText, 0, wx.ALL, 5 )
 		
@@ -477,5 +477,52 @@ class sendPanel ( wx.Panel ):
 	
 	def __del__( self ):
 		pass
+	
+
+###########################################################################
+## Class LockFrame
+###########################################################################
+
+class LockFrame ( wx.Frame ):
+	
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 273,139 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
+		
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		
+		sizer = wx.BoxSizer( wx.VERTICAL )
+		
+		subSizer = wx.BoxSizer( wx.VERTICAL )
+		
+		self.lockLabel = wx.StaticText( self, wx.ID_ANY, u"Please enter your lock", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.lockLabel.Wrap( -1 )
+		subSizer.Add( self.lockLabel, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		self.lockText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), wx.TE_PASSWORD )
+		subSizer.Add( self.lockText, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		self.lockButton = wx.Button( self, wx.ID_ANY, u"Confirm", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.lockButton.SetDefault() 
+		subSizer.Add( self.lockButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		
+		sizer.Add( subSizer, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		self.SetSizer( sizer )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.lockButton.Bind( wx.EVT_BUTTON, self.OnLockButton )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def OnLockButton( self, event ):
+		event.Skip()
 	
 

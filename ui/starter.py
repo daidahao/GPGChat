@@ -1,4 +1,4 @@
-from ui import SignupFrame, LockDialog, MainFrame
+from ui import SignupFrame, LockDialog, MainFrame, LockFrame
 import wx
 
 
@@ -19,15 +19,17 @@ class SignupFrameMod(SignupFrame):
 class LockDialogType:
     NOLOCK, HASLOCK = range(2)
 
-
-class LockDialogMod(LockDialog):
+class LockFrameMod(LockFrame):
     def __init__(self, parent,
-                 type=LockDialogType.NOLOCK, lock=None):
+                 type=LockDialogType.NOLOCK, lock=None, verbose=False):
 
-        LockDialog.__init__(self, parent)
-
+        LockFrame.__init__(self, parent)
         self.type = type
         self.lock = lock
+        self.verbose = verbose
+
+        if self.verbose:
+            print("Initializing LockDialog")
 
         if (type == LockDialogType.NOLOCK):
             self.lockLabel.SetLabelText("Please set your lock first")
@@ -46,24 +48,25 @@ class LockDialogMod(LockDialog):
                                            "Your lock is set successfully!",
                                            "Success", wx.OK)
                     dlg.ShowModal()
-                    dlg.Destroy()
+                    # dlg.Destroy()
 
-                    dialog = LockDialogMod(None, True)
-                    dialog.Show()
+                    frame = LockFrameMod(None, LockDialogType.HASLOCK,
+                                         self.lock, self.verbose)
+                    frame.Show()
 
-                    self.Hide()
+                    self.Close()
                 else:
                     dlg = wx.MessageDialog(self,
                                            "The confirmed lock is inconsistent with the "
                                            "previous one. Please try again!",
                                            "Failure", wx.OK)
                     dlg.ShowModal()
-                    dlg.Destroy()
+                    # dlg.Destroy()
 
-                    dialog = LockDialogMod(None)
-                    dialog.Show()
+                    frame = LockFrameMod(None)
+                    frame.Show()
 
-                    self.Destroy()
+                    self.Close()
         else:
             self.lock = self.lockText.GetValue()
             if (self.lock == "123"):
@@ -72,19 +75,22 @@ class LockDialogMod(LockDialog):
                 # self.Destroy()
                 frame = MainFrameMod(None)
                 frame.Show()
+                self.Close()
             else:
                 dlg = wx.MessageDialog(self,
                                        "Your lock is incorrect!",
                                        "Failure", wx.OK)
                 dlg.ShowModal()
-                dlg.Destroy()
+                # dlg.Destroy()
 
-                dialog = LockDialogMod(None, True)
-                dialog.Show()
+                frame = LockFrameMod(None, LockDialogType.HASLOCK)
+                frame.Show()
 
-                self.Hide()
+                self.Close()
 
-            self.Destroy()
+            # self.Destroy()
+
+
 
 data1 = {
     1: ("Dai", "daidahao@icloud.com", "9999999"),
@@ -116,7 +122,7 @@ class MainFrameMod(MainFrame):
             self.list.SetItemData(index, key)
 
         self.list.SetColumnWidth(0, 50)
-        self.list.SetColumnWidth(1, 150)
+        self.list.SetColumnWidth(1, 100)
         self.list.SetColumnWidth(2, 100)
 
         self.currentItem = 0
@@ -154,6 +160,8 @@ class MainFrameMod(MainFrame):
 
 if __name__ == '__main__':
     app = wx.App()
-    dialog = LockDialogMod(None)
-    dialog.Show()
+    # dialog = LockDialogMod(None)
+    # dialog.Show()
+    frame = LockFrameMod(None)
+    frame.Show()
     app.MainLoop()
