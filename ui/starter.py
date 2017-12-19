@@ -1,5 +1,6 @@
 from ui import SignupFrame, MainFrame, LockFrame
 import wx
+import time
 
 
 class SignupFrameMod(SignupFrame):
@@ -93,11 +94,19 @@ class LockFrameMod(LockFrame):
 
 
 data1 = {
-    1: ("Dai", "daidahao@icloud.com", "9999999"),
-    2: ("Zou", "999@test.com", "9999999"),
-    3: ("Sun", "test@test.com", "9999999"),
+    1: ("Dai", "daidahao@icloud.com", "9999999", time.time()),
+    2: ("Zou", "999@test.com", "9999999", time.time() - 3600),
+    3: ("Sun", "test@test.com", "9999999", time.time() + 36000),
 }
 
+def time_to_string(t):
+    t_localtime = time.localtime(t)
+    localtime = time.localtime()
+    if (t_localtime.tm_year == localtime.tm_year
+        and t_localtime.tm_mon == localtime.tm_mon
+        and t_localtime.tm_mday == localtime.tm_mday):
+        return time.strftime("%H:%M:%S", t_localtime)
+    return time.strftime("%Y-%m-%d %H:%M:%S", t_localtime)
 
 class MainFrameMod(MainFrame):
 
@@ -113,17 +122,19 @@ class MainFrameMod(MainFrame):
         self.list.InsertColumn(0, "Email")
         self.list.InsertColumn(1, "Name")
         self.list.InsertColumn(2, "KeyID")
-
+        self.list.InsertColumn(3, "Last Message")
         items = data1.items()
         for key, data in items:
             index = self.list.InsertItem(self.list.GetItemCount(), data[0])
             self.list.SetItem(index, 1, data[1])
             self.list.SetItem(index, 2 ,data[2])
+            self.list.SetItem(index, 3, time_to_string(data[3]))
             self.list.SetItemData(index, key)
 
         self.list.SetColumnWidth(0, 50)
         self.list.SetColumnWidth(1, 100)
         self.list.SetColumnWidth(2, 100)
+        self.list.SetColumnWidth(3, 150)
 
         self.currentItem = 0
 

@@ -366,9 +366,6 @@ class MainFrame ( wx.Frame ):
 		
 		self.SetSizer( sizer )
 		self.Layout()
-		self.m_menubar1 = wx.MenuBar( 0 )
-		self.SetMenuBar( self.m_menubar1 )
-		
 		
 		self.Centre( wx.BOTH )
 		
