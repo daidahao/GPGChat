@@ -1,6 +1,7 @@
 from ui import SignupFrame, MainFrame, LockFrame
 import wx
 import time
+from wx.lib.mixins.listctrl import ColumnSorterMixin
 
 
 class SignupFrameMod(SignupFrame):
@@ -93,10 +94,15 @@ class LockFrameMod(LockFrame):
 
 
 
-data1 = {
+contact_data = {
     1: ("Dai", "daidahao@icloud.com", "9999999", time.time()),
     2: ("Zou", "999@test.com", "9999999", time.time() - 3600),
     3: ("Sun", "test@test.com", "9999999", time.time() + 36000),
+}
+
+blacklist_data = {
+    1: ("China Mobile", "123@10086.com", "9999999", 0),
+    2: ("China Telcom", "123@10000.com", "9999999", 0)
 }
 
 def time_to_string(t):
@@ -108,24 +114,32 @@ def time_to_string(t):
         return time.strftime("%H:%M:%S", t_localtime)
     return time.strftime("%Y-%m-%d %H:%M:%S", t_localtime)
 
-class MainFrameMod(MainFrame):
+
+class MainFrameMod(MainFrame, ColumnSorterMixin):
+    def GetListCtrl(self):
+        return self.list
 
     def __init__(self, parent):
         MainFrame.__init__(self, parent)
-        self.PopulateList()
         self.count = 0
         self.allText = []
+        self.itemDataMap = {}
+        self.OnContactButton(None)
 
-    def PopulateList(self):
+    def PopulateList(self, data1):
+        self.itemDataMap = data1
 
+        self.list.ClearAll()
+        ColumnSorterMixin.__init__(self, 4)
         # for normal, simple columns, you can add them like this:
-        self.list.InsertColumn(0, "Email")
-        self.list.InsertColumn(1, "Name")
+        self.list.InsertColumn(0, "Name")
+        self.list.InsertColumn(1, "Email")
         self.list.InsertColumn(2, "KeyID")
         self.list.InsertColumn(3, "Last Message")
         items = data1.items()
         for key, data in items:
             index = self.list.InsertItem(self.list.GetItemCount(), data[0])
+            # print(index)
             self.list.SetItem(index, 1, data[1])
             self.list.SetItem(index, 2 ,data[2])
             self.list.SetItem(index, 3, time_to_string(data[3]))
@@ -135,8 +149,6 @@ class MainFrameMod(MainFrame):
         self.list.SetColumnWidth(1, 100)
         self.list.SetColumnWidth(2, 100)
         self.list.SetColumnWidth(3, 150)
-
-        self.currentItem = 0
 
     def OnSend( self, event ):
         self.AddSendMessage(self.inputText.GetValue())
@@ -168,11 +180,23 @@ class MainFrameMod(MainFrame):
         self.m_scrolledWindow1.Layout()
         self.m_panel15.Layout()
 
+    def OnContactButton( self, event ):
+        self.PopulateList(contact_data)
+        self.SortListItems(0, 1)
+
+    def OnRecentButton( self, event ):
+        self.PopulateList(contact_data)
+        self.SortListItems(3, 1)
+
+    def OnBlacklistButton( self, event ):
+        self.PopulateList(blacklist_data)
+        self.SortListItems(0, 1)
+
 
 if __name__ == '__main__':
     app = wx.App()
     # dialog = LockDialogMod(None)
     # dialog.Show()
-    frame = LockFrameMod(None)
+    frame = LockFrameMod(None, verbose=True)
     frame.Show()
     app.MainLoop()

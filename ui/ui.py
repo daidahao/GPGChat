@@ -370,6 +370,9 @@ class MainFrame ( wx.Frame ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
+		self.contactButton.Bind( wx.EVT_BUTTON, self.OnContactButton )
+		self.recentButton.Bind( wx.EVT_BUTTON, self.OnRecentButton )
+		self.blacklistButton.Bind( wx.EVT_BUTTON, self.OnBlacklistButton )
 		self.sendButton.Bind( wx.EVT_BUTTON, self.OnSend )
 	
 	def __del__( self ):
@@ -377,6 +380,15 @@ class MainFrame ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def OnContactButton( self, event ):
+		event.Skip()
+	
+	def OnRecentButton( self, event ):
+		event.Skip()
+	
+	def OnBlacklistButton( self, event ):
+		event.Skip()
+	
 	def OnSend( self, event ):
 		event.Skip()
 	
