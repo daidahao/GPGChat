@@ -205,72 +205,6 @@ class SignupFrame ( wx.Frame ):
 	
 
 ###########################################################################
-## Class LockDialog
-###########################################################################
-
-class LockDialog ( wx.Dialog ):
-	
-	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"LOCK", pos = wx.DefaultPosition, size = wx.Size( 261,131 ), style = wx.DEFAULT_DIALOG_STYLE )
-		
-		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
-		
-		sizer = wx.BoxSizer( wx.VERTICAL )
-		
-		subSizer = wx.BoxSizer( wx.VERTICAL )
-		
-		subsubSizer = wx.BoxSizer( wx.VERTICAL )
-		
-		self.lockLabel = wx.StaticText( self, wx.ID_ANY, u"Please enter your lock", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.lockLabel.Wrap( -1 )
-		subsubSizer.Add( self.lockLabel, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
-		
-		self.lockText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), wx.TE_PASSWORD )
-		subsubSizer.Add( self.lockText, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
-		
-		self.lockButton = wx.Button( self, wx.ID_ANY, u"Confirm", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.lockButton.SetDefault() 
-		subsubSizer.Add( self.lockButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
-		
-		
-		subSizer.Add( subsubSizer, 1, wx.EXPAND, 5 )
-		
-		
-		sizer.Add( subSizer, 1, wx.EXPAND|wx.LEFT|wx.RIGHT, 20 )
-		
-		
-		self.SetSizer( sizer )
-		self.Layout()
-		
-		self.Centre( wx.BOTH )
-		
-		# Connect Events
-		self.lockButton.Bind( wx.EVT_BUTTON, self.OnLockButton )
-	
-	def __del__( self ):
-		pass
-	
-	
-	# Virtual event handlers, overide them in your derived class
-	def OnLockButton( self, event ):
-		event.Skip()
-	
-
-###########################################################################
-## Class MyPanel1
-###########################################################################
-
-class MyPanel1 ( wx.Panel ):
-	
-	def __init__( self, parent ):
-		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.TAB_TRAVERSAL )
-		
-	
-	def __del__( self ):
-		pass
-	
-
-###########################################################################
 ## Class MainFrame
 ###########################################################################
 
@@ -432,6 +366,9 @@ class MainFrame ( wx.Frame ):
 		
 		self.SetSizer( sizer )
 		self.Layout()
+		self.m_menubar1 = wx.MenuBar( 0 )
+		self.SetMenuBar( self.m_menubar1 )
+		
 		
 		self.Centre( wx.BOTH )
 		
@@ -445,38 +382,6 @@ class MainFrame ( wx.Frame ):
 	# Virtual event handlers, overide them in your derived class
 	def OnSend( self, event ):
 		event.Skip()
-	
-
-###########################################################################
-## Class sendPanel
-###########################################################################
-
-class sendPanel ( wx.Panel ):
-	
-	def __init__( self, parent ):
-		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.TAB_TRAVERSAL )
-		
-		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_HIGHLIGHT ) )
-		
-		fgSizer7 = wx.FlexGridSizer( 0, 2, 0, 0 )
-		fgSizer7.SetFlexibleDirection( wx.BOTH )
-		fgSizer7.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
-		
-		self.m_staticText32 = wx.StaticText( self, wx.ID_ANY, u"MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel MyLabel ", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText32.Wrap( 200 )
-		fgSizer7.Add( self.m_staticText32, 0, wx.ALL, 5 )
-		
-		self.m_staticText33 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 40,-1 ), 0 )
-		self.m_staticText33.Wrap( -1 )
-		fgSizer7.Add( self.m_staticText33, 0, wx.ALL, 5 )
-		
-		
-		self.SetSizer( fgSizer7 )
-		self.Layout()
-		fgSizer7.Fit( self )
-	
-	def __del__( self ):
-		pass
 	
 
 ###########################################################################

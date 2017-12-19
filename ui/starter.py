@@ -1,4 +1,4 @@
-from ui import SignupFrame, LockDialog, MainFrame, LockFrame
+from ui import SignupFrame, MainFrame, LockFrame
 import wx
 
 
