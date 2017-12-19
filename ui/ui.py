@@ -228,19 +228,19 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.contactButton = wx.Button( self.m_panel13, wx.ID_ANY, u"联系人", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		self.contactButton = wx.Button( self.m_panel13, wx.ID_ANY, u"Contact", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
 		bSizer31.Add( self.contactButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
 		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.recentButton = wx.Button( self.m_panel13, wx.ID_ANY, u"最近聊天", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		self.recentButton = wx.Button( self.m_panel13, wx.ID_ANY, u"Most Recent", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
 		bSizer31.Add( self.recentButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
 		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.blacklistButton = wx.Button( self.m_panel13, wx.ID_ANY, u"黑名单", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		self.blacklistButton = wx.Button( self.m_panel13, wx.ID_ANY, u"Blacklist", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
 		bSizer31.Add( self.blacklistButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
@@ -266,7 +266,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer38 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.addContactButton = wx.Button( self.m_panel14, wx.ID_ANY, u"添加", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.addContactButton = wx.Button( self.m_panel14, wx.ID_ANY, u"Add", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer38.Add( self.addContactButton, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT, 5 )
 		
 		
@@ -274,7 +274,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer39 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.removeContactButton = wx.Button( self.m_panel14, wx.ID_ANY, u"删除", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.removeContactButton = wx.Button( self.m_panel14, wx.ID_ANY, u"Remove", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer39.Add( self.removeContactButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
@@ -282,7 +282,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer40 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.blockContactButton = wx.Button( self.m_panel14, wx.ID_ANY, u"屏蔽", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.blockContactButton = wx.Button( self.m_panel14, wx.ID_ANY, u"Block", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer40.Add( self.blockContactButton, 0, wx.ALL, 5 )
 		
 		
@@ -373,6 +373,9 @@ class MainFrame ( wx.Frame ):
 		self.contactButton.Bind( wx.EVT_BUTTON, self.OnContactButton )
 		self.recentButton.Bind( wx.EVT_BUTTON, self.OnRecentButton )
 		self.blacklistButton.Bind( wx.EVT_BUTTON, self.OnBlacklistButton )
+		self.addContactButton.Bind( wx.EVT_BUTTON, self.OnAddContactButton )
+		self.removeContactButton.Bind( wx.EVT_BUTTON, self.OnRemoveContactButton )
+		self.blockContactButton.Bind( wx.EVT_BUTTON, self.OnBlockContactButton )
 		self.sendButton.Bind( wx.EVT_BUTTON, self.OnSend )
 	
 	def __del__( self ):
@@ -387,6 +390,15 @@ class MainFrame ( wx.Frame ):
 		event.Skip()
 	
 	def OnBlacklistButton( self, event ):
+		event.Skip()
+	
+	def OnAddContactButton( self, event ):
+		event.Skip()
+	
+	def OnRemoveContactButton( self, event ):
+		event.Skip()
+	
+	def OnBlockContactButton( self, event ):
 		event.Skip()
 	
 	def OnSend( self, event ):
@@ -437,6 +449,121 @@ class LockFrame ( wx.Frame ):
 	
 	# Virtual event handlers, overide them in your derived class
 	def OnLockButton( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class AddContactFrame
+###########################################################################
+
+class AddContactFrame ( wx.Frame ):
+	
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Add Contact", pos = wx.DefaultPosition, size = wx.Size( 273,139 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
+		
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		
+		sizer = wx.BoxSizer( wx.VERTICAL )
+		
+		subSizer = wx.BoxSizer( wx.VERTICAL )
+		
+		self.lockLabel = wx.StaticText( self, wx.ID_ANY, u"Please enter the email", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.lockLabel.Wrap( -1 )
+		subSizer.Add( self.lockLabel, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		self.lockText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), 0 )
+		subSizer.Add( self.lockText, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		self.lockButton = wx.Button( self, wx.ID_ANY, u"Confirm", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.lockButton.SetDefault() 
+		subSizer.Add( self.lockButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		
+		sizer.Add( subSizer, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		self.SetSizer( sizer )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.lockButton.Bind( wx.EVT_BUTTON, self.OnConfirmButton )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def OnConfirmButton( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class ChooseContactFrame
+###########################################################################
+
+class ChooseContactFrame ( wx.Frame ):
+	
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Add Contact", pos = wx.DefaultPosition, size = wx.Size( 481,298 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
+		
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer34 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer37 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.label = wx.StaticText( self, wx.ID_ANY, u"Please choose the user you want to add", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.label.Wrap( -1 )
+		bSizer37.Add( self.label, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10 )
+		
+		self.m_listCtrl3 = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_REPORT )
+		bSizer37.Add( self.m_listCtrl3, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		bSizer38 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer40 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.confirmButton = wx.Button( self, wx.ID_ANY, u"Confirm", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer40.Add( self.confirmButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		
+		bSizer38.Add( bSizer40, 1, wx.EXPAND, 5 )
+		
+		bSizer41 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.cancelButton = wx.Button( self, wx.ID_ANY, u"Cancel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer41.Add( self.cancelButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		
+		bSizer38.Add( bSizer41, 1, wx.EXPAND, 5 )
+		
+		
+		bSizer37.Add( bSizer38, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.EXPAND, 5 )
+		
+		
+		bSizer34.Add( bSizer37, 1, wx.EXPAND, 10 )
+		
+		
+		self.SetSizer( bSizer34 )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.confirmButton.Bind( wx.EVT_BUTTON, self.OnConfirmButton )
+		self.cancelButton.Bind( wx.EVT_BUTTON, self.OnCancelButton )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def OnConfirmButton( self, event ):
+		event.Skip()
+	
+	def OnCancelButton( self, event ):
 		event.Skip()
 	
 

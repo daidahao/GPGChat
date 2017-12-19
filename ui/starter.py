@@ -1,4 +1,4 @@
-from ui import SignupFrame, MainFrame, LockFrame
+from ui import SignupFrame, MainFrame, LockFrame, AddContactFrame, ChooseContactFrame
 import wx
 import time
 from wx.lib.mixins.listctrl import ColumnSorterMixin
@@ -125,9 +125,13 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.allText = []
         self.itemDataMap = {}
         self.OnContactButton(None)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.list)
+        self.currentItem = -1
+        self.blacklistDisplayed = False
 
     def PopulateList(self, data1):
         self.itemDataMap = data1
+        self.currentItem = -1
 
         self.list.ClearAll()
         ColumnSorterMixin.__init__(self, 4)
@@ -183,15 +187,103 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
     def OnContactButton( self, event ):
         self.PopulateList(contact_data)
         self.SortListItems(0, 1)
+        self.blacklistDisplayed = False
 
     def OnRecentButton( self, event ):
         self.PopulateList(contact_data)
         self.SortListItems(3, 1)
+        self.blacklistDisplayed = False
 
     def OnBlacklistButton( self, event ):
         self.PopulateList(blacklist_data)
         self.SortListItems(0, 1)
+        self.blacklistDisplayed = True
 
+    def ShowWarningMessage(self, message):
+        dlg = wx.MessageDialog(self, message,
+                               'Warning',
+                               wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
+
+    def CheckIfItemSelected(self):
+        if (-1 == self.currentItem):
+            dlg = wx.MessageDialog(self, 'You havn\'t selected any item!',
+                                   'Warning',
+                                   wx.OK | wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+
+    def ShowYesNoMessage(self, message):
+        dlg = wx.MessageDialog(self, message,
+                               'Warning',
+                               wx.YES_NO | wx.ICON_INFORMATION)
+        result = dlg.ShowModal()
+        dlg.Destroy()
+        return result
+
+    def GetCurrentNameText(self):
+        return self.list.GetItem(self.currentItem, 0).GetText()
+
+    def OnAddContactButton( self, event ):
+        # The function of adding to the blacklist by hand
+        # could be considered in a later version
+        if (self.blacklistDisplayed):
+            self.ShowWarningMessage('You cannot add to the blacklist for now.')
+            return
+        addContactFrame = AddContactFrameMod(self)
+        addContactFrame.Show()
+
+    def OnRemoveContactButton( self, event ):
+        if (self.blacklistDisplayed):
+            return
+        self.CheckIfItemSelected()
+
+        name = self.GetCurrentNameText()
+        result = self.ShowYesNoMessage(
+            'Are you sure to remove %s from the list?' % (name))
+
+        if result == wx.ID_YES:
+            print("Removing %s..." % name)
+        else:
+            print("The user cancel the removing operation.")
+
+    def OnBlockContactButton( self, event ):
+        if (self.blacklistDisplayed):
+            self.CheckIfItemSelected()
+            return
+        self.CheckIfItemSelected()
+
+        name = self.GetCurrentNameText()
+        result = self.ShowYesNoMessage('Are you sure to block %s?' % (name))
+
+        if result == wx.ID_YES:
+            print("Blocking %s..." % name)
+        else:
+            print("The user cancel the removing operation.")
+
+    def OnItemSelected(self, event):
+        self.currentItem = event.Index
+        name = self.list.GetItem(self.currentItem, 0).GetText()
+        # print(self.list.GetItem(self.currentItem, 2).GetText())
+
+class AddContactFrameMod(AddContactFrame):
+    def __init__(self, parent):
+        AddContactFrame.__init__(self, parent)
+        self.parent = parent
+
+    def OnConfirmButton( self, event ):
+        chooseContactFrame = ChooseContactFrameMod(self.parent)
+        chooseContactFrame.Show()
+        self.Close()
+
+
+class ChooseContactFrameMod(ChooseContactFrame):
+    def OnConfirmButton( self, event ):
+        self.Close()
+
+    def OnCancelButton( self, event ):
+        self.Close()
 
 if __name__ == '__main__':
     app = wx.App()
