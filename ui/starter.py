@@ -1,4 +1,4 @@
-from ui import SignupFrame, MainFrame, LockFrame, AddContactFrame, ChooseContactFrame
+from ui.ui import SignupFrame, MainFrame, LockFrame, AddContactFrame, ChooseContactFrame
 import wx
 import time
 from wx.lib.mixins.listctrl import ColumnSorterMixin
@@ -31,7 +31,7 @@ class LockFrameMod(LockFrame):
         self.verbose = verbose
 
         if self.verbose:
-            print("Initializing LockDialog")
+            print("Initializing LockFrame")
 
         if (type == LockDialogType.NOLOCK):
             self.lockLabel.SetLabelText("Please set your lock first")
@@ -42,21 +42,36 @@ class LockFrameMod(LockFrame):
             if (self.lock == None):
                 self.lock = self.lockText.GetValue()
                 self.lockText.SetValue("")
-                self.lockLabel.SetLabelText("Please confirm your lock")
-                self.lockButton.SetLabelText("Confirm")
+                # print(self.checklock())
+                if self.lock is None or self.lock == "":
+                    dlg = wx.MessageDialog(self,
+                                           "Your lock cannot be empty!",
+                                           "Warning", wx.OK)
+                    dlg.ShowModal()
+                    self.lock = None
+                else:
+                    self.lockLabel.SetLabelText("Please confirm your lock")
+                    self.lockButton.SetLabelText("Confirm")
             else:
                 if (self.lock == self.lockText.GetValue()):
-                    dlg = wx.MessageDialog(self,
-                                           "Your lock is set successfully!",
-                                           "Success", wx.OK)
-                    dlg.ShowModal()
-                    # dlg.Destroy()
+                    if (self.setlock()):
+                        dlg = wx.MessageDialog(self,
+                                               "Your lock is set successfully!",
+                                               "Success", wx.OK)
+                        dlg.ShowModal()
+                        # dlg.Destroy()
 
-                    frame = LockFrameMod(None, LockDialogType.HASLOCK,
-                                         self.lock, self.verbose)
-                    frame.Show()
+                        frame = self.__class__(None, LockDialogType.HASLOCK,
+                                             self.lock, self.verbose)
+                        frame.Show()
 
-                    self.Close()
+                        self.Close()
+                    else:
+                        dlg = wx.MessageDialog(self,
+                                               "Cannot set up the lock!",
+                                               "Failure", wx.OK)
+                        dlg.ShowModal()
+                        self.Close()
                 else:
                     dlg = wx.MessageDialog(self,
                                            "The confirmed lock is inconsistent with the "
@@ -65,16 +80,13 @@ class LockFrameMod(LockFrame):
                     dlg.ShowModal()
                     # dlg.Destroy()
 
-                    frame = LockFrameMod(None)
+                    frame = self.__class__(None)
                     frame.Show()
 
                     self.Close()
         else:
             self.lock = self.lockText.GetValue()
-            if (self.lock == "123"):
-                # frame = SignupFrameMod(None)
-                # frame.Show()
-                # self.Destroy()
+            if (self.islockcorrect()):
                 frame = MainFrameMod(None)
                 frame.Show()
                 self.Close()
@@ -85,12 +97,29 @@ class LockFrameMod(LockFrame):
                 dlg.ShowModal()
                 # dlg.Destroy()
 
-                frame = LockFrameMod(None, LockDialogType.HASLOCK)
+                frame = self.__class__(None, LockDialogType.HASLOCK)
                 frame.Show()
 
                 self.Close()
 
-            # self.Destroy()
+    def setlock(self):
+        pass
+
+    def islockcorrect(self):
+        pass
+
+    def checklock(self):
+        if self.lock is None or self.lock == "":
+            dlg = wx.MessageDialog(self,
+                                   "Your lock cannot be empty!",
+                                   "Warning", wx.OK)
+            dlg.ShowModal()
+            return False
+        return True
+
+    def islockcorrect(self):
+        pass
+
 
 
 
