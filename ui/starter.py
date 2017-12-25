@@ -60,10 +60,11 @@ class LockFrameMod(LockFrame):
                                                "Success", wx.OK)
                         dlg.ShowModal()
                         # dlg.Destroy()
-
-                        frame = self.__class__(None, LockDialogType.HASLOCK,
-                                             self.lock, self.verbose)
-                        frame.Show()
+                        #
+                        # frame = self.__class__(None, LockDialogType.HASLOCK,
+                        #                      self.lock, self.verbose)
+                        # frame.Show()
+                        self.starthaslockframe()
 
                         self.Close()
                     else:
@@ -95,12 +96,8 @@ class LockFrameMod(LockFrame):
                                        "Your lock is incorrect!",
                                        "Failure", wx.OK)
                 dlg.ShowModal()
-                # dlg.Destroy()
-
-                frame = self.__class__(None, LockDialogType.HASLOCK)
-                frame.Show()
-
-                self.Close()
+                self.lockText.SetValue("")
+                self.lock = ""
 
     def setlock(self):
         pass
@@ -117,10 +114,8 @@ class LockFrameMod(LockFrame):
             return False
         return True
 
-    def islockcorrect(self):
+    def starthaslockframe(self):
         pass
-
-
 
 
 contact_data = {

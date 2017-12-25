@@ -6,10 +6,8 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.fernet import InvalidToken
 from cryptography.fernet import Fernet
 
-salt = os.urandom(16)
-
 def encrypt(password, filepath):
-    # salt = os.urandom(16)
+    salt = os.urandom(16)
     key = derivekey(password, salt)
     f = Fernet(key)
     data = readfile(filepath)
@@ -17,15 +15,18 @@ def encrypt(password, filepath):
     writefile(filepath + ".encrypt", token)
     return salt
 
-def decrypt(password, filepath):
+
+def decrypt(password, salt, filepath):
     key = derivekey(password, salt)
     f = Fernet(key)
     data = readfile(filepath + ".encrypt")
     try:
         dec = f.decrypt(data)
     except InvalidToken as e:
+        print(e)
         return False
     return dec
+
 
 def derivekey(password, salt):
     password = password.encode()
@@ -39,6 +40,7 @@ def derivekey(password, salt):
     key = base64.urlsafe_b64encode(kdf.derive(password))
     return key
 
+
 def readfile(filepath):
     try:
         f = open(filepath, 'rb')
@@ -46,6 +48,7 @@ def readfile(filepath):
         return data
     except FileNotFoundError as e:
         print(e)
+
 
 def writefile(filepath, data):
     try:
