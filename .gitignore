@@ -102,3 +102,7 @@ ENV/
 
 .DS_Store
 .idea
+
+base
+prefix
+Using

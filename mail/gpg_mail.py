@@ -1,5 +1,29 @@
 #-*- encoding: utf-8 -*-
 import email
+import smtplib
+from email.header import Header
+from email.mime.text import MIMEText
+
+def check_mail_info(mail_addr, password):
+    server = smtplib.SMTP('smtp.exmail.qq.com', 25)
+    try:
+        server.login(mail_addr, password)
+    except smtplib.SMTPAuthenticationError as e:
+        server.close()
+        return 0
+
+    server.close()
+
+def sendMail(server,from_addr, to_addr, text, subject=''):
+    # form an email
+    msg = MIMEText(text, 'plain', 'utf-8')
+    msg['From'] = from_addr
+    msg['To'] =  to_addr
+    msg['Subject'] = Header(subject, 'utf-8').encode()
+
+    # send the email
+    server.sendmail(from_addr, [to_addr], msg.as_string())
+
 
 def receive_mail(M):
 
