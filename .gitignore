@@ -106,3 +106,7 @@ ENV/
 base
 prefix
 Using
+database/gpg.db
+database/test.ipynb
+GPGChat.iml
+mail/test.py
