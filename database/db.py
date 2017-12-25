@@ -6,12 +6,12 @@ import sqlite3
 '''
 
 '''TABLE CONTACT'''
-def add_contact(db_path, addr, name, public_key):
+def add_contact(db_path, key_id, addr, name, public_key):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
 
     try:
-        cursor.execute('INSERT INTO contact VALUES (?,?,?,?)',(addr, name, public_key, 'W'))
+        cursor.execute('INSERT INTO contact VALUES (?,?,?,?,?)',(key_id,addr, name, public_key, 'W'))
         connection.commit()
     except sqlite3.IntegrityError as e:
         cursor.close()
@@ -28,6 +28,7 @@ def delete_contact(db_path, addr):
     cursor =connection.cursor()
 
     sql_cmd = 'DELETE FROM contact WHERE email_addr = "%s"' % addr
+    cursor.execute(sql_cmd)
     connection.commit()
 
     cursor.close()
@@ -54,43 +55,25 @@ def alter_contact_block(db_path, addr):
     cursor.close()
     connection.close()
 
-'''TABLE CHAT'''
-def add_chat(db_path, uuid, send_by, send_from):
+def read_contact(db_path):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
 
-    try:
-        cursor.execute('INSERT INTO chat VALUES (?,?,?)', (uuid, send_by, send_from))
-        connection.commit()
-    except sqlite3.IntegrityError as e:
-        cursor.close()
-        connection.close()
-        return 0
-
-    cursor.close()
-    connection.close()
-    return 1
-
-def get_uuid(db_path,send_by, send_to):
-    connection = sqlite3.connect(db_path)
-    cursor =connection.cursor()
-
-    sql_cmd = 'SELECT uuid FROM chat WHERE send_by = "%s" and send_to = "%s"' %(send_by, send_to)
-    cursor.execute(sql_cmd)
-    uuid = cursor.fetchall()
-
+    cursor.execute('SELECT * FROM contact')
+    rst = cursor.fetchall()
     cursor.close()
     connection.close()
 
-    return uuid
+    return rst
+
 
 '''TABLE MESSAGE'''
-def add_massage(db_path,uuid, seq, content, timestamp):
+def add_massage(db_path,uuid, seq, send_from, send_to, content, timestamp):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
 
     try:
-        sql_cmd = 'INSERT INTO message VALUES ("%s",%d,"%s",%f)'%(uuid, seq, content, timestamp)
+        sql_cmd = 'INSERT INTO message VALUES ("%s",%d,"%s","%s","%s",%f)'%(uuid, seq, send_from, send_to, content, timestamp)
         cursor.execute(sql_cmd)
         connection.commit()
     except sqlite3.IntegrityError as e:
@@ -102,14 +85,28 @@ def add_massage(db_path,uuid, seq, content, timestamp):
     connection.close()
     return 1
 
-def get_message(db_path, uuid):
+def get_message(db_path, send_from, send_to):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
 
-    sql_cmd = 'SECLECT * FROM message WHERE uuid = "%s" ORDER BY time_stamp' % uuid
+    sql_cmd = 'SELECT * FROM message ' \
+              'WHERE (send_from = "%s" and send_to = "%s") ' \
+              'or (send_from = "%s" and send_to = "%s") ' \
+              'ORDER BY time_stamp' % (send_from, send_to,send_to,send_from)
     cursor.execute(sql_cmd)
     rst = cursor.fetchall()
 
     cursor.close()
     connection.close()
+    return rst
+
+def read_message(db_path):
+    connection = sqlite3.connect(db_path)
+    cursor =connection.cursor()
+
+    cursor.execute('SELECT * FROM message')
+    rst = cursor.fetchall()
+    cursor.close()
+    connection.close()
+
     return rst
