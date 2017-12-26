@@ -70,13 +70,6 @@ if __name__ == '__main__':
     else:
         frame = LockFrame(None, LockDialogType.HASLOCK, verbose=True)
         frame.info = info
-    #
-    # if inf == False:
-    #     frame = LockFrame(None, LockDialogType.NOLOCK, verbose=True)
-    # else:
-    #     frame = LockFrame(None, LockDialogType.HASLOCK, verbose=True)
-    #     frame.mail = inf[0]
-    #     frame.salt = inf[1]
 
     frame.Show()
     app.MainLoop()
