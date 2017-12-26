@@ -304,6 +304,7 @@ class MainFrame ( wx.Frame ):
 		flexSizer.SetMinSize( wx.Size( -1,250 ) ) 
 		self.m_scrolledWindow1 = wx.ScrolledWindow( self.m_panel15, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), wx.HSCROLL|wx.VSCROLL )
 		self.m_scrolledWindow1.SetScrollRate( 5, 5 )
+		self.m_scrolledWindow1.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 		self.m_scrolledWindow1.SetMinSize( wx.Size( -1,220 ) )
 		self.m_scrolledWindow1.SetMaxSize( wx.Size( -1,220 ) )
 		
