@@ -1,8 +1,8 @@
 import wx
-import base64
-from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod
+
 from encrypt import fernet
-from encrypt.info import Info
+from info import Info
+from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod
 
 dbpath = ".db.sqlite"
 infopath = "info.txt"
