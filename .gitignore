@@ -113,3 +113,4 @@ mail/test.py
 *.ipynb
 database/db_test.py
 database/db_test.py
+info.txt
