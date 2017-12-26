@@ -6,8 +6,10 @@ from email.mime.text import MIMEText
 
 def check_mail_info(mail_addr, password, serveraddr):
     server = None
+    hostname, port = split_addr(serveraddr)
     try:
         server = smtplib.SMTP(serveraddr, 25)
+        server = smtplib.SMTP(hostname, port)
         server.login(mail_addr, password)
     except smtplib.SMTPAuthenticationError as e:
         server.close()
@@ -31,6 +33,13 @@ def connect_imap(email_addr, password,server_addr):
     connection = imaplib.IMAP4_SSL(server_addr)
     connection.login(email_addr, password)
     return connection
+
+
+def split_addr(addr):
+    addr_split = addr.split(':')
+    if len(addr_split) == 2:
+        return addr_split[0], int(addr_split[1])
+    return addr, 25
 
 def sendMail(smtp_connection,from_addr, to_addr, text, subject=''):
     # form an email
