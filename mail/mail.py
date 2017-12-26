@@ -1,9 +1,8 @@
 #-*- encoding: utf-8 -*-
 import email
-import smtplib
+import smtplib,imaplib
 from email.header import Header
 from email.mime.text import MIMEText
-
 
 def check_mail_info(mail_addr, password, serveraddr):
     server = None
@@ -22,8 +21,18 @@ def check_mail_info(mail_addr, password, serveraddr):
         return False, "Please check the server address or your connection!"
     return True, "Success"
 
+'''Don't forget close connection when log out'''
+def connect_smtp(email_addr, password, server_addr):
+    connection = smtplib.SMTP(server_addr, 25)
+    connection.login(email_addr, password)
+    return connection
 
-def sendMail(server,from_addr, to_addr, text, subject=''):
+def connect_imap(email_addr, password,server_addr):
+    connection = imaplib.IMAP4_SSL(server_addr)
+    connection.login(email_addr, password)
+    return connection
+
+def sendMail(smtp_connection,from_addr, to_addr, text, subject=''):
     # form an email
     msg = MIMEText(text, 'plain', 'utf-8')
     msg['From'] = from_addr
@@ -31,14 +40,14 @@ def sendMail(server,from_addr, to_addr, text, subject=''):
     msg['Subject'] = Header(subject, 'utf-8').encode()
 
     # send the email
-    server.sendmail(from_addr, [to_addr], msg.as_string())
+    smtp_connection.sendmail(from_addr, [to_addr], msg.as_string())
 
 
-def receive_mail(M):
+def receive_mail(imap_connection):
 
     new_msg = []
 
-    M.select('INBOX')
+    imap_connection.select('INBOX')
     # email status settinghttps://www.example-code.com/python/imap_search.asp
 
     # # TEST: set all emails as unseen
@@ -48,11 +57,11 @@ def receive_mail(M):
     #     M.store(email_id,'-FLAGS','\Seen')
 
     # Fetch UNSEEN emails
-    typ, data = M.search(None, 'UNSEEN')
+    typ, data = imap_connection.search(None, 'UNSEEN')
     id_list = data[0].split()
     for email_id in id_list:
         # fetch the email body
-        typ,data=M.fetch(email_id,'(RFC822)')
+        typ,data=imap_connection.fetch(email_id,'(RFC822)')
 
         # here's the body, which is raw text of the whole email, including headers and alternate payloads
         raw_mail = data[0][1].decode()
@@ -62,7 +71,7 @@ def receive_mail(M):
         sub=email.header.decode_header(msg['Subject'])
         subject = sub[0][0].decode()
         if '[GPGChat]' in subject:
-            M.store(email_id,'+FLAGS','\Seen')
+            imap_connection.store(email_id,'+FLAGS','\Seen')
             new_msg.append(msg)
 
     # # TEST FUNCTION: parse the new msgs
