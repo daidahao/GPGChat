@@ -4,7 +4,8 @@ from encrypt import fernet
 from info import Info
 from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod, MainFrameMod
 from database.init_db import init_db
-from util.file import write_file, rm_file
+from util.file import write_file
+from mail.mail import check_mail_info
 
 dbdir = "data/"
 dbext = ".db.sqlite"
@@ -14,13 +15,19 @@ testpath = "test.db"
 
 class SignupFrame(SignupFrameMod):
 
-
     def __init__(self, parent, verbose=True):
         super().__init__(parent)
         self.verbose = verbose
 
     def check_signup(self):
         if not SignupFrameMod.check_signup(self):
+            return False
+        result, message = check_mail_info(self.mail, self.password, self.server)
+        if not result:
+            dlg = wx.MessageDialog(self,
+                                   message,
+                                   "Failure", wx.OK)
+            dlg.ShowModal()
             return False
         return True
 
@@ -117,7 +124,7 @@ class GPGApp(wx.App):
         self.info.write(infopath)
 
     def encrypt_password(self):
-        if self.info.salt or self.info.realpassword is None:
+        if self.info.salt is None or self.info.realpassword is None:
             return
         self.info.password = fernet.encryptstring(self.info.reallock,
                                                   self.info.salt, self.info.realpassword)

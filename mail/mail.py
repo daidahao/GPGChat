@@ -4,15 +4,24 @@ import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
 
-def check_mail_info(mail_addr, password):
-    server = smtplib.SMTP('smtp.exmail.qq.com', 25)
+
+def check_mail_info(mail_addr, password, serveraddr):
+    server = None
     try:
+        server = smtplib.SMTP(serveraddr, 25)
         server.login(mail_addr, password)
     except smtplib.SMTPAuthenticationError as e:
         server.close()
-        return 0
+        return False, "Email or password is not correct!"
+    except smtplib.SMTPConnectError as e:
+        server.close()
+        return False, "Please check the server address or your connection!"
+    except ConnectionRefusedError as e:
+        if server is not None:
+            server.close()
+        return False, "Please check the server address or your connection!"
+    return True, "Success"
 
-    server.close()
 
 def sendMail(server,from_addr, to_addr, text, subject=''):
     # form an email
