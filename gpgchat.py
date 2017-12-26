@@ -3,8 +3,11 @@ import wx
 from encrypt import fernet
 from info import Info
 from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod
+from database.init_db import init_db
+from util.file import write_file, rm_file
 
-dbpath = ".db.sqlite"
+dbdir = "data/"
+dbext = ".db.sqlite"
 infopath = "info.txt"
 testpath = "test.db"
 
@@ -34,20 +37,26 @@ class LockFrame(LockFrameMod):
     def setlock(self):
         if (self.verbose):
             print("Setting up the lock")
-        self.info.salt = fernet.encrypt(self.lock, testpath)
+        self.info.dbpath = dbdir + self.info.mail + dbext
+        init_db(self.info.dbpath)
+        self.info.salt = fernet.encrypt(self.lock, self.info.dbpath)
         self.info.password = fernet.encryptstring(self.lock,
                                                   self.info.salt, self.info.realpassword)
         self.info.write(infopath)
+
         return True
 
     def islockcorrect(self):
         self.info.print()
         if (self.verbose):
             print("Checking if the lock is correct")
-        if fernet.decrypt(self.lock, self.info.salt, testpath) == False:
+        dec = fernet.decrypt(self.lock, self.info.salt, self.info.dbpath)
+        if dec == False:
             print("The lock is incorrect!")
             return False
-        print("The lock is correct!")
+        write_file(self.info.dbpath, dec)
+        if (self.verbose):
+            print("The lock is correct!")
         self.info.realpassword = fernet.decryptstring(self.lock,
                                                      self.info.salt,
                                                      self.info.password)

@@ -5,6 +5,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.fernet import InvalidToken
 from cryptography.fernet import Fernet
+from util.file import rm_file
 
 
 def encrypt(password, filepath):
@@ -14,6 +15,7 @@ def encrypt(password, filepath):
     data = readfile(filepath)
     token = f.encrypt(data)
     writefile(filepath + ".encrypt", token)
+    rm_file(filepath)
     return salt
 
 
@@ -68,5 +70,6 @@ def writefile(filepath, data):
     try:
         f = open(filepath, 'wb')
         f.write(data)
+        f.close()
     except FileNotFoundError as e:
         print(e)

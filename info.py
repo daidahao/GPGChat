@@ -11,6 +11,7 @@ class Info:
         self.server = None
         self.name = None
         self.realpassword = None
+        self.dbpath = None
 
     def read(self, filepath):
         try:
@@ -30,6 +31,8 @@ class Info:
                     self.server = self.readline(line, 'server')
                 if line.startswith('name='):
                     self.name = self.readline(line, 'name')
+                if line.startswith('dbpath='):
+                    self.dbpath = self.readline(line, 'dbpath')
             reader.close()
         except FileNotFoundError as e:
             return False
@@ -42,7 +45,8 @@ class Info:
                 self.writeline('salt', salt) +
                 self.writeline('password', self.password) +
                 self.writeline('server', self.server) +
-                self.writeline('name', self.name))
+                self.writeline('name', self.name) +
+                self.writeline('dbpath', self.dbpath))
         f.close()
 
     def print(self):
@@ -51,7 +55,8 @@ class Info:
         print("password=", self.password)
         print("server=", self.server)
         print("name=", self.name)
-        print("realpassword=", self.realpassword)
+        # print("realpassword=", self.realpassword)
+        print("dbpath=", self.dbpath)
 
     def readline(self, line, name):
         if line.startswith(name + '='):
