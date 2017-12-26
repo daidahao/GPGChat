@@ -29,6 +29,19 @@ def decrypt(password, salt, filepath):
     return dec
 
 
+def encryptstring(password, salt, string):
+    key = derivekey(password, salt)
+    f = Fernet(key)
+    result = f.encrypt(string.encode())
+    result = base64.urlsafe_b64encode(result).decode()
+    return result
+
+
+def decryptstring(password, salt, string):
+    key = derivekey(password, salt)
+    f = Fernet(key)
+    return f.decrypt(base64.urlsafe_b64decode(string))
+
 def derivekey(password, salt):
     password = password.encode()
     kdf = PBKDF2HMAC(

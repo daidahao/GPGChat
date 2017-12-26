@@ -1,4 +1,5 @@
 import wx
+import base64
 from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod
 from encrypt import fernet
 from encrypt.info import Info
@@ -24,7 +25,7 @@ class SignupFrame(SignupFrameMod):
         info = Info()
         info.mail = self.mail
         info.name = self.name
-        info.password = self.password
+        info.realpassword = self.password
         info.server = self.server
         return info
 
@@ -34,16 +35,23 @@ class LockFrame(LockFrameMod):
         if (self.verbose):
             print("Setting up the lock")
         self.info.salt = fernet.encrypt(self.lock, testpath)
+        self.info.password = fernet.encryptstring(self.lock,
+                                                  self.info.salt, self.info.realpassword)
         self.info.write(infopath)
         return True
 
     def islockcorrect(self):
+        self.info.print()
         if (self.verbose):
             print("Checking if the lock is correct")
         if fernet.decrypt(self.lock, self.info.salt, testpath) == False:
             print("The lock is incorrect!")
             return False
         print("The lock is correct!")
+        self.info.realpassword = fernet.decryptstring(self.lock,
+                                                     self.info.salt,
+                                                     self.info.password)
+        self.info.print()
         return True
 
     def starthaslockframe(self):
@@ -60,7 +68,6 @@ if __name__ == '__main__':
     if info.read(infopath) == False:
         frame = SignupFrame(None)
     else:
-        info.print()
         frame = LockFrame(None, LockDialogType.HASLOCK, verbose=True)
         frame.info = info
     #
