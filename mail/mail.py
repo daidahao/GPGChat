@@ -7,8 +7,11 @@ from email.mime.text import MIMEText
 
 def check_mail_info(mail_addr, password, serveraddr):
     server = None
+    hostname, port = split_addr(serveraddr)
     try:
-        server = smtplib.SMTP(serveraddr, 25)
+        print("hostname=", hostname)
+        print("port=", port)
+        server = smtplib.SMTP(hostname, port)
         server.login(mail_addr, password)
     except smtplib.SMTPAuthenticationError as e:
         server.close()
@@ -22,6 +25,11 @@ def check_mail_info(mail_addr, password, serveraddr):
         return False, "Please check the server address or your connection!"
     return True, "Success"
 
+def split_addr(addr):
+    addr_split = addr.split(':')
+    if len(addr_split) == 2:
+        return addr_split[0], int(addr_split[1])
+    return addr, 25
 
 def sendMail(server,from_addr, to_addr, text, subject=''):
     # form an email
