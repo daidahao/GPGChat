@@ -1,2 +1,2 @@
-mail=zou@qq.com
-salt=NyJt__22fBQJLf5H8f0tkQ==
+mail=1
+salt=8CTvPXA5IuXjjXOr3IAF3Q==

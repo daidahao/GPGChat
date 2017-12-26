@@ -106,8 +106,8 @@ class SignupFrame ( wx.Frame ):
 		self.emptyLabel2.Wrap( -1 )
 		passwordSizer.Add( self.emptyLabel2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.emailSizer = wx.TextCtrl( self.panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), wx.TE_PASSWORD )
-		passwordSizer.Add( self.emailSizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		self.passwordText = wx.TextCtrl( self.panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), wx.TE_PASSWORD )
+		passwordSizer.Add( self.passwordText, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
 		subsubSizer.Add( passwordSizer, 1, wx.EXPAND, 5 )

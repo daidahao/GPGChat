@@ -6,6 +6,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.fernet import InvalidToken
 from cryptography.fernet import Fernet
 
+
 def encrypt(password, filepath):
     salt = os.urandom(16)
     key = derivekey(password, salt)

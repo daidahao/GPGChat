@@ -1,25 +1,46 @@
 import wx
-from ui.starter import LockFrameMod, LockDialogType
-from encrypt import fernet, info
+from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod
+from encrypt import fernet
+from encrypt.info import Info
 
 dbpath = ".db.sqlite"
 infopath = "info.txt"
 testpath = "test.db"
+
+
+class SignupFrame(SignupFrameMod):
+    def checksignup(self):
+        if not SignupFrameMod.checksignup(self):
+            return False
+        return True
+
+    def startlockframe(self):
+        frame = LockFrame(None, LockDialogType.NOLOCK, verbose=True)
+        frame.info = self.setinfo()
+        frame.Show()
+        self.Close()
+
+    def setinfo(self):
+        info = Info()
+        info.mail = self.mail
+        info.name = self.name
+        info.password = self.password
+        info.server = self.server
+        return info
 
 class LockFrame(LockFrameMod):
 
     def setlock(self):
         if (self.verbose):
             print("Setting up the lock")
-        self.mail = "zou@qq.com"
-        self.salt = fernet.encrypt(self.lock, testpath)
-        info.writeinfo(self.mail, self.salt, infopath)
+        self.info.salt = fernet.encrypt(self.lock, testpath)
+        self.info.write(infopath)
         return True
 
     def islockcorrect(self):
         if (self.verbose):
             print("Checking if the lock is correct")
-        if fernet.decrypt(self.lock, self.salt, testpath) == False:
+        if fernet.decrypt(self.lock, self.info.salt, testpath) == False:
             print("The lock is incorrect!")
             return False
         print("The lock is correct!")
@@ -28,18 +49,27 @@ class LockFrame(LockFrameMod):
     def starthaslockframe(self):
         frame = self.__class__(None, LockDialogType.HASLOCK,
                              self.lock, self.verbose)
-        frame.salt = self.salt
+        frame.info = self.info
         frame.Show()
 
 
 if __name__ == '__main__':
     app = wx.App()
-    inf = info.readinfo(infopath)
-    if inf == False:
-        frame = LockFrame(None, LockDialogType.NOLOCK, verbose=True)
+    info = Info()
+
+    if info.read(infopath) == False:
+        frame = SignupFrame(None)
     else:
+        info.print()
         frame = LockFrame(None, LockDialogType.HASLOCK, verbose=True)
-        frame.mail = inf[0]
-        frame.salt = inf[1]
+        frame.info = info
+    #
+    # if inf == False:
+    #     frame = LockFrame(None, LockDialogType.NOLOCK, verbose=True)
+    # else:
+    #     frame = LockFrame(None, LockDialogType.HASLOCK, verbose=True)
+    #     frame.mail = inf[0]
+    #     frame.salt = inf[1]
+
     frame.Show()
     app.MainLoop()

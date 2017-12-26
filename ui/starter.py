@@ -6,6 +6,16 @@ from wx.lib.mixins.listctrl import ColumnSorterMixin
 
 class SignupFrameMod(SignupFrame):
     def OnSignup(self, event):
+        if self.checksignup():
+            self.showsuccess()
+            self.startlockframe()
+        else:
+            pass
+
+    def OnQuit(self, event):
+        self.Destroy()
+
+    def showsuccess(self):
         dlg = wx.MessageDialog(self,
                                "Signup successfully!",
                                "Success",
@@ -14,8 +24,56 @@ class SignupFrameMod(SignupFrame):
         dlg.ShowModal()
         dlg.Destroy()
 
-    def OnQuit(self, event):
-        self.Destroy()
+    def showfailure(self, message="Cannot signup!"):
+        dlg = wx.MessageDialog(self,
+                               message,
+                               "Failure",
+                               wx.OK)
+        dlg.Center()
+        dlg.ShowModal()
+        dlg.Destroy()
+
+    def checkmail(self):
+        self.mail = self.emailText.GetValue()
+        if self.mail == "":
+            self.showfailure("Email cannot be empty")
+            return False
+        return True
+
+    def checkpassword(self):
+        self.password = self.passwordText.GetValue()
+        if self.password == "":
+            self.showfailure("Password cannot be empty")
+            return False
+        return True
+
+
+    def checkserver(self):
+        self.server = self.smtpText.GetValue()
+        if self.server == "":
+            self.showfailure("SMTP Server cannot be empty")
+            return False
+        return True
+
+    def checkname(self):
+        self.name = self.nameText.GetValue()
+        if self.name == "":
+            self.showfailure("Name cannot be empty")
+            return False
+        return True
+
+    def checksignup(self):
+        if (self.checkmail() and
+                self.checkpassword() and
+                self.checkserver() and
+                self.checkname()):
+            return True
+        return False
+
+    def startlockframe(self):
+        pass
+
+
 
 
 class LockDialogType:
