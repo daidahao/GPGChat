@@ -8,7 +8,8 @@ def check_mail_info(mail_addr, password, serveraddr):
     server = None
     hostname, port = split_addr(serveraddr)
     try:
-        server = smtplib.SMTP(serveraddr, 25)
+        print("hostname=", hostname)
+        print("port=", port)
         server = smtplib.SMTP(hostname, port)
         server.login(mail_addr, password)
     except smtplib.SMTPAuthenticationError as e:
