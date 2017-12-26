@@ -12,6 +12,7 @@ class Info:
         self.name = None
         self.realpassword = None
         self.dbpath = None
+        self.reallock = None
 
     def read(self, filepath):
         try:

@@ -42,7 +42,7 @@ def encryptstring(password, salt, string):
 def decryptstring(password, salt, string):
     key = derivekey(password, salt)
     f = Fernet(key)
-    return f.decrypt(base64.urlsafe_b64decode(string))
+    return f.decrypt(base64.urlsafe_b64decode(string)).decode()
 
 def derivekey(password, salt):
     password = password.encode()

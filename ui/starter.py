@@ -6,9 +6,9 @@ from wx.lib.mixins.listctrl import ColumnSorterMixin
 
 class SignupFrameMod(SignupFrame):
     def OnSignup(self, event):
-        if self.checksignup():
+        if self.check_signup():
             self.showsuccess()
-            self.startlockframe()
+            self.start_lock_frame()
         else:
             pass
 
@@ -62,7 +62,7 @@ class SignupFrameMod(SignupFrame):
             return False
         return True
 
-    def checksignup(self):
+    def check_signup(self):
         if (self.checkmail() and
                 self.checkpassword() and
                 self.checkserver() and
@@ -70,7 +70,7 @@ class SignupFrameMod(SignupFrame):
             return True
         return False
 
-    def startlockframe(self):
+    def start_lock_frame(self):
         pass
 
 
@@ -112,7 +112,7 @@ class LockFrameMod(LockFrame):
                     self.lockButton.SetLabelText("Confirm")
             else:
                 if (self.lock == self.lockText.GetValue()):
-                    if (self.setlock()):
+                    if (self.set_lock()):
                         dlg = wx.MessageDialog(self,
                                                "Your lock is set successfully!",
                                                "Success", wx.OK)
@@ -122,7 +122,7 @@ class LockFrameMod(LockFrame):
                         # frame = self.__class__(None, LockDialogType.HASLOCK,
                         #                      self.lock, self.verbose)
                         # frame.Show()
-                        self.starthaslockframe()
+                        self.start_has_lock_frame()
 
                         self.Close()
                     else:
@@ -145,9 +145,8 @@ class LockFrameMod(LockFrame):
                     self.Close()
         else:
             self.lock = self.lockText.GetValue()
-            if (self.islockcorrect()):
-                frame = MainFrameMod(None)
-                frame.Show()
+            if (self.is_lock_correct()):
+                self.strat_main_frame()
                 self.Close()
             else:
                 dlg = wx.MessageDialog(self,
@@ -157,13 +156,13 @@ class LockFrameMod(LockFrame):
                 self.lockText.SetValue("")
                 self.lock = ""
 
-    def setlock(self):
+    def set_lock(self):
         pass
 
-    def islockcorrect(self):
+    def is_lock_correct(self):
         pass
 
-    def checklock(self):
+    def check_lock(self):
         if self.lock is None or self.lock == "":
             dlg = wx.MessageDialog(self,
                                    "Your lock cannot be empty!",
@@ -172,8 +171,12 @@ class LockFrameMod(LockFrame):
             return False
         return True
 
-    def starthaslockframe(self):
+    def start_has_lock_frame(self):
         pass
+
+    def strat_main_frame(self):
+        frame = MainFrameMod(None)
+        frame.Show()
 
 
 contact_data = {
