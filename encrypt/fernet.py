@@ -8,7 +8,7 @@ from cryptography.fernet import Fernet
 from util.file import rm_file
 
 
-def encrypt(password, filepath):
+def encrypt_file(password, filepath):
     salt = os.urandom(16)
     key = derivekey(password, salt)
     f = Fernet(key)
@@ -19,7 +19,7 @@ def encrypt(password, filepath):
     return salt
 
 
-def decrypt(password, salt, filepath):
+def decrypt_file(password, salt, filepath):
     key = derivekey(password, salt)
     f = Fernet(key)
     data = readfile(filepath + ".encrypt")

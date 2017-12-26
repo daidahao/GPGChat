@@ -49,7 +49,7 @@ class LockFrame(LockFrameMod):
         init_db(self.info.dbpath)
 
     def encrypt_db(self):
-        self.info.salt = fernet.encrypt(self.lock, self.info.dbpath)
+        self.info.salt = fernet.encrypt_file(self.lock, self.info.dbpath)
 
     def encrypt_password(self):
         self.info.password = fernet.encryptstring(self.lock,
@@ -62,7 +62,7 @@ class LockFrame(LockFrameMod):
         self.info.print()
 
     def decrypt_file(self):
-        return fernet.decrypt(self.lock, self.info.salt, self.info.dbpath)
+        return fernet.decrypt_file(self.lock, self.info.salt, self.info.dbpath)
 
     def decrypt_password(self):
         self.info.realpassword = \
@@ -138,7 +138,7 @@ class GPGApp(wx.App):
     def encrypt_db(self):
         if self.info.reallock is not None and self.info.dbpath is not None:
             print("Encrypting the database file again...")
-            self.info.salt = fernet.encrypt(self.info.reallock, self.info.dbpath)
+            self.info.salt = fernet.encrypt_file(self.info.reallock, self.info.dbpath)
 
 
 
