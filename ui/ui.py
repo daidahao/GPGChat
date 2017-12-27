@@ -228,19 +228,19 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.contactButton = wx.Button( self.m_panel13, wx.ID_ANY, u"Contact", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
-		bSizer31.Add( self.contactButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.contactButton = wx.Button( self.m_panel13, wx.ID_ANY, u"Contact", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer31.Add( self.contactButton, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 		
 		
 		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.recentButton = wx.Button( self.m_panel13, wx.ID_ANY, u"Most Recent", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		self.recentButton = wx.Button( self.m_panel13, wx.ID_ANY, u"Most Recent", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer31.Add( self.recentButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
 		bSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.blacklistButton = wx.Button( self.m_panel13, wx.ID_ANY, u"Blacklist", wx.DefaultPosition, wx.DefaultSize, wx.NO_BORDER )
+		self.blacklistButton = wx.Button( self.m_panel13, wx.ID_ANY, u"Blacklist", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer31.Add( self.blacklistButton, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		
