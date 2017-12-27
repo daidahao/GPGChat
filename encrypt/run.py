@@ -1,4 +1,3 @@
-import os
+from uuid import uuid4
 
-salt = os.urandom(16)
-print(salt)
+print(uuid4())

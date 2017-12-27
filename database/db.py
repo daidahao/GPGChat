@@ -9,7 +9,6 @@ import sqlite3
 def add_contact(db_path, key_id, addr, name, public_key):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
-
     try:
         cursor.execute('INSERT INTO contact VALUES (?,?,?,?,?)',(key_id,addr, name, public_key, 'W'))
         connection.commit()
@@ -68,28 +67,44 @@ def read_contact(db_path):
 
 
 '''TABLE MESSAGE'''
-def add_massage(db_path,uuid, seq, send_from, send_to, content, timestamp):
+def add_massage(db_path, uuid, seq, send_from, send_to, content, timestamp):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
-
     try:
-        sql_cmd = 'INSERT INTO message VALUES ("%s",%d,"%s","%s","%s",%f)'%(uuid, seq, send_from, send_to, content, timestamp)
+        sql_cmd = 'INSERT INTO message VALUES ("%s",%d,"%s","%s","%s",%f)'\
+                  % (uuid, seq, send_from, send_to, content, timestamp)
         cursor.execute(sql_cmd)
         connection.commit()
     except sqlite3.IntegrityError as e:
+        print(e)
         cursor.close()
         connection.close()
-        return 0
+        return False
 
     cursor.close()
     connection.close()
-    return 1
+    return True
+
+def fetch_all_messages(db_path, keyId, null=None):
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
+
+    sql_cmd = 'SELECT (send_from = "%s") send, content, time_stamp, uuid, sequence FROM message ' \
+              'WHERE (send_from = "%s" and send_to = "%s") ' \
+              'or (send_from = "%s" and send_to = "%s") ' \
+              'ORDER BY time_stamp' % (null, keyId, null, null, keyId)
+    cursor.execute(sql_cmd)
+    rst = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+    return rst
 
 def get_message(db_path, send_from, send_to):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
 
-    sql_cmd = 'SELECT * FROM message ' \
+    sql_cmd = 'SELECT uuid, sequence, send_from, send_to, content, time_stamp FROM message ' \
               'WHERE (send_from = "%s" and send_to = "%s") ' \
               'or (send_from = "%s" and send_to = "%s") ' \
               'ORDER BY time_stamp' % (send_from, send_to,send_to,send_from)
