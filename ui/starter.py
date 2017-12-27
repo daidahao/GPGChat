@@ -218,6 +218,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.list)
         self.currentItem = -1
         self.blacklistDisplayed = False
+        self.staticTextList = []
 
     def PopulateList(self, data1):
         self.itemDataMap = data1
@@ -268,10 +269,20 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         else:
             wrapSizer.Add(textCtrl, 0, wx.ALL | wx.ALIGN_LEFT, 5)
 
+        self.staticTextList.append(textCtrl)
 
         self.m_scrolledWindow1.SetSizerAndFit(wrapSizer)
         self.m_scrolledWindow1.Layout()
         self.m_panel15.Layout()
+
+    def ClearAllMessages(self):
+        for staticText in self.staticTextList:
+            # wrapSizer = self.m_scrolledWindow1.GetSizer()
+            # wrapSizer.Remove(staticText)
+            staticText.Destroy()
+        self.count = 0
+        self.staticTextList.clear()
+
 
     def OnContactButton( self, event ):
         self.PopulateList(contact_data)
