@@ -1,7 +1,7 @@
 import gnupg
 
 class GPG:
-    gpg=gnupg.GPG(gnupghome='gpghome',verbose=False)
+    gpg=gnupg.GPG(gnupghome='gpghome',verbose=False, gpgbinary='gpg')
     gpg.encoding = 'utf-8'
 
     #产生密钥
@@ -29,13 +29,13 @@ class GPG:
 
     #下载公钥
     def download_key(self,keyid):
-        import_result =GPG.gpg.recv_keys('pgp.mit.edu', keyid)
+        import_result = GPG.gpg.recv_keys('pgp.mit.edu', keyid)
         print(import_result.fingerprints)
         
 
     #加密
     def encrypt(self,data,keyid):
-        encrypted_data = GPG.gpg.encrypt(data.encode(),keyid)
+        encrypted_data = GPG.gpg.encrypt(data.encode(),keyid, always_trust=True)
         return str(encrypted_data)
 
     #解密
