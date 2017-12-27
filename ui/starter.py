@@ -139,8 +139,9 @@ class LockFrameMod(LockFrame):
                     dlg.ShowModal()
                     # dlg.Destroy()
 
-                    frame = self.__class__(None)
-                    frame.Show()
+                    # frame = self.__class__(None)
+                    # frame.Show()
+                    self.start_no_lock_frame()
 
                     self.Close()
         else:
@@ -155,6 +156,10 @@ class LockFrameMod(LockFrame):
                 dlg.ShowModal()
                 self.lockText.SetValue("")
                 self.lock = ""
+
+    def start_no_lock_frame(self):
+        frame = self.__class__(None, None, self.verbose)
+        frame.Show()
 
     def set_lock(self):
         pass
@@ -181,13 +186,13 @@ class LockFrameMod(LockFrame):
 
 contact_data = {
     1: ("Dai", "daidahao@icloud.com", "9999999", time.time()),
-    2: ("Zou", "999@test.com", "9999999", time.time() - 3600),
+    2: ("Zou", "999@test.com", "9999999", time.time() - 36000),
     3: ("Sun", "test@test.com", "9999999", time.time() + 36000),
 }
 
 blacklist_data = {
     1: ("China Mobile", "123@10086.com", "9999999", 0),
-    2: ("China Telcom", "123@10000.com", "9999999", 0)
+    2: ("China Telecom", "123@10000.com", "9999999", 0)
 }
 
 def time_to_string(t):
@@ -220,7 +225,6 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
         self.list.ClearAll()
         ColumnSorterMixin.__init__(self, 4)
-        # for normal, simple columns, you can add them like this:
         self.list.InsertColumn(0, "Name")
         self.list.InsertColumn(1, "Email")
         self.list.InsertColumn(2, "KeyID")

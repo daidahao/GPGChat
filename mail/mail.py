@@ -1,34 +1,37 @@
 #-*- encoding: utf-8 -*-
 import email
-import smtplib,imaplib
+import smtplib, imaplib
 from email.header import Header
 from email.mime.text import MIMEText
 
-def check_mail_info(mail_addr, password, serveraddr):
-    server = None
-    hostname, port = split_addr(serveraddr)
-    try:
-        print("hostname=", hostname)
-        print("port=", port)
-        server = smtplib.SMTP(hostname, port)
-        server.login(mail_addr, password)
-    except smtplib.SMTPAuthenticationError as e:
-        server.close()
-        return False, "Email or password is not correct!"
-    except smtplib.SMTPConnectError as e:
-        server.close()
-        return False, "Please check the server address or your connection!"
-    except ConnectionRefusedError as e:
-        if server is not None:
-            server.close()
-        return False, "Please check the server address or your connection!"
-    return True, "Success"
+def check_mail_info(mail_addr, password, server_addr):
+    connection, message = connect_smtp(mail_addr, password, server_addr)
+    if connection is None:
+        return False, message
+    connection.close()
+    return True, message
 
-'''Don't forget close connection when log out'''
-def connect_smtp(email_addr, password, server_addr):
-    connection = smtplib.SMTP(server_addr, 25)
-    connection.login(email_addr, password)
-    return connection
+# Don't forget close connection when log out
+def connect_smtp(mail_addr, password, server_addr):
+    connection = None
+    hostname, port = split_addr(server_addr)
+    try:
+        # print("hostname=", hostname)
+        # print("port=", port)
+        connection = smtplib.SMTP(hostname, port)
+        connection.login(mail_addr, password)
+    except smtplib.SMTPAuthenticationError as e:
+        connection.close()
+        return None, "Email or password is not correct!"
+    except smtplib.SMTPConnectError as e:
+        connection.close()
+        return None, "Please check the server address or your connection!"
+    except ConnectionRefusedError as e:
+        if connection is not None:
+            connection.close()
+        return None, "Please check the server address or your connection!"
+    return connection, "Success"
+
 
 def connect_imap(email_addr, password,server_addr):
     connection = imaplib.IMAP4_SSL(server_addr)
@@ -42,7 +45,8 @@ def split_addr(addr):
         return addr_split[0], int(addr_split[1])
     return addr, 25
 
-def sendMail(smtp_connection,from_addr, to_addr, text, subject=''):
+
+def send_mail(smtp_connection, from_addr, to_addr, text, subject=''):
     # form an email
     msg = MIMEText(text, 'plain', 'utf-8')
     msg['From'] = from_addr

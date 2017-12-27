@@ -59,8 +59,8 @@ class LockFrame(LockFrameMod):
         self.info.salt = fernet.encrypt_file(self.lock, self.info.dbpath)
 
     def encrypt_password(self):
-        self.info.password = fernet.encryptstring(self.lock,
-                                                  self.info.salt, self.info.realpassword)
+        self.info.password = fernet.encrypt_string(self.lock,
+                                                   self.info.salt, self.info.realpassword)
 
     def write_info(self):
         self.info.write(infopath)
@@ -73,7 +73,7 @@ class LockFrame(LockFrameMod):
 
     def decrypt_password(self):
         self.info.realpassword = \
-            fernet.decryptstring(self.lock, self.info.salt, self.info.password)
+            fernet.decrypt_string(self.lock, self.info.salt, self.info.password)
 
     def set_lock(self):
         if (self.verbose):
@@ -106,6 +106,12 @@ class LockFrame(LockFrameMod):
         frame.info = self.info
         frame.Show()
 
+    def start_no_lock_frame(self):
+        frame = self.__class__(None, LockDialogType.NOLOCK,
+                               None, self.verbose)
+        frame.info = self.info
+        frame.Show()
+
     def strat_main_frame(self):
         if (self.verbose):
             print("Starting main frame")
@@ -113,7 +119,35 @@ class LockFrame(LockFrameMod):
         frame.Show()
 
 class MainFrame(MainFrameMod):
-    pass
+    def __init__(self, parent):
+        MainFrameMod.__init__(self, parent)
+        self.SetTitle('GPGChat (' + info.mail + ' ' + info.name + ')')
+
+    def OnSend( self, event ):
+        if self.blacklistDisplayed:
+            self.show_dialog('You haven\'t selected any contact yet!', 'Warning')
+            return
+        text = self.inputText.GetValue()
+        result, message = self.send_text(text)
+        if result:
+            self.AddSendMessage(text)
+            self.inputText.SetValue('')
+        else:
+            self.show_dialog(message=message, title='Warning')
+
+    def check_contact_selected(self):
+        if self.blacklistDisplayed:
+            self.show_dialog('You have\'t selected any contact yet!', 'Warning')
+
+    def show_dialog(self, message, title):
+        dlg = wx.MessageDialog(self, message,
+                               title,
+                               wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+
+    def send_text(self, text):
+        return False, 'Cannot connect to the SMTP server!'
+
 
 
 class GPGApp(wx.App):
@@ -126,8 +160,8 @@ class GPGApp(wx.App):
     def encrypt_password(self):
         if self.info.salt is None or self.info.realpassword is None:
             return
-        self.info.password = fernet.encryptstring(self.info.reallock,
-                                                  self.info.salt, self.info.realpassword)
+        self.info.password = fernet.encrypt_string(self.info.reallock,
+                                                   self.info.salt, self.info.realpassword)
 
     def OnExit(self):
         print("OnExit:")
@@ -146,7 +180,6 @@ class GPGApp(wx.App):
         if self.info.reallock is not None and self.info.dbpath is not None:
             print("Encrypting the database file again...")
             self.info.salt = fernet.encrypt_file(self.info.reallock, self.info.dbpath)
-
 
 
 if __name__ == '__main__':

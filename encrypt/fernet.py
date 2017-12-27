@@ -26,12 +26,12 @@ def decrypt_file(password, salt, filepath):
     try:
         dec = f.decrypt(data)
     except InvalidToken as e:
-        print(e)
+        # print(e)
         return False
     return dec
 
 
-def encryptstring(password, salt, string):
+def encrypt_string(password, salt, string):
     key = derivekey(password, salt)
     f = Fernet(key)
     result = f.encrypt(string.encode())
@@ -39,7 +39,7 @@ def encryptstring(password, salt, string):
     return result
 
 
-def decryptstring(password, salt, string):
+def decrypt_string(password, salt, string):
     key = derivekey(password, salt)
     f = Fernet(key)
     return f.decrypt(base64.urlsafe_b64decode(string)).decode()
