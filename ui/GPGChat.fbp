@@ -3109,11 +3109,11 @@
                                         <property name="permission">none</property>
                                         <property name="rows">2</property>
                                         <property name="vgap">0</property>
-                                        <object class="sizeritem" expanded="0">
+                                        <object class="sizeritem" expanded="1">
                                             <property name="border">5</property>
                                             <property name="flag">wxEXPAND | wxALL</property>
                                             <property name="proportion">1</property>
-                                            <object class="wxScrolledWindow" expanded="0">
+                                            <object class="wxScrolledWindow" expanded="1">
                                                 <property name="BottomDockable">1</property>
                                                 <property name="LeftDockable">1</property>
                                                 <property name="RightDockable">1</property>
@@ -3189,7 +3189,7 @@
                                                 <event name="OnSetFocus"></event>
                                                 <event name="OnSize"></event>
                                                 <event name="OnUpdateUI"></event>
-                                                <object class="wxWrapSizer" expanded="0">
+                                                <object class="wxWrapSizer" expanded="1">
                                                     <property name="minimum_size">-1,220</property>
                                                     <property name="name">wrapSizer</property>
                                                     <property name="orient">wxVERTICAL</property>
@@ -3309,7 +3309,7 @@
                                                             <property name="gripper">0</property>
                                                             <property name="hidden">1</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">Ha ha ha</property>
+                                                            <property name="label">Ha ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha ha</property>
                                                             <property name="max_size"></property>
                                                             <property name="maximize_button">0</property>
                                                             <property name="maximum_size">-1,-1</property>

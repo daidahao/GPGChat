@@ -187,13 +187,13 @@ class LockFrameMod(LockFrame):
 #初始联系人数据存储
 contact_data = {
     1: ("Dai", "daidahao@icloud.com", "9999999", time.time()),
-    2: ("Zou", "999@test.com", "9999999", time.time() - 36000),
-    3: ("Sun", "test@test.com", "9999999", time.time() + 36000),
+    2: ("Zou", "999@test.com", "8888888", time.time() - 36000),
+    3: ("Sun", "test@test.com", "7777777", time.time() + 36000),
 }
 #初始黑名单数据存储
 blacklist_data = {
-    1: ("China Mobile", "123@10086.com", "9999999", 0),
-    2: ("China Telecom", "123@10000.com", "9999999", 0)
+    1: ("China Mobile", "123@10086.com", "1111111", 0),
+    2: ("China Telecom", "123@10000.com", "2222222", 0)
 }
 #从电脑获取当前年月日
 def time_to_string(t):
@@ -258,12 +258,13 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         wrapSizer = self.m_scrolledWindow1.GetSizer()
         self.count = self.count + 1
 
-        textCtrl = wx.StaticText(self.m_scrolledWindow1, wx.ID_HIGHEST + 1, u"", wx.DefaultPosition,
+        textCtrl = wx.StaticText(self.m_scrolledWindow1, wx.ID_HIGHEST + 1, message, wx.DefaultPosition,
                                  wx.DefaultSize, 0)
-        textCtrl.SetLabelText(message)
+        # textCtrl.SetLabelText(message)
         textCtrl.Wrap(250)
         textCtrl.SetForegroundColour(wx.Colour(255, 255, 255))
         textCtrl.SetBackgroundColour(wx.Colour(0, 128, 255))
+        # textCtrl.SetMaxSize(wx.Size(200, -1))
 
         if (send):
             wrapSizer.Add(textCtrl, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
@@ -272,7 +273,9 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
         self.staticTextList.append(textCtrl)
 
-        self.m_scrolledWindow1.SetSizerAndFit(wrapSizer)
+
+        # self.m_scrolledWindow1.SetSizerAndFit(wrapSizer)
+        wrapSizer.Layout()
         self.m_scrolledWindow1.Layout()
         self.m_panel15.Layout()
 #清空窗口显示的发送接收信息
@@ -284,22 +287,27 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.count = 0
         self.staticTextList.clear()
 
-#选择联系人
+    #选择联系人
     def OnContactButton( self, event ):
         self.PopulateList(contact_data)
         self.SortListItems(0, 1)
         self.blacklistDisplayed = False
-#选择最近联系人
+        self.EnableInput()
+
     def OnRecentButton( self, event ):
         self.PopulateList(contact_data)
         self.SortListItems(3, 1)
         self.blacklistDisplayed = False
-#选择黑名单
+        self.EnableInput()
+
+    #选择黑名单
     def OnBlacklistButton( self, event ):
         self.PopulateList(blacklist_data)
         self.SortListItems(0, 1)
         self.blacklistDisplayed = True
-#提示性系
+        self.DisableInput()
+
+    #提示信息
     def ShowWarningMessage(self, message):
         dlg = wx.MessageDialog(self, message,
                                'Warning',
@@ -367,6 +375,15 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.currentItem = event.Index
         name = self.list.GetItem(self.currentItem, 0).GetText()
         # print(self.list.GetItem(self.currentItem, 2).GetText())
+
+    def DisableInput(self):
+        self.inputText.Disable()
+        self.sendButton.Disable()
+
+    def EnableInput(self):
+        self.inputText.Enable()
+        self.sendButton.Enable()
+
 #添加联系人窗口设计
 class AddContactFrameMod(AddContactFrame):
     def __init__(self, parent):

@@ -315,7 +315,7 @@ class MainFrame ( wx.Frame ):
 		self.emptyText.Wrap( -1 )
 		wrapSizer.Add( self.emptyText, 0, wx.ALL, 5 )
 		
-		self.sendText = wx.StaticText( self.m_scrolledWindow1, wx.ID_ANY, u"Ha ha ha", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.sendText = wx.StaticText( self.m_scrolledWindow1, wx.ID_ANY, u"Ha ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha haHa ha ha", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.sendText.Wrap( 250 )
 		self.sendText.SetForegroundColour( wx.Colour( 255, 255, 255 ) )
 		self.sendText.SetBackgroundColour( wx.Colour( 0, 128, 255 ) )

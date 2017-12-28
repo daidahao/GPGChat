@@ -1,11 +1,15 @@
 import wx
+import time
+from uuid import uuid4
 
 from encrypt import fernet
 from info import Info
 from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod, MainFrameMod
 from database.init_db import init_db
+from database import db
 from util.file import write_file
 from mail.mail import check_mail_info
+from model.message import Message
 
 dbdir = "data/"
 dbext = ".db.sqlite"
@@ -115,29 +119,72 @@ class LockFrame(LockFrameMod):
     def strat_main_frame(self):
         if (self.verbose):
             print("Starting main frame")
-        frame = MainFrame(None)
+        frame = MainFrame(None, info=self.info)
+        frame.info = self.info
         frame.Show()
 
 class MainFrame(MainFrameMod):
-    def __init__(self, parent):
+    def __init__(self, parent, info=None):
         MainFrameMod.__init__(self, parent)
-        self.SetTitle('GPGChat (' + info.mail + ' ' + info.name + ')')
+        self.info = info
+        self.SetTitle('GPGChat (' + self.info.mail + ' ' + self.info.name + ')')
+        self.uuid = uuid4()
+        self.seqmap = {}
+        self.DisableInput()
+        self.current_keyid = None
+        self.current_mail = None
 
     def OnSend( self, event ):
-        if self.blacklistDisplayed:
-            self.show_dialog('You haven\'t selected any contact yet!', 'Warning')
-            return
         text = self.inputText.GetValue()
-        result, message = self.send_text(text)
-        if result:
-            self.AddSendMessage(text)
+        self.DisableInput()
+        if (not self.check_text(text)) or (not self.check_contact_selected()):
+            self.EnableInput()
+            return
+        if self.send_text(text):
+            self.add_sent_message_to_db(text, self.current_keyid)
+            self.ClearAllMessages()
+            self.load_all_messages(self.current_keyid)
+            self.EnableInput()
             self.inputText.SetValue('')
+
+    def increment_seq(self, keyid):
+        if not keyid in self.seqmap:
+            self.seqmap[keyid] = 0
         else:
-            self.show_dialog(message=message, title='Warning')
+            self.seqmap[keyid] = self.seqmap[keyid] + 1
+        return self.seqmap[keyid]
+
+    def add_sent_message_to_db(self, text, keyid):
+        db.add_massage(db_path=self.info.dbpath,
+                       uuid=self.uuid,
+                       seq=self.increment_seq(keyid),
+                       send_from=None,
+                       send_to=keyid,
+                       content=text,
+                       timestamp=time.time())
+
+    def check_text(self, text):
+        if text is None or text == '':
+            self.show_dialog('Text cannot be empty!', 'Warning')
+            return False
+        return True
 
     def check_contact_selected(self):
         if self.blacklistDisplayed:
-            self.show_dialog('You have\'t selected any contact yet!', 'Warning')
+            self.show_dialog('You haven\'t selected any contact yet!', 'Warning')
+            return False
+        return True
+
+    def OnItemSelected(self, event):
+        self.currentItem = event.Index
+        self.current_mail = self.list.GetItem(self.currentItem, 1).GetText()
+        self.current_keyid = self.list.GetItem(self.currentItem, 2).GetText()
+        self.ClearAllMessages()
+        self.load_all_messages(self.current_keyid)
+        if not self.blacklistDisplayed:
+            self.EnableInput()
+        else:
+            self.DisableInput()
 
     def show_dialog(self, message, title):
         dlg = wx.MessageDialog(self, message,
@@ -146,8 +193,27 @@ class MainFrame(MainFrameMod):
         dlg.ShowModal()
 
     def send_text(self, text):
-        return False, 'Cannot connect to the SMTP server!'
+        # self.show_dialog('Cannot connect to the SMTP server', 'Failure')
+        return True
 
+    def load_all_messages(self, keyId):
+        allmessages = db.fetch_all_messages(self.info.dbpath, keyId)
+        for messagelist in allmessages:
+            message = self.load_message(messagelist)
+            if message.send:
+                self.AddSendMessage(str(message))
+            else:
+                self.AddRecvMessage(str(message))
+        # self.m_scrolledWindow1.Scroll(-1, self.GetClientSize()[1])
+
+    def load_message(self, messagelist):
+        message = Message()
+        message.send = messagelist[0]
+        message.text = messagelist[1]
+        message.timestamp = messagelist[2]
+        message.uuid = messagelist[3]
+        message.seq = messagelist[4]
+        return message
 
 
 class GPGApp(wx.App):
