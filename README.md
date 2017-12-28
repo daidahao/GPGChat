@@ -4,11 +4,11 @@
 
 `pip install -U wxPython`
 
-`pip install cryptography`
+`pip install cryptography python-gnupg`
 
-## Remove `info.txt` & encrypted files
+## Remove `info.txt`
 
-`rm info.txt *.encrypt`
+`rm info.txt`
 
 ## Run the demo
 
