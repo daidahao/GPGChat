@@ -365,6 +365,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
     def OnAddContactButton( self, event ):
         # The function of adding to the blacklist by hand
         # could be considered in a later version
+        self.ClearAllMessages()
         if (self.blacklistDisplayed):
             self.ShowWarningMessage('You cannot add to the blacklist for now.')
             return
@@ -374,6 +375,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
     def OnRemoveContactButton( self, event ):
         # if (self.blacklistDisplayed):
         #     return
+        self.ClearAllMessages()
         if not self.CheckIfItemSelected():
             return
 
@@ -397,6 +399,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
     def OnBlockContactButton( self, event ):
         # if self.blacklistDisplayed:
         #     return
+        self.ClearAllMessages()
         if not self.CheckIfItemSelected():
             return
 
@@ -436,7 +439,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         pass
 
     def remove_contact(self, keyid):
-        pass
+        return True
 
     def GetCurrentKeyId(self):
         return self.list.GetItem(self.currentItem, 2).GetText()
@@ -445,7 +448,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         pass
 
     def block_contact(self, param):
-        pass
+        return True
 
 
 #添加联系人窗口设计
