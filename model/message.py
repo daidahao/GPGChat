@@ -9,7 +9,7 @@ class Message:
         self.seq = None
 
     def __str__(self):
-        return self.text + '\n' \
+        return self.text + '\n\n' \
                + self.__time_to_string__()
 
     def __time_to_string__(self):

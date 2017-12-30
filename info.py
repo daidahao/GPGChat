@@ -13,6 +13,7 @@ class Info:
         self.realpassword = None
         self.dbpath = None
         self.reallock = None
+        self.imapserver = None
 
     def read(self, filepath):
         try:
@@ -34,6 +35,8 @@ class Info:
                     self.name = self.readline(line, 'name')
                 if line.startswith('dbpath='):
                     self.dbpath = self.readline(line, 'dbpath')
+                if line.startswith('imapserver='):
+                    self.imapserver = self.readline(line, 'imapserver')
             reader.close()
         except FileNotFoundError as e:
             return False
@@ -47,7 +50,8 @@ class Info:
                 self.writeline('password', self.password) +
                 self.writeline('server', self.server) +
                 self.writeline('name', self.name) +
-                self.writeline('dbpath', self.dbpath))
+                self.writeline('dbpath', self.dbpath) +
+                self.writeline('imapserver', self.imapserver))
         f.close()
 
     def print(self):
@@ -58,6 +62,7 @@ class Info:
         print("name=", self.name)
         # print("realpassword=", self.realpassword)
         print("dbpath=", self.dbpath)
+        print("imapserver=", self.imapserver)
 
     def readline(self, line, name):
         if line.startswith(name + '='):

@@ -9,6 +9,7 @@ from database.init_db import init_db
 from database import db
 from util.file import write_file
 from Mail.mail import check_mail_info
+from Mail import mail
 from model.message import Message
 
 dbdir = "data/"
@@ -26,7 +27,7 @@ class SignupFrame(SignupFrameMod):
     def check_signup(self):
         if not SignupFrameMod.check_signup(self):
             return False
-        result, message = check_mail_info(self.mail, self.password, self.server)
+        result, message = mail.check_smtp_info(self.mail, self.password, self.server)
         if not result:
             dlg = wx.MessageDialog(self,
                                    message,
@@ -47,6 +48,7 @@ class SignupFrame(SignupFrameMod):
         info.name = self.name
         info.realpassword = self.password
         info.server = self.server
+        info.imapserver = self.imapserver
         return info
 
 
@@ -194,6 +196,14 @@ class MainFrame(MainFrameMod):
 
     def send_text(self, text):
         # self.show_dialog('Cannot connect to the SMTP server', 'Failure')
+        connection, message = mail.connect_smtp(self.info.mail, self.info.realpassword, self.info.server)
+        if connection is None:
+            self.show_dialog(message, 'Failure')
+            return False
+        result, message = mail.send_mail(connection, self.info.mail, self.current_mail, text, str(self.uuid))
+        if not result:
+            self.show_dialog(message, 'Failure')
+            return False
         return True
 
     def load_all_messages(self, keyId):

@@ -61,12 +61,21 @@ class SignupFrameMod(SignupFrame):
             self.showfailure("Name cannot be empty")
             return False
         return True
+
+    def checkimapserver(self):
+        self.imapserver = self.imapText.GetValue()
+        if self.imapserver == "":
+            self.showfailure("IMAP Server cannnot be empty")
+            return False
+        return True
+
 #确认注册完成
     def check_signup(self):
         if (self.checkmail() and
                 self.checkpassword() and
                 self.checkserver() and
-                self.checkname()):
+                self.checkname() and
+                self.checkimapserver()):
             return True
         return False
 #打开lock界面
@@ -187,7 +196,7 @@ class LockFrameMod(LockFrame):
 #初始联系人数据存储
 contact_data = {
     1: ("Dai", "daidahao@icloud.com", "9999999", time.time()),
-    2: ("Zou", "999@test.com", "8888888", time.time() - 36000),
+    2: ("Zou", "zzj@daidahao.me", "8888888", time.time() - 36000),
     3: ("Sun", "test@test.com", "7777777", time.time() + 36000),
 }
 #初始黑名单数据存储
