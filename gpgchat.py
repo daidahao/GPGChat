@@ -230,8 +230,12 @@ class MainFrame(MainFrameMod):
         addContactFrame = AddContactFrame(self, self.gpg)
         addContactFrame.Show()
 
-    def add_contact(self):
-        self.ShowWarningMessage("HAHA")
+    def add_contact(self, name, mail, keyid):
+        if not db.add_contact(self.info.dbpath, name, mail, keyid):
+            self.ShowWarningMessage("Cannot add that user!")
+            return
+        else:
+            self.ShowSuccessMessage("Add contact successfully")
 
 
 class AddContactFrame(AddContactFrameMod):
@@ -260,10 +264,10 @@ class ChooseContactFrame(ChooseContactFrameMod):
     def OnConfirmButton( self, event ):
         ChooseContactFrameMod.OnConfirmButton(self, event)
 
-        self.list.GetItem(self.currentItem, 0).GetText()
-        self.list.GetItem(self.currentItem, 1).GetText()
-        self.list.GetItem(self.currentItem, 2).GetText()
-        self.parent.add_contact()
+        name = self.list.GetItem(self.currentItem, 0).GetText()
+        mail = self.list.GetItem(self.currentItem, 1).GetText()
+        keyid = self.list.GetItem(self.currentItem, 2).GetText()
+        self.parent.add_contact(name, mail, keyid)
         self.Close()
 
 class GPGApp(wx.App):

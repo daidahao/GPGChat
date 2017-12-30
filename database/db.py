@@ -6,20 +6,19 @@ import sqlite3
 '''
 
 '''TABLE CONTACT'''
-def add_contact(db_path, key_id, addr, name, public_key):
+def add_contact(db_path, name, addr, key_id):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
     try:
-        cursor.execute('INSERT INTO contact VALUES (?,?,?,?,?)',(key_id,addr, name, public_key, 'W'))
+        cursor.execute('INSERT INTO contact (key_id, email_addr, name, status) VALUES (?,?,?,?)', (key_id, addr, name, 'C'))
         connection.commit()
     except sqlite3.IntegrityError as e:
         cursor.close()
         connection.close()
-        return 0
-
+        return False
     cursor.close()
     connection.close()
-    return 1
+    return True
 
 
 def delete_contact(db_path, addr):

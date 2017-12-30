@@ -317,14 +317,23 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.blacklistDisplayed = True
         self.DisableInput()
 
-    #提示信息
+    # 提示信息
     def ShowWarningMessage(self, message):
         dlg = wx.MessageDialog(self, message,
                                'Warning',
                                wx.OK | wx.ICON_INFORMATION)
         dlg.ShowModal()
         dlg.Destroy()
-#确认是否正确选择
+
+    # 提示信息
+    def ShowSuccessMessage(self, message):
+        dlg = wx.MessageDialog(self, message,
+                               'Success',
+                               wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
+
+    # 确认是否正确选择
     def CheckIfItemSelected(self):
         if (-1 == self.currentItem):
             dlg = wx.MessageDialog(self, 'You havn\'t selected any item!',
