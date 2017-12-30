@@ -229,7 +229,8 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.currentItem = -1
         self.blacklistDisplayed = False
         self.staticTextList = []
-#联系人列表及相关信息
+
+    #联系人列表及相关信息
     def PopulateList(self, data1):
         self.itemDataMap = data1
         self.currentItem = -1
@@ -349,8 +350,8 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         if (self.blacklistDisplayed):
             self.ShowWarningMessage('You cannot add to the blacklist for now.')
             return
-        addContactFrame = AddContactFrameMod(self)
-        addContactFrame.Show()
+        self.StartAddContactFrame()
+
 #删除联系人窗口
     def OnRemoveContactButton( self, event ):
         if (self.blacklistDisplayed):
@@ -393,25 +394,111 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.inputText.Enable()
         self.sendButton.Enable()
 
+    def StartAddContactFrame(self):
+        addContactFrame = AddContactFrameMod(self)
+        addContactFrame.Show()
+
+
 #添加联系人窗口设计
 class AddContactFrameMod(AddContactFrame):
     def __init__(self, parent):
         AddContactFrame.__init__(self, parent)
         self.parent = parent
-#添加button
+        self.email = None
+        self.keysmap = {}
+
+    #添加button
     def OnConfirmButton( self, event ):
-        chooseContactFrame = ChooseContactFrameMod(self.parent)
-        chooseContactFrame.Show()
+        if not self.check_email():
+            return
+        if not self.check_gpg():
+            return
+        self.StartChooseContactFrame()
         self.Close()
 
-#选择联系人窗口设计
-class ChooseContactFrameMod(ChooseContactFrame):
-    #确认button
+    # 提示信息
+    def ShowWarningMessage(self, message):
+        dlg = wx.MessageDialog(self, message,
+                                'Warning',
+                                 wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
+
+    def check_email(self):
+        self.email = self.emailText.GetValue()
+        if self.email == "":
+            self.ShowWarningMessage("Email cannot be empty!")
+            return False
+        return True
+
+    def StartChooseContactFrame(self):
+        chooseContactFrame = ChooseContactFrameMod(self.parent, self.keysmap)
+        chooseContactFrame.Show()
+
+    def check_gpg(self):
+        return True
+
+
+# 选择联系人窗口设计
+class ChooseContactFrameMod(ChooseContactFrame, ColumnSorterMixin):
+
+    def GetListCtrl(self):
+        return self.list
+
+    def __init__(self, parent, keysmap):
+        ChooseContactFrame.__init__(self, parent)
+        self.parent = parent
+        self.itemDataMap = {}
+        self.currentItem = -1
+        self.PopulateList(keysmap)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.list)
+
+    # 确认button
     def OnConfirmButton( self, event ):
-        self.Close()
-    #取消button
+        if self.currentItem == -1:
+            self.ShowWarningMessage("You haven't selected any item yet!")
+            self.Close()
+
+    # 取消button
     def OnCancelButton( self, event ):
         self.Close()
+
+    def PopulateList(self, data1):
+        self.itemDataMap = self.keysmap_to_datamap(data1)
+        self.currentItem = -1
+
+        self.list.ClearAll()
+        ColumnSorterMixin.__init__(self, 3)
+        self.list.InsertColumn(0, "Name")
+        self.list.InsertColumn(1, "Email")
+        self.list.InsertColumn(2, "Key ID")
+        items = data1.items()
+        for key, data in items:
+            index = self.list.InsertItem(self.list.GetItemCount(), data['name'])
+            self.list.SetItem(index, 1, data['mail'])
+            self.list.SetItem(index, 2, data['keyid'])
+
+        self.list.SetColumnWidth(0, 100)
+        self.list.SetColumnWidth(1, 100)
+        self.list.SetColumnWidth(2, 200)
+
+    def keysmap_to_datamap(self, keysmap):
+        result = {}
+        for key, data in keysmap.items():
+            result[key] = (data['name'], data['mail'], data['keyid'])
+        return result
+
+    def OnItemSelected(self, event):
+        self.currentItem = event.Index
+
+    # 提示信息
+    def ShowWarningMessage(self, message):
+        dlg = wx.MessageDialog(self, message,
+                                'Warning',
+                                wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
+
 
 if __name__ == '__main__':
     app = wx.App()

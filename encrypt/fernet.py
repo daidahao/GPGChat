@@ -7,7 +7,7 @@ from cryptography.fernet import InvalidToken
 from cryptography.fernet import Fernet
 from util.file import rm_file
 
-#使用Fernet对用户设置的密码进行加密并返回密码的salt
+# 使用Fernet对用户设置的密码进行加密并返回密码的salt
 def encrypt_file(password, filepath):
     #随机生成一个16bytes的salt
     salt = os.urandom(16)
@@ -21,7 +21,7 @@ def encrypt_file(password, filepath):
     rm_file(filepath)
     return salt
 
-#当用户输入密码，在文件中找到相应的salt，组合成key，对key进行解密，返回解密后的数据
+# 当用户输入密码，在文件中找到相应的salt，组合成key，对key进行解密，返回解密后的数据
 def decrypt_file(password, salt, filepath):
     key = derivekey(password, salt)
     f = Fernet(key)

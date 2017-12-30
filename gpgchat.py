@@ -3,8 +3,9 @@ import time
 from uuid import uuid4
 
 from encrypt import fernet
+from encrypt.gpg import GPG
 from info import Info
-from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod, MainFrameMod
+from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod, MainFrameMod, AddContactFrameMod, ChooseContactFrameMod
 from database.init_db import init_db
 from database import db
 from util.file import write_file
@@ -134,6 +135,7 @@ class MainFrame(MainFrameMod):
         self.DisableInput()
         self.current_keyid = None
         self.current_mail = None
+        self.gpg = GPG()
 
     def OnSend( self, event ):
         text = self.inputText.GetValue()
@@ -224,6 +226,45 @@ class MainFrame(MainFrameMod):
         message.seq = messagelist[4]
         return message
 
+    def StartAddContactFrame(self):
+        addContactFrame = AddContactFrame(self, self.gpg)
+        addContactFrame.Show()
+
+    def add_contact(self):
+        self.ShowWarningMessage("HAHA")
+
+
+class AddContactFrame(AddContactFrameMod):
+    def __init__(self, parent, gpg):
+        AddContactFrameMod.__init__(self, parent)
+        self.gpg = gpg
+        self.keys = {}
+
+    def StartChooseContactFrame(self):
+        self.keysmap = self.gpg.keys_to_datamap(self.keys)
+        chooseContactFrame = ChooseContactFrame(self.parent, self.keysmap)
+        chooseContactFrame.Show()
+
+
+    def check_gpg(self):
+        self.keys = self.gpg.search(self.email)
+        if len(self.keys) == 0:
+            self.ShowWarningMessage("Cannot find that user!")
+            return False
+        return True
+
+
+
+class ChooseContactFrame(ChooseContactFrameMod):
+
+    def OnConfirmButton( self, event ):
+        ChooseContactFrameMod.OnConfirmButton(self, event)
+
+        self.list.GetItem(self.currentItem, 0).GetText()
+        self.list.GetItem(self.currentItem, 1).GetText()
+        self.list.GetItem(self.currentItem, 2).GetText()
+        self.parent.add_contact()
+        self.Close()
 
 class GPGApp(wx.App):
 

@@ -128,22 +128,6 @@ class SignupFrame ( wx.Frame ):
 		
 		subsubSizer.Add( smtpSizer, 1, wx.EXPAND, 5 )
 		
-		nameSIzer = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.nameLabel = wx.StaticText( self.panel, wx.ID_ANY, u"Your Real Name", wx.DefaultPosition, wx.Size( 110,-1 ), wx.ALIGN_RIGHT )
-		self.nameLabel.Wrap( -1 )
-		nameSIzer.Add( self.nameLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
-		
-		self.emptyLabel4 = wx.StaticText( self.panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 4,-1 ), 0 )
-		self.emptyLabel4.Wrap( -1 )
-		nameSIzer.Add( self.emptyLabel4, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
-		
-		self.nameText = wx.TextCtrl( self.panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), 0 )
-		nameSIzer.Add( self.nameText, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
-		
-		
-		subsubSizer.Add( nameSIzer, 1, wx.EXPAND, 5 )
-		
 		imapSizer = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.imapLabel = wx.StaticText( self.panel, wx.ID_ANY, u"IMAP Server (SSL)", wx.DefaultPosition, wx.Size( 110,-1 ), wx.ALIGN_RIGHT )
@@ -159,6 +143,22 @@ class SignupFrame ( wx.Frame ):
 		
 		
 		subsubSizer.Add( imapSizer, 1, wx.EXPAND, 5 )
+		
+		nameSIzer = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.nameLabel = wx.StaticText( self.panel, wx.ID_ANY, u"Your Real Name", wx.DefaultPosition, wx.Size( 110,-1 ), wx.ALIGN_RIGHT )
+		self.nameLabel.Wrap( -1 )
+		nameSIzer.Add( self.nameLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		self.emptyLabel4 = wx.StaticText( self.panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 4,-1 ), 0 )
+		self.emptyLabel4.Wrap( -1 )
+		nameSIzer.Add( self.emptyLabel4, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.nameText = wx.TextCtrl( self.panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), 0 )
+		nameSIzer.Add( self.nameText, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		
+		subsubSizer.Add( nameSIzer, 1, wx.EXPAND, 5 )
 		
 		bottomSizer = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -488,8 +488,8 @@ class AddContactFrame ( wx.Frame ):
 		self.lockLabel.Wrap( -1 )
 		subSizer.Add( self.lockLabel, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
-		self.lockText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), 0 )
-		subSizer.Add( self.lockText, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.emailText = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), 0 )
+		subSizer.Add( self.emailText, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		self.lockButton = wx.Button( self, wx.ID_ANY, u"Confirm", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.lockButton.SetDefault() 
@@ -535,8 +535,8 @@ class ChooseContactFrame ( wx.Frame ):
 		self.label.Wrap( -1 )
 		bSizer37.Add( self.label, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10 )
 		
-		self.m_listCtrl3 = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_REPORT )
-		bSizer37.Add( self.m_listCtrl3, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.list = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_REPORT )
+		bSizer37.Add( self.list, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		bSizer38 = wx.BoxSizer( wx.HORIZONTAL )
 		
