@@ -1,4 +1,4 @@
-from Mail import mail
+from mail import mail
 import time
 
 # print(mail.connect_smtp("dzh@daidahao.me", "Mima123", "smtp.exmail.qq.com"))
