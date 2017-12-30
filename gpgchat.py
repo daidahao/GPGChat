@@ -17,7 +17,7 @@ from mail.packet import Packet, Agent
 
 dbdir = "data/"
 gpgdir = "data/gnupg"
-gpgbinary = "gpg2"
+gpgbinary = "gpg"
 dbext = ".db.sqlite"
 infopath = "info.txt"
 testpath = "test.db"
@@ -171,7 +171,7 @@ class MainFrame(MainFrameMod):
             self.load_all_messages(self.current_keyid)
             self.EnableInput()
             self.inputText.SetValue('')
-            self.update_last_message_time()
+            # self.update_last_message_time()
 
     def increment_seq(self, keyid):
         if not keyid in self.seqmap:
@@ -226,7 +226,7 @@ class MainFrame(MainFrameMod):
             return False
         text = base64.urlsafe_b64encode(text.encode()).decode()
         print("base64", text)
-        text = self.gpg.encrypt(text, self.GetCurrentKeyId())
+        text = self.gpg.encrypt(text, self.current_keyid)
         packet = Packet()
         packet.set_message(text)
         packet.set_receiver(self.current_mail)
@@ -318,9 +318,8 @@ class MainFrame(MainFrameMod):
                 db.add_massage(self.info.dbpath, packet.uuid,
                                packet.sequence, packet.signed_keyid, None,
                                message, time.time())
-                if self.GetCurrentKeyId() is not None:
-                    self.ClearAllMessages()
-                    self.load_all_messages(self.GetCurrentKeyId())
+                self.ClearAllMessages()
+                # self.load_all_messages(self.current_keyid)
             time.sleep(5)
 
     def start_listern_thread(self):
