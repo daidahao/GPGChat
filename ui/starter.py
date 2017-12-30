@@ -313,8 +313,9 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.blacklistDisplayed = False
         self.EnableInput()
 
-    #选择黑名单
+    # 选择黑名单
     def OnBlacklistButton( self, event ):
+        self.ReadBlacklistData()
         self.PopulateList(self.blacklist_data)
         self.SortListItems(0, 1)
         self.blacklistDisplayed = True
@@ -426,6 +427,9 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
     def GetCurrentKeyId(self):
         return self.list.GetItem(self.currentItem, 2).GetText()
+
+    def ReadBlacklistData(self):
+        pass
 
 
 #添加联系人窗口设计

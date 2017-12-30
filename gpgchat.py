@@ -252,6 +252,16 @@ class MainFrame(MainFrameMod):
             self.contact_data[cnt] = contact
             cnt = cnt + 1
 
+    def ReadBlacklistData(self):
+        if not self.contactCanBeRead:
+            return
+        blacklist = db.read_contact(self.info.dbpath, status='B')
+        self.blacklist_data = {}
+        cnt = 1
+        for contact in blacklist:
+            self.blacklist_data[cnt] = contact
+            cnt = cnt + 1
+
     def update_last_message_time(self):
         self.list.SetItem(self.currentItem, 3, time_to_string(time.time()))
 

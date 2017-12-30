@@ -58,7 +58,7 @@ def alter_contact_block(db_path, addr):
     cursor.close()
     connection.close()
 
-def read_contact(db_path):
+def read_contact(db_path, status='C'):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
     command = \
@@ -66,13 +66,14 @@ def read_contact(db_path):
     ""LEFT JOIN ( SELECT max(time_stamp) last_message, key_id"" \
     "" FROM ( SELECT time_stamp, CASE send_from WHEN 'None' THEN send_to"" \
     "" ELSE send_from END key_id FROM message ) b GROUP BY key_id ) a"" \
-    "" ON a.key_id = c.key_id WHERE c.status = 'C';"""
-    cursor.execute(command)
+    "" ON a.key_id = c.key_id WHERE c.status = ?;"""
+    cursor.execute(command, (status,))
     rst = cursor.fetchall()
     cursor.close()
     connection.close()
 
     return rst
+
 
 
 '''TABLE MESSAGE'''
