@@ -5,11 +5,10 @@ from uuid import uuid4
 from encrypt import fernet
 from encrypt.gpg import GPG
 from info import Info
-from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod, MainFrameMod, AddContactFrameMod, ChooseContactFrameMod
+from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod, MainFrameMod, AddContactFrameMod, ChooseContactFrameMod, time_to_string
 from database.init_db import init_db
 from database import db
 from util.file import write_file
-from mail.mail import check_mail_info
 from mail import mail
 from model.message import Message
 
@@ -127,6 +126,7 @@ class LockFrame(LockFrameMod):
         frame.Show()
 
 class MainFrame(MainFrameMod):
+
     def __init__(self, parent, info=None):
         MainFrameMod.__init__(self, parent)
         self.info = info
@@ -137,6 +137,8 @@ class MainFrame(MainFrameMod):
         self.current_keyid = None
         self.current_mail = None
         self.gpg = GPG()
+        self.contactCanBeRead = True
+        self.OnContactButton(None)
 
     def OnSend( self, event ):
         text = self.inputText.GetValue()
@@ -150,6 +152,7 @@ class MainFrame(MainFrameMod):
             self.load_all_messages(self.current_keyid)
             self.EnableInput()
             self.inputText.SetValue('')
+            self.update_last_message_time()
 
     def increment_seq(self, keyid):
         if not keyid in self.seqmap:
@@ -240,7 +243,17 @@ class MainFrame(MainFrameMod):
             self.OnContactButton()
 
     def ReadContactData(self):
-        contact_list = db.read_contact()
+        if not self.contactCanBeRead:
+            return
+        contact_list = db.read_contact(self.info.dbpath)
+        self.contact_data = {}
+        cnt = 1
+        for contact in contact_list:
+            self.contact_data[cnt] = contact
+            cnt = cnt + 1
+
+    def update_last_message_time(self):
+        self.list.SetItem(self.currentItem, 3, time_to_string(time.time()))
 
 
 class AddContactFrame(AddContactFrameMod):

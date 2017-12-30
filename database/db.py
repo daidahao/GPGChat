@@ -21,16 +21,21 @@ def add_contact(db_path, name, addr, key_id):
     return True
 
 
-def delete_contact(db_path, addr):
+def delete_contact(db_path, keyid):
     connection = sqlite3.connect(db_path)
-    cursor =connection.cursor()
-
-    sql_cmd = 'DELETE FROM contact WHERE email_addr = "%s"' % addr
-    cursor.execute(sql_cmd)
-    connection.commit()
+    cursor = connection.cursor()
+    try:
+        sql_cmd = 'DELETE FROM contact WHERE key_id = "%s"' % keyid
+        cursor.execute(sql_cmd)
+        connection.commit()
+    except sqlite3.IntegrityError as e:
+        cursor.close()
+        connection.close()
+        return False
 
     cursor.close()
     connection.close()
+    return True
 
 
 def alter_contact_block(db_path, addr):
@@ -56,8 +61,12 @@ def alter_contact_block(db_path, addr):
 def read_contact(db_path):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
-
-    cursor.execute('SELECT name, email_addr, key_id FROM contact where status = \'C\'')
+    command = \
+    "SELECT c.name, c.email_addr, c.key_id, coalesce(a.last_message, 0) last_message FROM contact c"" \
+    ""LEFT JOIN ( SELECT max(time_stamp)    last_message, CASE send_from WHEN 'None'"" \
+    "" THEN send_to ELSE send_from END key_id FROM message ) a"" \
+    ""ON a.key_id = c.key_id WHERE c.status = 'C';"
+    cursor.execute(command)
     rst = cursor.fetchall()
     cursor.close()
     connection.close()

@@ -193,17 +193,6 @@ class LockFrameMod(LockFrame):
         frame = MainFrameMod(None)
         frame.Show()
 
-#初始联系人数据存储
-contact_data = {
-    1: ("Dai", "daidahao@icloud.com", "9999999", time.time()),
-    2: ("Zou", "zzj@daidahao.me", "8888888", time.time() - 36000),
-    3: ("Sun", "test@test.com", "7777777", time.time() + 36000),
-}
-#初始黑名单数据存储
-blacklist_data = {
-    1: ("China Mobile", "123@10086.com", "1111111", 0),
-    2: ("China Telecom", "123@10000.com", "2222222", 0)
-}
 #从电脑获取当前年月日
 def time_to_string(t):
     t_localtime = time.localtime(t)
@@ -216,11 +205,21 @@ def time_to_string(t):
 
 #登录成功后聊天主界面，包括联系人，黑名单，最近聊天人，聊天窗口
 class MainFrameMod(MainFrame, ColumnSorterMixin):
+
+
+
     def GetListCtrl(self):
         return self.list
 
     def __init__(self, parent):
         MainFrame.__init__(self, parent)
+
+        # 初始化联系人数据
+        self.contact_data = {}
+        # 初始黑名单数据
+        self.blacklist_data = {}
+
+        self.contactCanBeRead = False
         self.count = 0
         self.allText = []
         self.itemDataMap = {}
@@ -229,6 +228,8 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.currentItem = -1
         self.blacklistDisplayed = False
         self.staticTextList = []
+        # 初始联系人数据存储
+
 
     #联系人列表及相关信息
     def PopulateList(self, data1):
@@ -299,20 +300,21 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
     #选择联系人
     def OnContactButton( self, event ):
-        self.PopulateList(contact_data)
+        self.ReadContactData()
+        self.PopulateList(self.contact_data)
         self.SortListItems(0, 1)
         self.blacklistDisplayed = False
         self.EnableInput()
 
     def OnRecentButton( self, event ):
-        self.PopulateList(contact_data)
-        self.SortListItems(3, 1)
+        self.PopulateList(self.contact_data)
+        self.SortListItems(3, 0)
         self.blacklistDisplayed = False
         self.EnableInput()
 
     #选择黑名单
     def OnBlacklistButton( self, event ):
-        self.PopulateList(blacklist_data)
+        self.PopulateList(self.blacklist_data)
         self.SortListItems(0, 1)
         self.blacklistDisplayed = True
         self.DisableInput()
@@ -406,6 +408,9 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
     def StartAddContactFrame(self):
         addContactFrame = AddContactFrameMod(self)
         addContactFrame.Show()
+
+    def ReadContactData(self):
+        pass
 
 
 #添加联系人窗口设计
