@@ -61,8 +61,7 @@ def send_mail(smtp_connection, from_addr, to_addr, text, subject=''):
 
 
 def receive_mail(imap_connection):
-
-    with imap_connection:
+    try:
         new_msg = []
 
         imap_connection.select('INBOX')
@@ -87,11 +86,11 @@ def receive_mail(imap_connection):
 
             # Select emails with a prefix [GPGChat]
             sub=email.header.decode_header(msg['Subject'])
-            if isinstance(sub[0][0],str):
-                subject = sub[0][0]
-            else:
-                subject = sub[0][0].decode()
-            if '[GPGChat]' in subject:
+            subject = sub[0][0]
+            if isinstance(subject,str) == False:
+                subject = subject.decode()
+
+            if subject.startswith('[GPGChat] '):
                 imap_connection.store(email_id,'+FLAGS','\Seen')
                 new_msg.append(msg)
 
@@ -111,6 +110,10 @@ def receive_mail(imap_connection):
 
             mail_content = mail_content.decode()
 
-            messages.append((str(subject), str(mail_from), str(mail_content)))
+            messages.append((str(subject).strip('[GPGChat] '), str(mail_from), str(mail_content)))
 
         return messages
+
+    except imaplib.IMAP4_SSL.error as e:
+        print(e)
+        return None
