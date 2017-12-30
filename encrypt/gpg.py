@@ -53,6 +53,7 @@ class GPG:
 
     # 加密
     def encrypt(self, data, keyid):
+        self.download_key(keyid)
         encrypted_data = self.gpg.encrypt(data.encode(),keyid, always_trust=True)
         return str(encrypted_data)
 

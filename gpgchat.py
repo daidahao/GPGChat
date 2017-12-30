@@ -1,6 +1,7 @@
 import wx
 import time
 import threading
+import base64
 from uuid import uuid4
 
 from encrypt import fernet
@@ -152,7 +153,7 @@ class MainFrame(MainFrameMod):
         self.DisableInput()
         self.current_keyid = None
         self.current_mail = None
-        self.gpg = GPG(binary=gpgbinary, homepath=gpgdir)
+        self.gpg = GPG(binary=gpgbinary, homepath=gpgdir, verbose=True)
         self.contactCanBeRead = True
         self.OnContactButton(None)
 
@@ -223,6 +224,8 @@ class MainFrame(MainFrameMod):
         if connection is None:
             self.show_dialog(message, 'Failure')
             return False
+        text = base64.urlsafe_b64encode(text.encode()).decode()
+        print("base64", text)
         text = self.gpg.encrypt(text, self.GetCurrentKeyId())
         packet = Packet()
         packet.set_message(text)
@@ -310,6 +313,8 @@ class MainFrame(MainFrameMod):
             packets = agent.receive_packet(connection)
             for packet in packets:
                 message = self.gpg.decrypt(packet.message, self.info.reallock)
+                message = base64.urlsafe_b64decode(message).decode()
+                print("base64", message)
                 db.add_massage(self.info.dbpath, packet.uuid,
                                packet.sequence, packet.signed_keyid, None,
                                message, time.time())
