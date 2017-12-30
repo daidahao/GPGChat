@@ -1,5 +1,6 @@
 import wx
 import time
+import threading
 from uuid import uuid4
 
 from encrypt import fernet
@@ -144,6 +145,8 @@ class MainFrame(MainFrameMod):
         self.contactCanBeRead = True
         self.OnContactButton(None)
 
+        self.start_listern_thread()
+
     def OnSend( self, event ):
         text = self.inputText.GetValue()
         self.DisableInput()
@@ -209,6 +212,8 @@ class MainFrame(MainFrameMod):
         if connection is None:
             self.show_dialog(message, 'Failure')
             return False
+        text = self.gpg.encrypt(text, self.GetCurrentKeyId())
+        print(text)
         result, message = mail.send_mail(connection, self.info.mail, self.current_mail, text, str(self.uuid))
         if not result:
             self.show_dialog(message, 'Failure')
@@ -274,6 +279,16 @@ class MainFrame(MainFrameMod):
 
     def block_contact(self, keyid):
         return db.alter_contact_block(self.info.dbpath, keyid)
+
+    def listen_mail(self):
+        while True:
+            print("Listening for new emails")
+            time.sleep(5)
+
+    def start_listern_thread(self):
+        t = threading.Thread(target=self.listen_mail)
+        t.setDaemon(True)
+        t.start()
 
 
 class AddContactFrame(AddContactFrameMod):

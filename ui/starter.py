@@ -228,7 +228,6 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.currentItem = -1
         self.blacklistDisplayed = False
         self.staticTextList = []
-        # 初始联系人数据存储
 
 
     #联系人列表及相关信息
@@ -442,6 +441,8 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         return True
 
     def GetCurrentKeyId(self):
+        if self.currentItem == -1:
+            return ''
         return self.list.GetItem(self.currentItem, 2).GetText()
 
     def ReadBlacklistData(self):
@@ -449,6 +450,8 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
     def block_contact(self, param):
         return True
+
+
 
 
 #添加联系人窗口设计
