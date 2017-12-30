@@ -48,8 +48,11 @@ def connect_smtp(mail_addr, password, server_addr):
 
 
 def connect_imap(email_addr, password,server_addr):
+    hostname, port = split_addr(server_addr)
     try:
-        connection = imaplib.IMAP4_SSL(server_addr)
+        if port == 0:
+            port = 993
+        connection = imaplib.IMAP4_SSL(hostname, port)
         connection.login(email_addr, password)
         return connection
     except imaplib.IMAP4_SSL.error:

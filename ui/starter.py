@@ -442,7 +442,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
     def GetCurrentKeyId(self):
         if self.currentItem == -1:
-            return ''
+            return None
         return self.list.GetItem(self.currentItem, 2).GetText()
 
     def ReadBlacklistData(self):

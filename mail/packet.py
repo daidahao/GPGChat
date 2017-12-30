@@ -1,5 +1,5 @@
 import platform
-import mail as mail_agent
+import mail.mail as mail_agent
 
 class Packet:
     def __init__(self):
@@ -43,7 +43,7 @@ class Agent:
 
     def receive_packet(self, imap_connect):
         packets = []
-        new_mails=mail_agent.receive_mail(con_imap)
+        new_mails=mail_agent.receive_mail(imap_connect)
         for mail in new_mails:
             try:
                 packet=Packet()

@@ -12,6 +12,7 @@ from database import db
 from util.file import write_file
 from mail import mail
 from model.message import Message
+from mail.packet import Packet, Agent
 
 dbdir = "data/"
 gpgdir = "data/gnupg"
@@ -36,8 +37,9 @@ class SignupFrame(SignupFrameMod):
             dlg = wx.MessageDialog(self, message, "Failure", wx.OK)
             dlg.ShowModal()
             return False
-        gpg = GPG(binary=gpgbinary, homepath=gpgdir)
-        self.keyid = str(gpg.gen_key(self.name, self.mail, self.password))
+
+        self.keyid = ''
+        # self.keyid = str(gpg.gen_key(self.name, self.mail, self.password))
         return True
 
     def start_lock_frame(self):
@@ -92,7 +94,10 @@ class LockFrame(LockFrameMod):
         self.init_db()
         self.encrypt_db()
         self.encrypt_password()
+        self.set_up_gpg()
+
         self.write_info()
+
         return True
 
     def is_lock_correct(self):
@@ -129,6 +134,12 @@ class LockFrame(LockFrameMod):
         frame = MainFrame(None, info=self.info)
         frame.info = self.info
         frame.Show()
+
+    def set_up_gpg(self):
+        gpg = GPG(binary=gpgbinary, homepath=gpgdir)
+        print("reallock=", self.lock)
+        self.info.keyid = str(gpg.gen_key(self.info.name, self.info.mail, self.lock))
+
 
 class MainFrame(MainFrameMod):
 
@@ -213,8 +224,16 @@ class MainFrame(MainFrameMod):
             self.show_dialog(message, 'Failure')
             return False
         text = self.gpg.encrypt(text, self.GetCurrentKeyId())
-        print(text)
-        result, message = mail.send_mail(connection, self.info.mail, self.current_mail, text, str(self.uuid))
+        packet = Packet()
+        packet.set_message(text)
+        packet.set_receiver(self.current_mail)
+        packet.set_sender(self.info.mail)
+        packet.set_sequence(self.increment_seq(self.current_keyid))
+        packet.set_signedkeyid(self.info.keyid)
+        packet.set_uuid(str(self.uuid))
+        agent = Agent()
+        result, message = agent.send_packet(connection, packet)
+        # result, message = mail.send_mail(connection, self.info.mail, self.current_mail, text, str(self.uuid))
         if not result:
             self.show_dialog(message, 'Failure')
             return False
@@ -281,8 +300,22 @@ class MainFrame(MainFrameMod):
         return db.alter_contact_block(self.info.dbpath, keyid)
 
     def listen_mail(self):
+        agent = Agent()
         while True:
-            print("Listening for new emails")
+            # print("Listening for new emails")
+            connection = mail.connect_imap(self.info.mail, self.info.realpassword, self.info.imapserver)
+            if connection is None:
+                self.ShowWarningMessage("Cannot connect to the IMAP Server!")
+                break
+            packets = agent.receive_packet(connection)
+            for packet in packets:
+                message = self.gpg.decrypt(packet.message, self.info.reallock)
+                db.add_massage(self.info.dbpath, packet.uuid,
+                               packet.sequence, packet.signed_keyid, None,
+                               message, time.time())
+                if self.GetCurrentKeyId() is not None:
+                    self.ClearAllMessages()
+                    self.load_all_messages(self.GetCurrentKeyId())
             time.sleep(5)
 
     def start_listern_thread(self):
@@ -301,7 +334,6 @@ class AddContactFrame(AddContactFrameMod):
         self.keysmap = self.gpg.keys_to_datamap(self.keys)
         chooseContactFrame = ChooseContactFrame(self.parent, self.keysmap)
         chooseContactFrame.Show()
-
 
     def check_gpg(self):
         self.keys = self.gpg.search(self.email)
