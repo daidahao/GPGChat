@@ -300,6 +300,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
     #选择联系人
     def OnContactButton( self, event ):
+        self.blockContactButton.SetLabelText("Block")
         self.ReadContactData()
         self.PopulateList(self.contact_data)
         self.SortListItems(0, 1)
@@ -307,6 +308,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.EnableInput()
 
     def OnRecentButton( self, event ):
+        self.blockContactButton.SetLabelText("Block")
         self.ReadContactData()
         self.PopulateList(self.contact_data)
         self.SortListItems(3, 0)
@@ -315,6 +317,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
     # 选择黑名单
     def OnBlacklistButton( self, event ):
+        self.blockContactButton.SetLabelText("Unblock")
         self.ReadBlacklistData()
         self.PopulateList(self.blacklist_data)
         self.SortListItems(0, 1)
@@ -345,7 +348,9 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
                                    wx.OK | wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
-#确认信息是否正确输入窗口
+            return False
+        return True
+    # 确认信息是否正确输入窗口
     def ShowYesNoMessage(self, message):
         dlg = wx.MessageDialog(self, message,
                                'Warning',
@@ -369,7 +374,8 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
     def OnRemoveContactButton( self, event ):
         # if (self.blacklistDisplayed):
         #     return
-        self.CheckIfItemSelected()
+        if not self.CheckIfItemSelected():
+            return
 
         name = self.GetCurrentNameText()
         result = self.ShowYesNoMessage(
@@ -381,7 +387,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
                 self.ShowWarningMessage("Cannot remove the contact")
                 return
             if self.blacklistDisplayed:
-                self.OnBlacklistButton()
+                self.OnBlacklistButton(None)
             else:
                 self.OnContactButton(None)
         else:
@@ -389,16 +395,23 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
     # 获取黑名单联系人
     def OnBlockContactButton( self, event ):
-        if (self.blacklistDisplayed):
-            self.CheckIfItemSelected()
+        # if self.blacklistDisplayed:
+        #     return
+        if not self.CheckIfItemSelected():
             return
-        self.CheckIfItemSelected()
 
         name = self.GetCurrentNameText()
-        result = self.ShowYesNoMessage('Are you sure to block %s?' % (name))
+        result = self.ShowYesNoMessage('Are you sure to block/unblock %s?' % (name))
 
         if result == wx.ID_YES:
             print("Blocking %s..." % name)
+            if not self.block_contact(self.GetCurrentKeyId()):
+                self.ShowWarningMessage("Cannot block/unblock the contact")
+                return
+            if self.blacklistDisplayed:
+                self.OnBlacklistButton(None)
+            else:
+                self.OnContactButton(None)
         else:
             print("The user cancel the removing operation.")
 #选择操作
@@ -429,6 +442,9 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         return self.list.GetItem(self.currentItem, 2).GetText()
 
     def ReadBlacklistData(self):
+        pass
+
+    def block_contact(self, param):
         pass
 
 

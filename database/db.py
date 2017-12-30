@@ -38,25 +38,31 @@ def delete_contact(db_path, keyid):
     return True
 
 
-def alter_contact_block(db_path, addr):
+def alter_contact_block(db_path, keyid):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
 
-    sql_cmd = 'SELECT status FROM contact WHERE email_addr = "%s"' % addr
+    sql_cmd = 'SELECT status FROM contact WHERE key_id = "%s"' % keyid
     cursor.execute(sql_cmd)
     status = cursor.fetchall()[0][0]
 
-    if status == 'W':
-        sql_cmd = 'UPDATE contact SET status = "B" WHERE email_addr = "%s"' % addr
-        cursor.execute(sql_cmd)
-        connection.commit()
-    else:
-        sql_cmd = 'UPDATE contact SET status = "W" WHERE email_addr = "%s"' % addr
-        cursor.execute(sql_cmd)
-        connection.commit()
+    try:
+        if status == 'C':
+            sql_cmd = 'UPDATE contact SET status = "B" WHERE key_id = "%s"' % keyid
+            cursor.execute(sql_cmd)
+            connection.commit()
+        else:
+            sql_cmd = 'UPDATE contact SET status = "C" WHERE key_id = "%s"' % keyid
+            cursor.execute(sql_cmd)
+            connection.commit()
+    except sqlite3.IntegrityError as e:
+        cursor.close()
+        connection.close()
+        return False
 
     cursor.close()
     connection.close()
+    return True
 
 def read_contact(db_path, status='C'):
     connection = sqlite3.connect(db_path)

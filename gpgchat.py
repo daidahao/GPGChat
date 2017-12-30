@@ -268,6 +268,9 @@ class MainFrame(MainFrameMod):
     def remove_contact(self, keyid):
         return db.delete_contact(self.info.dbpath, keyid)
 
+    def block_contact(self, keyid):
+        return db.alter_contact_block(self.info.dbpath, keyid)
+
 
 class AddContactFrame(AddContactFrameMod):
     def __init__(self, parent, gpg):
