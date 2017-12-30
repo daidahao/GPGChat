@@ -2,7 +2,7 @@
 import sqlite3
 
 '''
-    format of SELECT result: [ (col_1, ), (col_1, ) 
+    format of SELECT result: [ (col_1, ), (col_1, ) ]
 '''
 
 '''TABLE CONTACT'''

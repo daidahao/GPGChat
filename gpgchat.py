@@ -9,6 +9,7 @@ from ui.starter import LockFrameMod, LockDialogType, SignupFrameMod, MainFrameMo
 from database.init_db import init_db
 from database import db
 from util.file import write_file
+from mail.mail import check_mail_info
 from mail import mail
 from model.message import Message
 
