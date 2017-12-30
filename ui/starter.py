@@ -3,7 +3,7 @@ import wx
 import time
 from wx.lib.mixins.listctrl import ColumnSorterMixin
 
-
+#注册窗口
 class SignupFrameMod(SignupFrame):
     def OnSignup(self, event):
         if self.check_signup():
@@ -11,10 +11,10 @@ class SignupFrameMod(SignupFrame):
             self.start_lock_frame()
         else:
             pass
-
+#取消注册
     def OnQuit(self, event):
         self.Destroy()
-
+#显示已成功注册的窗口
     def showsuccess(self):
         dlg = wx.MessageDialog(self,
                                "Signup successfully!",
@@ -23,7 +23,7 @@ class SignupFrameMod(SignupFrame):
         dlg.Center()
         dlg.ShowModal()
         dlg.Destroy()
-
+#显示注册失败窗口
     def showfailure(self, message="Cannot signup!"):
         dlg = wx.MessageDialog(self,
                                message,
@@ -32,14 +32,14 @@ class SignupFrameMod(SignupFrame):
         dlg.Center()
         dlg.ShowModal()
         dlg.Destroy()
-
+#确认是否输入邮箱，若否，弹出窗口
     def checkmail(self):
         self.mail = self.emailText.GetValue()
         if self.mail == "":
             self.showfailure("Email cannot be empty")
             return False
         return True
-
+#确认是否输入密码，若否，弹出该窗口
     def checkpassword(self):
         self.password = self.passwordText.GetValue()
         if self.password == "":
@@ -47,14 +47,14 @@ class SignupFrameMod(SignupFrame):
             return False
         return True
 
-
+#确认是否输入SMTP Server。若否，弹出窗口
     def checkserver(self):
         self.server = self.smtpText.GetValue()
         if self.server == "":
             self.showfailure("SMTP Server cannot be empty")
             return False
         return True
-
+#确认是否输入名字，若否，弹出窗口
     def checkname(self):
         self.name = self.nameText.GetValue()
         if self.name == "":
@@ -69,6 +69,7 @@ class SignupFrameMod(SignupFrame):
             return False
         return True
 
+#确认注册完成
     def check_signup(self):
         if (self.checkmail() and
                 self.checkpassword() and
@@ -77,7 +78,7 @@ class SignupFrameMod(SignupFrame):
                 self.checkimapserver()):
             return True
         return False
-
+#打开lock界面
     def start_lock_frame(self):
         pass
 
@@ -86,8 +87,9 @@ class SignupFrameMod(SignupFrame):
 
 class LockDialogType:
     NOLOCK, HASLOCK = range(2)
-
+#lock相关的窗口操作
 class LockFrameMod(LockFrame):
+    #设置lock
     def __init__(self, parent,
                  type=LockDialogType.NOLOCK, lock=None, verbose=False):
 
@@ -102,7 +104,7 @@ class LockFrameMod(LockFrame):
         if (type == LockDialogType.NOLOCK):
             self.lockLabel.SetLabelText("Please set your lock first")
             self.lockButton.SetLabelText("Set")
-
+#确认lock是否能正常使用的一系列操纵与提示窗口
     def OnLockButton(self, event):
         if (self.type == LockDialogType.NOLOCK):
             if (self.lock == None):
@@ -164,7 +166,7 @@ class LockFrameMod(LockFrame):
                 dlg.ShowModal()
                 self.lockText.SetValue("")
                 self.lock = ""
-
+#不存在lock的窗口
     def start_no_lock_frame(self):
         frame = self.__class__(None, None, self.verbose)
         frame.Show()
@@ -174,7 +176,7 @@ class LockFrameMod(LockFrame):
 
     def is_lock_correct(self):
         pass
-
+##确认是否输入lock，若否，弹出提示窗口
     def check_lock(self):
         if self.lock is None or self.lock == "":
             dlg = wx.MessageDialog(self,
@@ -186,23 +188,23 @@ class LockFrameMod(LockFrame):
 
     def start_has_lock_frame(self):
         pass
-
+#打开主聊天窗口
     def strat_main_frame(self):
         frame = MainFrameMod(None)
         frame.Show()
 
-
+#初始联系人数据存储
 contact_data = {
     1: ("Dai", "daidahao@icloud.com", "9999999", time.time()),
     2: ("Zou", "zzj@daidahao.me", "8888888", time.time() - 36000),
     3: ("Sun", "test@test.com", "7777777", time.time() + 36000),
 }
-
+#初始黑名单数据存储
 blacklist_data = {
     1: ("China Mobile", "123@10086.com", "1111111", 0),
     2: ("China Telecom", "123@10000.com", "2222222", 0)
 }
-
+#从电脑获取当前年月日
 def time_to_string(t):
     t_localtime = time.localtime(t)
     localtime = time.localtime()
@@ -212,7 +214,7 @@ def time_to_string(t):
         return time.strftime("%H:%M:%S", t_localtime)
     return time.strftime("%Y-%m-%d %H:%M:%S", t_localtime)
 
-
+#登录成功后聊天主界面，包括联系人，黑名单，最近聊天人，聊天窗口
 class MainFrameMod(MainFrame, ColumnSorterMixin):
     def GetListCtrl(self):
         return self.list
@@ -227,7 +229,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.currentItem = -1
         self.blacklistDisplayed = False
         self.staticTextList = []
-
+#联系人列表及相关信息
     def PopulateList(self, data1):
         self.itemDataMap = data1
         self.currentItem = -1
@@ -251,13 +253,13 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.list.SetColumnWidth(1, 100)
         self.list.SetColumnWidth(2, 100)
         self.list.SetColumnWidth(3, 150)
-
+#从窗口获取需要发送信息并发送
     def OnSend( self, event ):
         self.AddSendMessage(self.inputText.GetValue())
 
     def AddSendMessage(self, message):
         self.AddMessage(send=True, message=message)
-
+#获取接收到的信息并显示在窗口中
     def AddRecvMessage(self, message):
         self.AddMessage(send=False, message=message)
 
@@ -285,7 +287,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         wrapSizer.Layout()
         self.m_scrolledWindow1.Layout()
         self.m_panel15.Layout()
-
+#清空窗口显示的发送接收信息
     def ClearAllMessages(self):
         for staticText in self.staticTextList:
             # wrapSizer = self.m_scrolledWindow1.GetSizer()
@@ -294,7 +296,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.count = 0
         self.staticTextList.clear()
 
-
+    #选择联系人
     def OnContactButton( self, event ):
         self.PopulateList(contact_data)
         self.SortListItems(0, 1)
@@ -307,19 +309,21 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.blacklistDisplayed = False
         self.EnableInput()
 
+    #选择黑名单
     def OnBlacklistButton( self, event ):
         self.PopulateList(blacklist_data)
         self.SortListItems(0, 1)
         self.blacklistDisplayed = True
         self.DisableInput()
 
+    #提示信息
     def ShowWarningMessage(self, message):
         dlg = wx.MessageDialog(self, message,
                                'Warning',
                                wx.OK | wx.ICON_INFORMATION)
         dlg.ShowModal()
         dlg.Destroy()
-
+#确认是否正确选择
     def CheckIfItemSelected(self):
         if (-1 == self.currentItem):
             dlg = wx.MessageDialog(self, 'You havn\'t selected any item!',
@@ -327,7 +331,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
                                    wx.OK | wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
-
+#确认信息是否正确输入窗口
     def ShowYesNoMessage(self, message):
         dlg = wx.MessageDialog(self, message,
                                'Warning',
@@ -335,10 +339,10 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         result = dlg.ShowModal()
         dlg.Destroy()
         return result
-
+#获取当前联系人名字
     def GetCurrentNameText(self):
         return self.list.GetItem(self.currentItem, 0).GetText()
-
+#添加联系人窗口
     def OnAddContactButton( self, event ):
         # The function of adding to the blacklist by hand
         # could be considered in a later version
@@ -347,7 +351,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
             return
         addContactFrame = AddContactFrameMod(self)
         addContactFrame.Show()
-
+#删除联系人窗口
     def OnRemoveContactButton( self, event ):
         if (self.blacklistDisplayed):
             return
@@ -361,7 +365,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
             print("Removing %s..." % name)
         else:
             print("The user cancel the removing operation.")
-
+#获取黑名单联系人
     def OnBlockContactButton( self, event ):
         if (self.blacklistDisplayed):
             self.CheckIfItemSelected()
@@ -375,7 +379,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
             print("Blocking %s..." % name)
         else:
             print("The user cancel the removing operation.")
-
+#选择操作
     def OnItemSelected(self, event):
         self.currentItem = event.Index
         name = self.list.GetItem(self.currentItem, 0).GetText()
@@ -389,21 +393,23 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.inputText.Enable()
         self.sendButton.Enable()
 
+#添加联系人窗口设计
 class AddContactFrameMod(AddContactFrame):
     def __init__(self, parent):
         AddContactFrame.__init__(self, parent)
         self.parent = parent
-
+#添加button
     def OnConfirmButton( self, event ):
         chooseContactFrame = ChooseContactFrameMod(self.parent)
         chooseContactFrame.Show()
         self.Close()
 
-
+#选择联系人窗口设计
 class ChooseContactFrameMod(ChooseContactFrame):
+    #确认button
     def OnConfirmButton( self, event ):
         self.Close()
-
+    #取消button
     def OnCancelButton( self, event ):
         self.Close()
 
