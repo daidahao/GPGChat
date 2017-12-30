@@ -240,7 +240,7 @@ class MainFrame(MainFrameMod):
             return
         else:
             self.ShowSuccessMessage("Add contact successfully")
-            self.OnContactButton()
+            self.OnContactButton(None)
 
     def ReadContactData(self):
         if not self.contactCanBeRead:
@@ -254,6 +254,9 @@ class MainFrame(MainFrameMod):
 
     def update_last_message_time(self):
         self.list.SetItem(self.currentItem, 3, time_to_string(time.time()))
+
+    def remove_contact(self, keyid):
+        return db.delete_contact(self.info.dbpath, keyid)
 
 
 class AddContactFrame(AddContactFrameMod):

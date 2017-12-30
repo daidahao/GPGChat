@@ -63,9 +63,10 @@ def read_contact(db_path):
     cursor =connection.cursor()
     command = \
     "SELECT c.name, c.email_addr, c.key_id, coalesce(a.last_message, 0) last_message FROM contact c"" \
-    ""LEFT JOIN ( SELECT max(time_stamp)    last_message, CASE send_from WHEN 'None'"" \
-    "" THEN send_to ELSE send_from END key_id FROM message ) a"" \
-    ""ON a.key_id = c.key_id WHERE c.status = 'C';"
+    ""LEFT JOIN ( SELECT max(time_stamp) last_message, key_id"" \
+    "" FROM ( SELECT time_stamp, CASE send_from WHEN 'None' THEN send_to"" \
+    "" ELSE send_from END key_id FROM message ) b GROUP BY key_id ) a"" \
+    "" ON a.key_id = c.key_id WHERE c.status = 'C';"""
     cursor.execute(command)
     rst = cursor.fetchall()
     cursor.close()

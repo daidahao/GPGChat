@@ -307,6 +307,7 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.EnableInput()
 
     def OnRecentButton( self, event ):
+        self.ReadContactData()
         self.PopulateList(self.contact_data)
         self.SortListItems(3, 0)
         self.blacklistDisplayed = False
@@ -363,10 +364,10 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
             return
         self.StartAddContactFrame()
 
-#删除联系人窗口
+    # 删除联系人窗口
     def OnRemoveContactButton( self, event ):
-        if (self.blacklistDisplayed):
-            return
+        # if (self.blacklistDisplayed):
+        #     return
         self.CheckIfItemSelected()
 
         name = self.GetCurrentNameText()
@@ -375,9 +376,17 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
         if result == wx.ID_YES:
             print("Removing %s..." % name)
+            if not self.remove_contact(self.GetCurrentKeyId()):
+                self.ShowWarningMessage("Cannot remove the contact")
+                return
+            if self.blacklistDisplayed:
+                self.OnBlacklistButton()
+            else:
+                self.OnContactButton(None)
         else:
             print("The user cancel the removing operation.")
-#获取黑名单联系人
+
+    # 获取黑名单联系人
     def OnBlockContactButton( self, event ):
         if (self.blacklistDisplayed):
             self.CheckIfItemSelected()
@@ -411,6 +420,12 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
 
     def ReadContactData(self):
         pass
+
+    def remove_contact(self, keyid):
+        pass
+
+    def GetCurrentKeyId(self):
+        return self.list.GetItem(self.currentItem, 2).GetText()
 
 
 #添加联系人窗口设计
