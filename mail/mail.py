@@ -3,8 +3,9 @@ import email
 import smtplib, imaplib
 from email.header import Header
 from email.mime.text import MIMEText
+import socket
 
-def check_mail_info(mail_addr, password, server_addr):
+def check_smtp_info(mail_addr, password, server_addr):
     connection, message = connect_smtp(mail_addr, password, server_addr)
     if connection is None:
         return False, message
@@ -18,7 +19,7 @@ def connect_smtp(mail_addr, password, server_addr):
     try:
         # print("hostname=", hostname)
         # print("port=", port)
-        connection = smtplib.SMTP(hostname, port)
+        connection = smtplib.SMTP_SSL(hostname, port)
         connection.login(mail_addr, password)
     except smtplib.SMTPAuthenticationError as e:
         connection.close()
@@ -26,10 +27,23 @@ def connect_smtp(mail_addr, password, server_addr):
     except smtplib.SMTPConnectError as e:
         connection.close()
         return None, "Please check the server address or your connection!"
+    except smtplib.SMTPHeloError as e:
+        connection.close()
+        return None, "The server didn't reply to the HELO greeting."
+    except smtplib.SMTPNotSupportedError as e:
+        connection.close()
+        return None, "The AUTH command is not supported by the server."
+    except smtplib.SMTPException as e:
+        connection.close()
+        return None, "No suitable authentication method was found."
     except ConnectionRefusedError as e:
         if connection is not None:
             connection.close()
         return None, "Please check the server address or your connection!"
+    except socket.timeout as e:
+        if connection is not None:
+            connection.close()
+        return None, "Timeout!"
     return connection, "Success"
 
 
@@ -46,19 +60,39 @@ def split_addr(addr):
     addr_split = addr.split(':')
     if len(addr_split) == 2:
         return addr_split[0], int(addr_split[1])
-    return addr, 25
+    return addr, 0
 
 
-def send_mail(smtp_connection, from_addr, to_addr, text, subject=''):
+def send_mail(smtp_connection, from_addr, to_addr, text, title=''):
     # form an email
     msg = MIMEText(text, 'plain', 'utf-8')
     msg['From'] = from_addr
     msg['To'] =  to_addr
-    msg['Subject'] = Header(subject, 'utf-8').encode()
+    msg['Subject'] = Header(generate_subject(title), 'utf-8').encode()
 
     # send the email
-    smtp_connection.sendmail(from_addr, [to_addr], msg.as_string())
+    try:
+        smtp_connection.sendmail(from_addr, [to_addr], msg.as_string())
+    except smtplib.SMTPRecipientsRefused as e:
+        smtp_connection.close()
+        return False, "All recipients were refused. Nobody got the mail."
+    except smtplib.SMTPHeloError as e:
+        smtp_connection.close()
+        return False, "The server didn’t reply properly to the HELO greeting."
+    except smtplib.SMTPSenderRefused as e:
+        smtp_connection.close()
+        return False, "The server didn’t accept the from_addr."
+    except smtplib.SMTPDataError as e:
+        smtp_connection.close()
+        return False, "The server replied with an unexpected error code (other than a refusal of a recipient)."
+    except smtplib.SMTPNotSupportedError as e:
+        smtp_connection.close()
+        return False, "SMTPUTF8 was given in the mail_options but is not supported by the server."
+    smtp_connection.close()
+    return True, "Success"
 
+def generate_subject(title):
+    return '[GPGChat] ' + title
 
 def receive_mail(imap_connection):
     try:
