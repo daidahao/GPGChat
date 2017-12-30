@@ -13,6 +13,8 @@ from mail import mail
 from model.message import Message
 
 dbdir = "data/"
+gpgdir = "data/gnupg"
+gpgbinary = "gpg2"
 dbext = ".db.sqlite"
 infopath = "info.txt"
 testpath = "test.db"
@@ -23,17 +25,18 @@ class SignupFrame(SignupFrameMod):
     def __init__(self, parent, verbose=True):
         super().__init__(parent)
         self.verbose = verbose
+        self.keyid = None
 
     def check_signup(self):
         if not SignupFrameMod.check_signup(self):
             return False
         result, message = mail.check_smtp_info(self.mail, self.password, self.server)
         if not result:
-            dlg = wx.MessageDialog(self,
-                                   message,
-                                   "Failure", wx.OK)
+            dlg = wx.MessageDialog(self, message, "Failure", wx.OK)
             dlg.ShowModal()
             return False
+        gpg = GPG(binary=gpgbinary, homepath=gpgdir)
+        self.keyid = str(gpg.gen_key(self.name, self.mail, self.password))
         return True
 
     def start_lock_frame(self):
@@ -49,6 +52,7 @@ class SignupFrame(SignupFrameMod):
         info.realpassword = self.password
         info.server = self.server
         info.imapserver = self.imapserver
+        info.keyid = self.keyid
         return info
 
 
@@ -130,13 +134,13 @@ class MainFrame(MainFrameMod):
     def __init__(self, parent, info=None):
         MainFrameMod.__init__(self, parent)
         self.info = info
-        self.SetTitle('GPGChat (' + self.info.mail + ' ' + self.info.name + ')')
+        self.SetTitle('GPGChat (' + self.info.mail + ' | ' + self.info.name + ' | ' + self.info.keyid + ')')
         self.uuid = uuid4()
         self.seqmap = {}
         self.DisableInput()
         self.current_keyid = None
         self.current_mail = None
-        self.gpg = GPG()
+        self.gpg = GPG(binary=gpgbinary, homepath=gpgdir)
         self.contactCanBeRead = True
         self.OnContactButton(None)
 
