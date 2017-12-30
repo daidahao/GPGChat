@@ -236,6 +236,10 @@ class MainFrame(MainFrameMod):
             return
         else:
             self.ShowSuccessMessage("Add contact successfully")
+            self.OnContactButton()
+
+    def ReadContactData(self):
+        contact_list = db.read_contact()
 
 
 class AddContactFrame(AddContactFrameMod):
