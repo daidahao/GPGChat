@@ -100,28 +100,28 @@ def fetch_all_messages(db_path, keyId, null=None):
     connection.close()
     return rst
 
-# def get_message(db_path, send_from, send_to):
-#     connection = sqlite3.connect(db_path)
-#     cursor =connection.cursor()
-#
-#     sql_cmd = 'SELECT uuid, sequence, send_from, send_to, content, time_stamp FROM message ' \
-#               'WHERE (send_from = "%s" and send_to = "%s") ' \
-#               'or (send_from = "%s" and send_to = "%s") ' \
-#               'ORDER BY time_stamp' % (send_from, send_to,send_to,send_from)
-#     cursor.execute(sql_cmd)
-#     rst = cursor.fetchall()
-#
-#     cursor.close()
-#     connection.close()
-#     return rst
+def get_message(db_path, send_from, send_to):
+    connection = sqlite3.connect(db_path)
+    cursor =connection.cursor()
 
-# def read_message(db_path):
-#     connection = sqlite3.connect(db_path)
-#     cursor =connection.cursor()
-#
-#     cursor.execute('SELECT * FROM message')
-#     rst = cursor.fetchall()
-#     cursor.close()
-#     connection.close()
-#
-#     return rst
+    sql_cmd = 'SELECT uuid, sequence, send_from, send_to, content, time_stamp FROM message ' \
+              'WHERE (send_from = "%s" and send_to = "%s") ' \
+              'or (send_from = "%s" and send_to = "%s") ' \
+              'ORDER BY time_stamp' % (send_from, send_to,send_to,send_from)
+    cursor.execute(sql_cmd)
+    rst = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+    return rst
+
+def read_message(db_path):
+    connection = sqlite3.connect(db_path)
+    cursor =connection.cursor()
+
+    cursor.execute('SELECT * FROM message')
+    rst = cursor.fetchall()
+    cursor.close()
+    connection.close()
+
+    return rst
