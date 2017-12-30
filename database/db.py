@@ -57,7 +57,7 @@ def read_contact(db_path):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
 
-    cursor.execute('SELECT * FROM contact')
+    cursor.execute('SELECT name, email_addr, key_id FROM contact where status = \'C\'')
     rst = cursor.fetchall()
     cursor.close()
     connection.close()
