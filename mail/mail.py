@@ -144,7 +144,7 @@ def receive_mail(imap_connection):
 
             mail_content = mail_content.decode()
 
-            messages.append((str(subject).strip('[GPGChat] '), str(mail_from), str(mail_content)))
+            messages.append({'subject':str(subject),'mail_from':str(mail_from),'mail_content':str(mail_content)})
 
         return messages
 
