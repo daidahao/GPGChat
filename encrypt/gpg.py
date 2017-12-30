@@ -4,7 +4,6 @@ import gnupg
 class GPG:
     def __init__(self, binary='gpg2', verbose=False, homepath='data/gnupg'):
         self.gpg = gnupg.GPG(gnupghome=homepath,verbose=verbose, gpgbinary=binary)
-        self.gpg.encoding = 'utf-8'
 
     #产生密钥
     def gen_key(self, name, email, lock):
@@ -52,12 +51,12 @@ class GPG:
         print(import_result.fingerprints)
 
     # 加密
-    def encrypt(self, data, keyid):
+    def encrypt(self, message, keyid):
         self.download_key(keyid)
-        encrypted_data = self.gpg.encrypt(data.encode(),keyid, always_trust=True)
-        return str(encrypted_data)
+        encrypted_data = self.gpg.encrypt(message,keyid, always_trust=True)
+        return encrypted_data.data.decode('latin-1')
 
     # 解密
     def decrypt(self, encrypted_data, lock):
-        decrypted_data = self.gpg.decrypt(encrypted_data.encode(), passphrase=lock)
-        return str(decrypted_data)
+        decrypted_data = self.gpg.decrypt(encrypted_data, passphrase=lock)
+        return decrypted_data.data.decode('latin-1')
