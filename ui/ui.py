@@ -61,7 +61,7 @@ class SigninFrame ( wx.Frame ):
 class SignupFrame ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"GPGChat", pos = wx.DefaultPosition, size = wx.Size( 500,323 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"GPGChat", pos = wx.DefaultPosition, size = wx.Size( 500,345 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
@@ -114,7 +114,7 @@ class SignupFrame ( wx.Frame ):
 		
 		smtpSizer = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.smtpLabel = wx.StaticText( self.panel, wx.ID_ANY, u"SMTP Server", wx.DefaultPosition, wx.Size( 110,-1 ), wx.ALIGN_RIGHT )
+		self.smtpLabel = wx.StaticText( self.panel, wx.ID_ANY, u"SMTP Server (SSL)", wx.DefaultPosition, wx.Size( 110,-1 ), wx.ALIGN_RIGHT )
 		self.smtpLabel.Wrap( -1 )
 		smtpSizer.Add( self.smtpLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_TOP|wx.ALL, 5 )
 		
@@ -143,6 +143,22 @@ class SignupFrame ( wx.Frame ):
 		
 		
 		subsubSizer.Add( nameSIzer, 1, wx.EXPAND, 5 )
+		
+		imapSizer = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.imapLabel = wx.StaticText( self.panel, wx.ID_ANY, u"IMAP Server (SSL)", wx.DefaultPosition, wx.Size( 110,-1 ), wx.ALIGN_RIGHT )
+		self.imapLabel.Wrap( -1 )
+		imapSizer.Add( self.imapLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		self.emptyLabel41 = wx.StaticText( self.panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 4,-1 ), 0 )
+		self.emptyLabel41.Wrap( -1 )
+		imapSizer.Add( self.emptyLabel41, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.imapText = wx.TextCtrl( self.panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), 0 )
+		imapSizer.Add( self.imapText, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		
+		subsubSizer.Add( imapSizer, 1, wx.EXPAND, 5 )
 		
 		bottomSizer = wx.BoxSizer( wx.HORIZONTAL )
 		
