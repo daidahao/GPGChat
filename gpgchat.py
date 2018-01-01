@@ -21,6 +21,7 @@ gpgbinary = "gpg"
 dbext = ".db.sqlite"
 infopath = "info.txt"
 testpath = "test.db"
+waiting_time = 5
 
 
 class SignupFrame(SignupFrameMod):
@@ -319,14 +320,75 @@ class MainFrame(MainFrameMod):
                                packet.sequence, packet.signed_keyid, None,
                                message, time.time())
                 self.ClearAllMessages()
-                # self.load_all_messages(self.current_keyid)
+                self.load_all_messages(self.current_keyid)
             time.sleep(5)
 
     def start_listern_thread(self):
-        t = threading.Thread(target=self.listen_mail)
-        t.setDaemon(True)
-        t.start()
+        # t = threading.Thread(target=self.listen_mail)
+        # t.setDaemon(True)
+        #Segmentation fault: t.start()
 
+        myEVT_LISTEN = wx.NewEventType()
+        EVT_LISTENING = wx.PyEventBinder(myEVT_LISTEN, 1)
+        self.Bind(EVT_LISTENING, self.OnListen)
+        self.Bind(wx.EVT_CLOSE, self.OnClose)
+
+        self.listening_thread = ListeningMailsThread(self, myEVT_LISTEN, self.info, self.gpg)
+        self.listening_thread.setDaemon(True)
+        self.listening_thread.start()
+        # t.join()
+
+    def OnClose(self, evt):
+        if self.listening_thread is not None:
+            self.listening_thread.stop = True
+            time.sleep(waiting_time)
+        self.Destroy()
+
+    def OnListen(self, evt):
+        newmail = evt.isNewmail()
+        if newmail:
+            self.ClearAllMessages()
+            self.load_all_messages(self.current_keyid)
+
+
+class ListeningEvent(wx.PyCommandEvent):
+    def __init__(self, etype, eid, newmail=False):
+        wx.PyCommandEvent.__init__(self, etype, eid)
+        self._newmail = newmail
+
+    def isNewmail(self):
+        return self._newmail
+
+class ListeningMailsThread(threading.Thread):
+    def __init__(self, parent, etype, info, gpg):
+        threading.Thread.__init__(self)
+        self._parent = parent
+        self._etype = etype
+        self.info = info
+        self.gpg = gpg
+        self.stop = False
+
+    def run(self):
+        agent = Agent()
+        while not self.stop:
+            print("Listening for new emails")
+            connection = mail.connect_imap(self.info.mail, self.info.realpassword, self.info.imapserver)
+            if connection is None:
+                # self.ShowWarningMessage("Cannot connect to the IMAP Server!")
+                break
+            packets = agent.receive_packet(connection)
+            for packet in packets:
+                message = self.gpg.decrypt(packet.message, self.info.reallock)
+                message = base64.urlsafe_b64decode(message).decode()
+                print("base64", message)
+                db.add_massage(self.info.dbpath, packet.uuid,
+                               packet.sequence, packet.signed_keyid, None,
+                               message, time.time())
+                evt = ListeningEvent(self._etype, -1, True)
+                wx.PostEvent(self._parent, evt)
+                # self.ClearAllMessages()
+                # self.load_all_messages(self.current_keyid)
+            time.sleep(waiting_time)
 
 class AddContactFrame(AddContactFrameMod):
     def __init__(self, parent, gpg):
