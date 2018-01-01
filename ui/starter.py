@@ -284,11 +284,14 @@ class MainFrameMod(MainFrame, ColumnSorterMixin):
         self.staticTextList.append(textCtrl)
 
 
-        # self.m_scrolledWindow1.SetSizerAndFit(wrapSizer)
+        self.m_scrolledWindow1.SetSizerAndFit(wrapSizer)
         wrapSizer.Layout()
         self.m_scrolledWindow1.Layout()
         self.m_panel15.Layout()
-#清空窗口显示的发送接收信息
+
+        self.m_scrolledWindow1.Scroll(0, self.m_scrolledWindow1.GetScrollRange(wx.VERTICAL))
+
+    # 清空窗口显示的发送接收信息
     def ClearAllMessages(self):
         for staticText in self.staticTextList:
             # wrapSizer = self.m_scrolledWindow1.GetSizer()
