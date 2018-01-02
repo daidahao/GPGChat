@@ -6,6 +6,7 @@ import sqlite3
 '''
 
 '''TABLE CONTACT'''
+#向数据库中写入添加联系人name，keyid，email
 def add_contact(db_path, name, addr, key_id):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
@@ -20,7 +21,7 @@ def add_contact(db_path, name, addr, key_id):
     connection.close()
     return True
 
-
+#在数据库中删除联系人
 def delete_contact(db_path, keyid):
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
@@ -37,7 +38,7 @@ def delete_contact(db_path, keyid):
     connection.close()
     return True
 
-
+#更改联系人
 def alter_contact_block(db_path, keyid):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
@@ -63,7 +64,7 @@ def alter_contact_block(db_path, keyid):
     cursor.close()
     connection.close()
     return True
-
+#读取联系人信息
 def read_contact(db_path, status='C'):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
@@ -83,6 +84,7 @@ def read_contact(db_path, status='C'):
 
 
 '''TABLE MESSAGE'''
+#向数据库中写入用户发送的信息
 def add_massage(db_path, uuid, seq, send_from, send_to, content, timestamp):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
@@ -100,7 +102,7 @@ def add_massage(db_path, uuid, seq, send_from, send_to, content, timestamp):
     cursor.close()
     connection.close()
     return True
-
+#取出对应用户数据库中所有消息
 def fetch_all_messages(db_path, keyId, null=None):
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
@@ -115,7 +117,7 @@ def fetch_all_messages(db_path, keyId, null=None):
     cursor.close()
     connection.close()
     return rst
-
+#由发送人和收信人为索引获取信息
 def get_message(db_path, send_from, send_to):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
@@ -130,7 +132,7 @@ def get_message(db_path, send_from, send_to):
     cursor.close()
     connection.close()
     return rst
-
+#读取数据库中的信息
 def read_message(db_path):
     connection = sqlite3.connect(db_path)
     cursor =connection.cursor()
