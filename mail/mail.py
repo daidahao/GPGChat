@@ -4,7 +4,7 @@ import smtplib, imaplib
 from email.header import Header
 from email.mime.text import MIMEText
 import socket
-
+#确认需要连接的smtp信息
 def check_smtp_info(mail_addr, password, server_addr):
     connection, message = connect_smtp(mail_addr, password, server_addr)
     if connection is None:
@@ -13,6 +13,7 @@ def check_smtp_info(mail_addr, password, server_addr):
     return True, message
 
 # Don't forget close connection when log out
+#连接smtp
 def connect_smtp(mail_addr, password, server_addr):
     connection = None
     hostname, port = split_addr(server_addr)
@@ -46,7 +47,7 @@ def connect_smtp(mail_addr, password, server_addr):
         return None, "Timeout!"
     return connection, "Success"
 
-
+#连接imap
 def connect_imap(email_addr, password,server_addr):
     hostname, port = split_addr(server_addr)
     try:
@@ -58,14 +59,14 @@ def connect_imap(email_addr, password,server_addr):
     except imaplib.IMAP4_SSL.error:
         return None
 
-
+#获取完整独立地址
 def split_addr(addr):
     addr_split = addr.split(':')
     if len(addr_split) == 2:
         return addr_split[0], int(addr_split[1])
     return addr, 0
 
-
+#邮件发送端
 def send_mail(smtp_connection, from_addr, to_addr, text, title=''):
     # form an email
     msg = MIMEText(text, 'plain', 'utf-8')
@@ -96,7 +97,7 @@ def send_mail(smtp_connection, from_addr, to_addr, text, title=''):
 
 def generate_subject(title):
     return '[GPGChat] ' + title
-
+#邮件接收端
 def receive_mail(imap_connection):
     try:
         new_msg = []
