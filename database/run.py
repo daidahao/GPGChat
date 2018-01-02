@@ -29,6 +29,18 @@ db.add_massage(db_path=dbpath,
                        content=text,
                        timestamp=time.time())
 
+db.add_massage(db_path=dbpath,
+                       uuid=uuid,
+                       seq=5,
+                       send_from=keyid,
+                       send_to=None,
+                       content=text,
+                       timestamp=time.time())
+
+db.add_contact(dbpath, 'Zhihao Dai', 'me@daidahao.me', keyid)
+db.add_contact(dbpath, 'ZZJ', 'me2@daidahao.me', keyid + 1)
+
+
 all_messages = db.fetch_all_messages('123.db', keyid)
 
 for message in all_messages:
@@ -37,3 +49,4 @@ for message in all_messages:
     if not message[0]:
         print('Sent')
 
+print(db.read_contact(dbpath))

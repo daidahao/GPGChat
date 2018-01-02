@@ -1,3 +1,2 @@
-from uuid import uuid4
+from gpg import GPG
 
-print(uuid4())
