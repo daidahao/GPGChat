@@ -15,13 +15,21 @@ from mail import mail
 from model.message import Message
 from mail.packet import Packet, Agent
 
+# Local database directory
 dbdir = "data/"
+# GPG data directory
 gpgdir = "data/gnupg"
+# GPG binary
 gpgbinary = "gpg2"
+# Local database file extension
 dbext = ".db.sqlite"
+# The user information file
 infopath = "info.txt"
-testpath = "test.db"
+# Wating time for receiving email thread
 waiting_time = 5
+# Verbose option of GPG
+# You may find it quite useful, when your GPG
+# doesn't work correctly
 gpgverbose = False
 
 #注册窗口

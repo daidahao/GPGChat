@@ -67,6 +67,28 @@ python gpgchat.py
 
 * On exit, the local database (in the `data` directory) is encrypted. On the next time you sign in, it will be decrypted.
 
+## Configuration
+
+If you want to modify some parameters in GPGChat, here is a list of parameters you can modify in the head of `gpgchat.py`.
+
+```
+# Local database directory
+dbdir = "data/"
+# GPG data directory
+gpgdir = "data/gnupg"
+# GPG binary
+gpgbinary = "gpg2"
+# Local database file extension
+dbext = ".db.sqlite"
+# The user information file
+infopath = "info.txt"
+# Wating time for receiving email thread
+waiting_time = 5
+# Verbose option of GPG
+# You may find it quite useful, when your GPG
+# doesn't work correctly
+gpgverbose = False
+```
 
 ## Implementation
 
