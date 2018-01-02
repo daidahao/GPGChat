@@ -1,12 +1,25 @@
 # GPGChat
 
-GPGChat is an E-mail and GPG based Secured Instant Message Application. It implements a desktop IM application via IMAP using the existing Tencent exmail services.
+GPGChat is an E-mail and GPG based Secured Instant Message Application. It implements a desktop IM application via IMAP using the existing email services.
 
 In GPGChat, we do our best to ensure the safety of your instant communication.
 
 Concretely, your email password as well as your message records in the local database will be safely stored `PBKDF2` as key derivation function and `AES` in `CBC` mode with a 128-bit key for encryption.
 
 As our name imply, all your messages sent to and from you will be encrypted in the GPG fashion.
+
+## Features
+
+- Creates a pair of GPG keys and upload the public key to the public GPG server under the user's name for encrypting instant communication.
+- Provides GUI for instant messaging.
+- Provides contacts system based on GPG.
+  - Add contact
+  - Delete contact
+  - Block contact
+- Instant text messaging secured by GPG.
+- Offers IM protocol in `HTTP` and `UUID` fashion.
+- Local database for storing messaging records and contacts.
+- Local storage of user's information and encryption of email's password using `PBKDF2` and `AES-128`.
 
 ## Getting Started
 
