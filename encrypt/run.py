@@ -1,2 +1,0 @@
-from gpg import GPG
-
