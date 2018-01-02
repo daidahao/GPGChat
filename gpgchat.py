@@ -17,11 +17,12 @@ from mail.packet import Packet, Agent
 
 dbdir = "data/"
 gpgdir = "data/gnupg"
-gpgbinary = "gpg"
+gpgbinary = "gpg2"
 dbext = ".db.sqlite"
 infopath = "info.txt"
 testpath = "test.db"
 waiting_time = 5
+gpgverbose = False
 
 
 class SignupFrame(SignupFrameMod):
@@ -138,7 +139,7 @@ class LockFrame(LockFrameMod):
         frame.Show()
 
     def set_up_gpg(self):
-        gpg = GPG(binary=gpgbinary, homepath=gpgdir)
+        gpg = GPG(binary=gpgbinary, homepath=gpgdir, verbose=gpgverbose)
         print("reallock=", self.lock)
         self.info.keyid = str(gpg.gen_key(self.info.name, self.info.mail, self.lock))
 
@@ -154,7 +155,7 @@ class MainFrame(MainFrameMod):
         self.DisableInput()
         self.current_keyid = None
         self.current_mail = None
-        self.gpg = GPG(binary=gpgbinary, homepath=gpgdir, verbose=True)
+        self.gpg = GPG(binary=gpgbinary, homepath=gpgdir, verbose=gpgverbose)
         self.contactCanBeRead = True
         self.OnContactButton(None)
 
@@ -184,7 +185,7 @@ class MainFrame(MainFrameMod):
     def add_sent_message_to_db(self, text, keyid):
         db.add_massage(db_path=self.info.dbpath,
                        uuid=self.uuid,
-                       seq=self.increment_seq(keyid),
+                       seq=self.seqmap[keyid],
                        send_from=None,
                        send_to=keyid,
                        content=text,
