@@ -116,3 +116,4 @@ database/db_test.py
 info.txt
 *.db
 info.txt.bak
+report
