@@ -342,7 +342,8 @@ class MainFrame(MainFrameMod):
         self.Bind(EVT_LISTENING, self.OnListen)
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
-        self.listening_thread = ListeningMailsThread(self, myEVT_LISTEN, self.info, self.gpg)
+        self.listening_thread = ListeningMailsThread(self, myEVT_LISTEN,
+                                                     self.info, self.gpg)
         self.listening_thread.setDaemon(True)
         self.listening_thread.start()
         # t.join()
@@ -360,6 +361,7 @@ class MainFrame(MainFrameMod):
             self.load_all_messages(self.current_keyid)
 
 
+# 监听事件
 class ListeningEvent(wx.PyCommandEvent):
     def __init__(self, etype, eid, newmail=False):
         wx.PyCommandEvent.__init__(self, etype, eid)
@@ -368,6 +370,8 @@ class ListeningEvent(wx.PyCommandEvent):
     def isNewmail(self):
         return self._newmail
 
+
+# 监听子线程
 class ListeningMailsThread(threading.Thread):
     def __init__(self, parent, etype, info, gpg):
         threading.Thread.__init__(self)
