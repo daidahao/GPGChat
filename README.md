@@ -77,6 +77,9 @@ python gpgchat.py
 ![](./img/send.png)
 
 * Again, all your communication will be encrypted using GPG during transmission.
+* Before you start chatting, you need to add your friends in the contact list (identity verfication is very important in GPGChat's world).
+* Once you have added each other as contact, you can send text whatever you want without worrying about someone may sneak into your mailbox and stole all your messages.
+* Even if someone has gotten your email password, he will never know your private key and thus is unable to decrypt your messages.
 
 * On exit, the local database (in the `data` directory) is encrypted. On the next time you sign in, it will be decrypted.
 
@@ -120,6 +123,9 @@ In this module, `smtplib` and `imaplib` are heavily used.
 
 - `mail.py`
 Mail services. Messages are pushed by SMTP protocol and pulled by IMAP protocol. It also offers mail information checking and message parsing functions.
+
+- `packet.py`
+Encapsulation of a message packet, including attributes like `uuid`, `sender`, `receiver`, `sequence`, `message`, `signed_keyid`.
 
 ### `encrypt`
 
