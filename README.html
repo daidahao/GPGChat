@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8" />
+      <title>README</title>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: [],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+    },
+    showMathMenu: false
+  });
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js">
+</script>
+      <style>.markdown-preview:not([data-use-github-style]) { padding: 2em; font-size: 1.2em; color: rgb(96, 125, 139); background-color: rgb(250, 250, 250); overflow: auto; }
+.markdown-preview:not([data-use-github-style]) > :first-child { margin-top: 0px; }
+.markdown-preview:not([data-use-github-style]) h1, .markdown-preview:not([data-use-github-style]) h2, .markdown-preview:not([data-use-github-style]) h3, .markdown-preview:not([data-use-github-style]) h4, .markdown-preview:not([data-use-github-style]) h5, .markdown-preview:not([data-use-github-style]) h6 { line-height: 1.2; margin-top: 1.5em; margin-bottom: 0.5em; color: rgb(29, 38, 42); }
+.markdown-preview:not([data-use-github-style]) h1 { font-size: 2.4em; font-weight: 300; }
+.markdown-preview:not([data-use-github-style]) h2 { font-size: 1.8em; font-weight: 400; }
+.markdown-preview:not([data-use-github-style]) h3 { font-size: 1.5em; font-weight: 500; }
+.markdown-preview:not([data-use-github-style]) h4 { font-size: 1.2em; font-weight: 600; }
+.markdown-preview:not([data-use-github-style]) h5 { font-size: 1.1em; font-weight: 600; }
+.markdown-preview:not([data-use-github-style]) h6 { font-size: 1em; font-weight: 600; }
+.markdown-preview:not([data-use-github-style]) strong { color: rgb(29, 38, 42); }
+.markdown-preview:not([data-use-github-style]) del { color: rgb(141, 164, 176); }
+.markdown-preview:not([data-use-github-style]) a, .markdown-preview:not([data-use-github-style]) a code { color: rgb(0, 150, 136); }
+.markdown-preview:not([data-use-github-style]) img { max-width: 100%; }
+.markdown-preview:not([data-use-github-style]) > p { margin-top: 0px; margin-bottom: 1.5em; }
+.markdown-preview:not([data-use-github-style]) > ul, .markdown-preview:not([data-use-github-style]) > ol { margin-bottom: 1.5em; }
+.markdown-preview:not([data-use-github-style]) blockquote { margin: 1.5em 0px; font-size: inherit; color: rgb(141, 164, 176); border-color: rgb(209, 209, 209); border-width: 4px; }
+.markdown-preview:not([data-use-github-style]) hr { margin: 3em 0px; border-top: 2px dashed rgb(209, 209, 209); background: none; }
+.markdown-preview:not([data-use-github-style]) table { margin: 1.5em 0px; }
+.markdown-preview:not([data-use-github-style]) th { color: rgb(29, 38, 42); }
+.markdown-preview:not([data-use-github-style]) th, .markdown-preview:not([data-use-github-style]) td { padding: 0.66em 1em; border: 1px solid rgb(209, 209, 209); }
+.markdown-preview:not([data-use-github-style]) pre, .markdown-preview:not([data-use-github-style]) code { color: rgb(29, 38, 42); background-color: rgb(235, 235, 235); }
+.markdown-preview:not([data-use-github-style]) pre, .markdown-preview:not([data-use-github-style]) pre.editor-colors { margin: 1.5em 0px; padding: 1em; font-size: 0.92em; border-radius: 3px; background-color: rgb(240, 240, 240); }
+.markdown-preview:not([data-use-github-style]) kbd { color: rgb(29, 38, 42); border-width: 1px 1px 2px; border-style: solid; border-color: rgb(209, 209, 209) rgb(209, 209, 209) rgb(194, 194, 194); border-image: initial; background-color: rgb(235, 235, 235); }
+.markdown-preview[data-use-github-style] { font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif; line-height: 1.6; word-wrap: break-word; padding: 30px; font-size: 16px; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); overflow: scroll; }
+.markdown-preview[data-use-github-style] > :first-child { margin-top: 0px !important; }
+.markdown-preview[data-use-github-style] > :last-child { margin-bottom: 0px !important; }
+.markdown-preview[data-use-github-style] a:not([href]) { color: inherit; text-decoration: none; }
+.markdown-preview[data-use-github-style] .absent { color: rgb(204, 0, 0); }
+.markdown-preview[data-use-github-style] .anchor { position: absolute; top: 0px; left: 0px; display: block; padding-right: 6px; padding-left: 30px; margin-left: -30px; }
+.markdown-preview[data-use-github-style] .anchor:focus { outline: none; }
+.markdown-preview[data-use-github-style] h1, .markdown-preview[data-use-github-style] h2, .markdown-preview[data-use-github-style] h3, .markdown-preview[data-use-github-style] h4, .markdown-preview[data-use-github-style] h5, .markdown-preview[data-use-github-style] h6 { position: relative; margin-top: 1em; margin-bottom: 16px; font-weight: bold; line-height: 1.4; }
+.markdown-preview[data-use-github-style] h1 .octicon-link, .markdown-preview[data-use-github-style] h2 .octicon-link, .markdown-preview[data-use-github-style] h3 .octicon-link, .markdown-preview[data-use-github-style] h4 .octicon-link, .markdown-preview[data-use-github-style] h5 .octicon-link, .markdown-preview[data-use-github-style] h6 .octicon-link { display: none; color: rgb(0, 0, 0); vertical-align: middle; }
+.markdown-preview[data-use-github-style] h1:hover .anchor, .markdown-preview[data-use-github-style] h2:hover .anchor, .markdown-preview[data-use-github-style] h3:hover .anchor, .markdown-preview[data-use-github-style] h4:hover .anchor, .markdown-preview[data-use-github-style] h5:hover .anchor, .markdown-preview[data-use-github-style] h6:hover .anchor { padding-left: 8px; margin-left: -30px; text-decoration: none; }
+.markdown-preview[data-use-github-style] h1:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h2:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h3:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h4:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h5:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h6:hover .anchor .octicon-link { display: inline-block; }
+.markdown-preview[data-use-github-style] h1 tt, .markdown-preview[data-use-github-style] h2 tt, .markdown-preview[data-use-github-style] h3 tt, .markdown-preview[data-use-github-style] h4 tt, .markdown-preview[data-use-github-style] h5 tt, .markdown-preview[data-use-github-style] h6 tt, .markdown-preview[data-use-github-style] h1 code, .markdown-preview[data-use-github-style] h2 code, .markdown-preview[data-use-github-style] h3 code, .markdown-preview[data-use-github-style] h4 code, .markdown-preview[data-use-github-style] h5 code, .markdown-preview[data-use-github-style] h6 code { font-size: inherit; }
+.markdown-preview[data-use-github-style] h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
+.markdown-preview[data-use-github-style] h1 .anchor { line-height: 1; }
+.markdown-preview[data-use-github-style] h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
+.markdown-preview[data-use-github-style] h2 .anchor { line-height: 1; }
+.markdown-preview[data-use-github-style] h3 { font-size: 1.5em; line-height: 1.43; }
+.markdown-preview[data-use-github-style] h3 .anchor { line-height: 1.2; }
+.markdown-preview[data-use-github-style] h4 { font-size: 1.25em; }
+.markdown-preview[data-use-github-style] h4 .anchor { line-height: 1.2; }
+.markdown-preview[data-use-github-style] h5 { font-size: 1em; }
+.markdown-preview[data-use-github-style] h5 .anchor { line-height: 1.1; }
+.markdown-preview[data-use-github-style] h6 { font-size: 1em; color: rgb(119, 119, 119); }
+.markdown-preview[data-use-github-style] h6 .anchor { line-height: 1.1; }
+.markdown-preview[data-use-github-style] p, .markdown-preview[data-use-github-style] blockquote, .markdown-preview[data-use-github-style] ul, .markdown-preview[data-use-github-style] ol, .markdown-preview[data-use-github-style] dl, .markdown-preview[data-use-github-style] table, .markdown-preview[data-use-github-style] pre { margin-top: 0px; margin-bottom: 16px; }
+.markdown-preview[data-use-github-style] hr { height: 4px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border: 0px none; }
+.markdown-preview[data-use-github-style] ul, .markdown-preview[data-use-github-style] ol { padding-left: 2em; }
+.markdown-preview[data-use-github-style] ul.no-list, .markdown-preview[data-use-github-style] ol.no-list { padding: 0px; list-style-type: none; }
+.markdown-preview[data-use-github-style] ul ul, .markdown-preview[data-use-github-style] ul ol, .markdown-preview[data-use-github-style] ol ol, .markdown-preview[data-use-github-style] ol ul { margin-top: 0px; margin-bottom: 0px; }
+.markdown-preview[data-use-github-style] li > p { margin-top: 16px; }
+.markdown-preview[data-use-github-style] dl { padding: 0px; }
+.markdown-preview[data-use-github-style] dl dt { padding: 0px; margin-top: 16px; font-size: 1em; font-style: italic; font-weight: bold; }
+.markdown-preview[data-use-github-style] dl dd { padding: 0px 16px; margin-bottom: 16px; }
+.markdown-preview[data-use-github-style] blockquote { padding: 0px 15px; color: rgb(119, 119, 119); border-left: 4px solid rgb(221, 221, 221); }
+.markdown-preview[data-use-github-style] blockquote > :first-child { margin-top: 0px; }
+.markdown-preview[data-use-github-style] blockquote > :last-child { margin-bottom: 0px; }
+.markdown-preview[data-use-github-style] table { display: block; width: 100%; overflow: auto; word-break: keep-all; }
+.markdown-preview[data-use-github-style] table th { font-weight: bold; }
+.markdown-preview[data-use-github-style] table th, .markdown-preview[data-use-github-style] table td { padding: 6px 13px; border: 1px solid rgb(221, 221, 221); }
+.markdown-preview[data-use-github-style] table tr { background-color: rgb(255, 255, 255); border-top: 1px solid rgb(204, 204, 204); }
+.markdown-preview[data-use-github-style] table tr:nth-child(2n) { background-color: rgb(248, 248, 248); }
+.markdown-preview[data-use-github-style] img { max-width: 100%; box-sizing: border-box; }
+.markdown-preview[data-use-github-style] .emoji { max-width: none; }
+.markdown-preview[data-use-github-style] span.frame { display: block; overflow: hidden; }
+.markdown-preview[data-use-github-style] span.frame > span { display: block; float: left; width: auto; padding: 7px; margin: 13px 0px 0px; overflow: hidden; border: 1px solid rgb(221, 221, 221); }
+.markdown-preview[data-use-github-style] span.frame span img { display: block; float: left; }
+.markdown-preview[data-use-github-style] span.frame span span { display: block; padding: 5px 0px 0px; clear: both; color: rgb(51, 51, 51); }
+.markdown-preview[data-use-github-style] span.align-center { display: block; overflow: hidden; clear: both; }
+.markdown-preview[data-use-github-style] span.align-center > span { display: block; margin: 13px auto 0px; overflow: hidden; text-align: center; }
+.markdown-preview[data-use-github-style] span.align-center span img { margin: 0px auto; text-align: center; }
+.markdown-preview[data-use-github-style] span.align-right { display: block; overflow: hidden; clear: both; }
+.markdown-preview[data-use-github-style] span.align-right > span { display: block; margin: 13px 0px 0px; overflow: hidden; text-align: right; }
+.markdown-preview[data-use-github-style] span.align-right span img { margin: 0px; text-align: right; }
+.markdown-preview[data-use-github-style] span.float-left { display: block; float: left; margin-right: 13px; overflow: hidden; }
+.markdown-preview[data-use-github-style] span.float-left span { margin: 13px 0px 0px; }
+.markdown-preview[data-use-github-style] span.float-right { display: block; float: right; margin-left: 13px; overflow: hidden; }
+.markdown-preview[data-use-github-style] span.float-right > span { display: block; margin: 13px auto 0px; overflow: hidden; text-align: right; }
+.markdown-preview[data-use-github-style] code, .markdown-preview[data-use-github-style] tt { padding: 0.2em 0px; margin: 0px; font-size: 85%; background-color: rgba(0, 0, 0, 0.0392157); border-radius: 3px; }
+.markdown-preview[data-use-github-style] code::before, .markdown-preview[data-use-github-style] tt::before, .markdown-preview[data-use-github-style] code::after, .markdown-preview[data-use-github-style] tt::after { letter-spacing: -0.2em; content: " "; }
+.markdown-preview[data-use-github-style] code br, .markdown-preview[data-use-github-style] tt br { display: none; }
+.markdown-preview[data-use-github-style] del code { text-decoration: inherit; }
+.markdown-preview[data-use-github-style] pre > code { padding: 0px; margin: 0px; font-size: 100%; word-break: normal; white-space: pre; background: transparent; border: 0px; }
+.markdown-preview[data-use-github-style] .highlight { margin-bottom: 16px; }
+.markdown-preview[data-use-github-style] .highlight pre, .markdown-preview[data-use-github-style] pre { padding: 16px; overflow: auto; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border-radius: 3px; }
+.markdown-preview[data-use-github-style] .highlight pre { margin-bottom: 0px; word-break: normal; }
+.markdown-preview[data-use-github-style] pre { word-wrap: normal; }
+.markdown-preview[data-use-github-style] pre code, .markdown-preview[data-use-github-style] pre tt { display: inline; max-width: initial; padding: 0px; margin: 0px; overflow: initial; line-height: inherit; word-wrap: normal; background-color: transparent; border: 0px; }
+.markdown-preview[data-use-github-style] pre code::before, .markdown-preview[data-use-github-style] pre tt::before, .markdown-preview[data-use-github-style] pre code::after, .markdown-preview[data-use-github-style] pre tt::after { content: normal; }
+.markdown-preview[data-use-github-style] kbd { display: inline-block; padding: 3px 5px; font-size: 11px; line-height: 10px; color: rgb(85, 85, 85); vertical-align: middle; background-color: rgb(252, 252, 252); border-width: 1px; border-style: solid; border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(187, 187, 187); border-image: initial; border-radius: 3px; box-shadow: rgb(187, 187, 187) 0px -1px 0px inset; }
+.markdown-preview[data-use-github-style] a { color: rgb(51, 122, 183); }
+.markdown-preview[data-use-github-style] pre, .markdown-preview[data-use-github-style] code { color: inherit; }
+.markdown-preview[data-use-github-style] pre, .markdown-preview[data-use-github-style] pre.editor-colors { padding: 0.8em 1em; margin-bottom: 1em; font-size: 0.85em; border-radius: 4px; overflow: auto; }
+.scrollbars-visible-always .markdown-preview pre.editor-colors .vertical-scrollbar, .scrollbars-visible-always .markdown-preview pre.editor-colors .horizontal-scrollbar { visibility: hidden; }
+.scrollbars-visible-always .markdown-preview pre.editor-colors:hover .vertical-scrollbar, .scrollbars-visible-always .markdown-preview pre.editor-colors:hover .horizontal-scrollbar { visibility: visible; }
+.markdown-preview del { text-decoration: none; position: relative; }
+.markdown-preview del::after { border-bottom: 1px solid black; content: ""; left: 0px; position: absolute; right: 0px; top: 50%; }
+.markdown-preview .flash { animation: flash 1s ease-out 1; outline: rgba(255, 0, 0, 0) solid 1px; }
+.markdown-preview .flash:not(li) { display: block; }
+.markdown-preview code { text-shadow: none; }
+.bracket-matcher .region {
+  border-bottom: 1px dotted lime;
+  position: absolute;
+}
+.line-number.bracket-matcher {
+  background-color: #777;
+}
+
+.spell-check-misspelling .region {
+  border-bottom: 2px dotted rgba(255, 51, 51, 0.75);
+}
+.spell-check-corrections {
+  width: 25em !important;
+}
+
+pre.editor-colors {
+  background-color: #FAFAFA;
+  color: #607D8B;
+}
+pre.editor-colors .gutter {
+  background-color: #FAFAFA;
+  color: #707A80;
+}
+pre.editor-colors .gutter .line-number.cursor-line {
+  background-color: #FAFAFA;
+  color: #6ec1b9;
+}
+pre.editor-colors .gutter .line-number.cursor-line-no-selection {
+  color: #6ec1b9;
+}
+pre.editor-colors .wrap-guide {
+  color: #ededed;
+}
+pre.editor-colors .indent-guide {
+  color: #ededed;
+}
+pre.editor-colors .invisible-character {
+  color: #e1e1e1;
+}
+pre.editor-colors .search-results .syntax--marker .region {
+  background-color: transparent;
+  border: #d5dee2;
+}
+pre.editor-colors .search-results .syntax--marker.current-result .region {
+  border: #b7c6cd;
+}
+pre.editor-colors.is-focused .cursor {
+  border-color: #009688;
+}
+pre.editor-colors.is-focused .selection .region {
+  background-color: #D6EDEA;
+}
+pre.editor-colors.is-focused .line-number.cursor-line-no-selection,
+pre.editor-colors.is-focused .line.cursor-line {
+  background-color: rgba(144, 164, 174, 0.13);
+}
+.syntax--comment,
+.syntax--punctuation.syntax--definition.syntax--comment {
+  font-style: italic;
+  color: #9ca4a6;
+}
+.syntax--string .syntax--constant.syntax--other.syntax--placeholder,
+.syntax--variable {
+  color: #80CBC4;
+}
+.syntax--constant.syntax--other.syntax--color {
+  color: #ffffff;
+}
+.syntax--invalid,
+.syntax--invalid.syntax--broken,
+.syntax--invalid.syntax--illegal {
+  color: #ffffff;
+  background-color: #E53935;
+}
+.syntax--invalid.syntax--unimplemented {
+  color: #ffffff;
+  background-color: #91B859;
+}
+.syntax--invalid.syntax--deprecated {
+  color: #ffffff;
+  background-color: #7C4DFF;
+}
+.syntax--keyword,
+.syntax--storage.syntax--modifier,
+.syntax--storage.syntax--type {
+  color: #7C4DFF;
+}
+.syntax--keyword.syntax--control,
+.syntax--storage.syntax--type {
+  font-style: italic;
+}
+.syntax--constant.syntax--other.syntax--color,
+.syntax--keyword.syntax--operator,
+.syntax--keyword.syntax--other.syntax--substitution,
+.syntax--keyword.syntax--other.syntax--template,
+.syntax--meta.syntax--tag,
+.syntax--punctuation,
+.syntax--punctuation.syntax--definition.syntax--tag,
+.syntax--punctuation.syntax--definition.syntax--tag.syntax--begin.syntax--html,
+.syntax--punctuation.syntax--definition.syntax--tag.syntax--end.syntax--html,
+.syntax--punctuation.syntax--definition.syntax--tag.syntax--html,
+.syntax--punctuation.syntax--section.syntax--embedded,
+.syntax--punctuation.syntax--separator.syntax--inheritance.syntax--php {
+  color: #39ADB5;
+}
+.syntax--entity.syntax--name.syntax--tag,
+.syntax--markup.syntax--deleted.syntax--git_gutter,
+.syntax--meta.syntax--tag.syntax--sgml {
+  color: #FF5370;
+}
+.syntax--entity.syntax--name.syntax--function,
+.syntax--keyword.syntax--other.syntax--special-method,
+.syntax--meta.syntax--block-level,
+.syntax--meta.syntax--function-call,
+.syntax--support.syntax--function,
+.syntax--variable.syntax--function {
+  color: #6182B8;
+}
+.syntax--string.syntax--other.syntax--link,
+.syntax--support.syntax--other.syntax--variable {
+  color: #FF5370;
+}
+.syntax--constant.syntax--character,
+.syntax--constant.syntax--language,
+.syntax--constant.syntax--numeric,
+.syntax--keyword.syntax--other.syntax--unit,
+.syntax--support.syntax--constant,
+.syntax--variable.syntax--parameter {
+  color: #F76D47;
+}
+.syntax--constant.syntax--other.syntax--key,
+.syntax--constant.syntax--other.syntax--symbol,
+.syntax--entity.syntax--other.syntax--inherited-class,
+.syntax--markup.syntax--heading,
+.syntax--markup.syntax--inserted.syntax--git_gutter,
+.syntax--meta.syntax--group.syntax--braces.syntax--curly .syntax--constant.syntax--other.syntax--object.syntax--key.syntax--js .syntax--string.syntax--unquoted.syntax--label.syntax--js,
+.syntax--string {
+  color: #91B859;
+}
+.syntax--entity.syntax--name.syntax--class,
+.syntax--entity.syntax--name.syntax--type.syntax--class,
+.syntax--markup.syntax--changed.syntax--git_gutter,
+.syntax--meta.syntax--use.syntax--php,
+.syntax--support.syntax--class,
+.syntax--support.syntax--orther.syntax--namespace.syntax--use.syntax--php,
+.syntax--support.syntax--other.syntax--namespace.syntax--php,
+.syntax--support.syntax--type,
+.syntax--support.syntax--type.syntax--sys-types {
+  color: #FFB62C;
+}
+.syntax--source.syntax--css .syntax--support.syntax--type,
+.syntax--source.syntax--less .syntax--support.syntax--type,
+.syntax--source.syntax--sass .syntax--support.syntax--type,
+.syntax--source.syntax--scss .syntax--support.syntax--type,
+.syntax--source.syntax--stylus .syntax--support.syntax--type {
+  color: #8796B0;
+}
+.syntax--entity.syntax--name.syntax--module.syntax--js,
+.syntax--variable.syntax--import.syntax--parameter.syntax--js,
+.syntax--variable.syntax--other.syntax--class.syntax--js {
+  color: #E53935;
+}
+.syntax--variable.syntax--language {
+  font-style: italic;
+  color: #E53935;
+}
+.syntax--entity.syntax--name.syntax--method.syntax--js {
+  color: #6182B8;
+}
+.syntax--meta.syntax--class-method.syntax--js .syntax--entity.syntax--name.syntax--function.syntax--js,
+.syntax--variable.syntax--function.syntax--constructor {
+  color: #6182B8;
+}
+.syntax--entity.syntax--other.syntax--attribute-name {
+  color: #7C4DFF;
+}
+.syntax--text.syntax--html.syntax--basic .syntax--entity.syntax--other.syntax--attribute-name,
+.syntax--text.syntax--html.syntax--basic .syntax--entity.syntax--other.syntax--attribute-name.syntax--html {
+  font-style: italic;
+  color: #FFB62C;
+}
+.syntax--entity.syntax--other.syntax--attribute-name.syntax--class {
+  color: #FFB62C;
+}
+.syntax--source.syntax--sass .syntax--keyword.syntax--control {
+  color: #6182B8;
+}
+.syntax--markup.syntax--inserted {
+  color: #91B859;
+}
+.syntax--markup.syntax--deleted {
+  color: #E53935;
+}
+.syntax--markup.syntax--changed {
+  color: #7C4DFF;
+}
+.syntax--string.syntax--regexp {
+  color: #39ADB5;
+}
+.syntax--constant.syntax--character.syntax--escape {
+  color: #39ADB5;
+}
+* .syntax--link *,
+* .syntax--uri *,
+* .syntax--url * {
+  text-decoration: underline;
+}
+.syntax--constant.syntax--numeric.syntax--line-number.syntax--find-in-files:not(.syntax--match) {
+  color: #C17E70;
+}
+.syntax--entity.syntax--name.syntax--filename.syntax--find-in-files {
+  color: #91B859;
+}
+.syntax--tag.syntax--decorator.syntax--js .syntax--entity.syntax--name.syntax--tag.syntax--js,
+.syntax--tag.syntax--decorator.syntax--js .syntax--punctuation.syntax--definition.syntax--tag.syntax--js {
+  font-style: italic;
+  color: #6182B8;
+}
+.syntax--source.syntax--js .syntax--constant.syntax--other.syntax--object.syntax--key.syntax--js .syntax--string.syntax--unquoted.syntax--label.syntax--js {
+  font-style: italic;
+  color: #E53935;
+}
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--punctuation.syntax--definition.syntax--string:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--punctuation.syntax--definition.syntax--string),
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json) {
+  color: #91B859;
+}
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--punctuation.syntax--definition.syntax--string:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--punctuation.syntax--definition.syntax--string),
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json) {
+  color: #7C4DFF;
+}
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--punctuation.syntax--definition.syntax--string:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--punctuation.syntax--definition.syntax--string),
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json) {
+  color: #FF5370;
+}
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--punctuation.syntax--definition.syntax--string:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--punctuation.syntax--definition.syntax--string),
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json) {
+  color: #6182B8;
+}
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--punctuation.syntax--definition.syntax--string:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--punctuation.syntax--definition.syntax--string),
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json) {
+  color: #C17E70;
+}
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--punctuation.syntax--definition.syntax--string:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--punctuation.syntax--definition.syntax--string),
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json) {
+  color: #E53935;
+}
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--punctuation.syntax--definition.syntax--string:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--punctuation.syntax--definition.syntax--string),
+.syntax--source.syntax--json .syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json:not(.syntax--meta .syntax--meta .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json) {
+  color: #F76D47;
+}
+.syntax--source.syntax--json .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--punctuation.syntax--definition.syntax--string:not(.syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--punctuation.syntax--definition.syntax--string),
+.syntax--source.syntax--json .syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json:not(.syntax--meta .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json) {
+  color: #FFB62C;
+}
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--punctuation.syntax--definition.syntax--string:not(.syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--punctuation.syntax--definition.syntax--string),
+.syntax--source.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json:not(.syntax--meta.syntax--structure.syntax--dictionary.syntax--json .syntax--meta.syntax--structure.syntax--dictionary.syntax--value.syntax--json .syntax--string.syntax--quoted.syntax--double.syntax--json) {
+  color: #7C4DFF;
+}
+.syntax--punctuation.syntax--definition.syntax--list_item.syntax--markdown,
+.syntax--text.syntax--html.syntax--markdown {
+  color: #80CBC4;
+}
+.syntax--text.syntax--html.syntax--markdown .syntax--markup.syntax--raw.syntax--inline {
+  color: #7C4DFF;
+}
+.syntax--text.syntax--html.syntax--markdown .syntax--punctuation.syntax--definition.syntax--raw.syntax--markdown {
+  color: #E7EAEC;
+}
+.syntax--markdown.syntax--heading,
+.syntax--markup.syntax--heading,
+.syntax--markup.syntax--heading .syntax--entity.syntax--name,
+.syntax--markup.syntax--heading.syntax--markdown .syntax--punctuation.syntax--definition.syntax--heading.syntax--markdown {
+  color: #91B859;
+}
+.syntax--markup.syntax--italic {
+  font-style: italic;
+  color: #FF5370;
+}
+.syntax--markup.syntax--bold,
+.syntax--markup.syntax--bold .syntax--string {
+  font-weight: bold;
+  color: #FF5370;
+}
+.syntax--markup.syntax--bold .syntax--markup.syntax--italic,
+.syntax--markup.syntax--bold .syntax--markup.syntax--italic .syntax--string,
+.syntax--markup.syntax--italic .syntax--markup.syntax--bold,
+.syntax--markup.syntax--italic .syntax--markup.syntax--bold .syntax--string,
+.syntax--markup.syntax--quote .syntax--markup.syntax--bold,
+.syntax--markup.syntax--quote .syntax--markup.syntax--bold .syntax--string {
+  font-weight: bold;
+  font-style: italic;
+}
+.syntax--markup.syntax--underline {
+  text-decoration: underline;
+  color: #F76D47;
+}
+.syntax--markup.syntax--quote .syntax--punctuation.syntax--definition.syntax--blockquote.syntax--markdown {
+  color: #E7EAEC;
+  background-color: #E7EAEC;
+}
+.syntax--markup.syntax--quote {
+  font-style: italic;
+}
+.syntax--string.syntax--other.syntax--link.syntax--title.syntax--markdown {
+  color: #6182B8;
+}
+.syntax--string.syntax--other.syntax--link.syntax--description.syntax--title.syntax--markdown {
+  color: #7C4DFF;
+}
+.syntax--constant.syntax--other.syntax--reference.syntax--link.syntax--markdown {
+  color: #FFB62C;
+}
+.syntax--markup.syntax--raw.syntax--block {
+  color: #7C4DFF;
+}
+.syntax--markup.syntax--raw.syntax--block.syntax--fenced.syntax--markdown {
+  background-color: rgba(144, 164, 174, 0.13);
+}
+.syntax--punctuation.syntax--definition.syntax--fenced.syntax--markdown {
+  background-color: rgba(144, 164, 174, 0.13);
+}
+.syntax--markup.syntax--raw.syntax--block.syntax--fenced.syntax--markdown,
+.syntax--punctuation.syntax--section.syntax--class.syntax--end,
+.syntax--variable.syntax--language.syntax--fenced.syntax--markdown {
+  color: #80CBC4;
+}
+.syntax--variable.syntax--language.syntax--fenced.syntax--markdown {
+  color: #E7EAEC;
+}
+.syntax--text.syntax--html.syntax--markdown .syntax--punctuation.syntax--definition {
+  color: #CCD7DA;
+}
+.syntax--text.syntax--html.syntax--markdown .syntax--meta.syntax--disable-markdown .syntax--punctuation.syntax--definition {
+  color: #39ADB5;
+}
+.syntax--meta.syntax--separator {
+  font-weight: bold;
+  color: #E7EAEC;
+  background-color: rgba(144, 164, 174, 0.13);
+}
+.syntax--markup.syntax--table {
+  color: #80CBC4;
+}
+.syntax--acejump.syntax--label.syntax--blue {
+  color: #ffffff;
+  background-color: #6182B8;
+}
+.syntax--acejump.syntax--label.syntax--green {
+  color: #ffffff;
+  background-color: #91B859;
+}
+.syntax--acejump.syntax--label.syntax--orange {
+  color: #ffffff;
+  background-color: #F76D47;
+}
+.syntax--acejump.syntax--label.syntax--purple {
+  color: #ffffff;
+  background-color: #7C4DFF;
+}
+.syntax--sublimelinter.syntax--mark.syntax--warning {
+  color: #FFB62C;
+}
+.syntax--sublimelinter.syntax--gutter-mark {
+  color: #ffffff;
+}
+.syntax--sublimelinter.syntax--mark.syntax--error {
+  color: #E53935;
+}
+.syntax--sublimelinter.syntax--annotations {
+  background-color: #C17E70;
+}
+.syntax--markup.syntax--ignored.syntax--git_gutter {
+  color: #E7EAEC;
+}
+.syntax--markup.syntax--untracked.syntax--git_gutter {
+  color: #E7EAEC;
+}
+.syntax--markup.syntax--inserted.syntax--git_gutter {
+  color: #91B859;
+}
+.syntax--markup.syntax--changed.syntax--git_gutter {
+  color: #FFB62C;
+}
+.syntax--markup.syntax--deleted.syntax--git_gutter {
+  color: #E53935;
+}
+.syntax--brackethighlighter.syntax--default {
+  color: #8796B0;
+}
+.syntax--brackethighlighter.syntax--quote {
+  color: #91B859;
+}
+.syntax--brackethighlighter.syntax--unmatched {
+  color: #E53935;
+}
+[data-grammar*="gfm"] .syntax--markup.syntax--underline.syntax--link {
+  color: #ff869a;
+}
+[data-grammar*="gfm"] .syntax--markup.syntax--underline.syntax--link span.syntax--punctuation {
+  color: #ff5370;
+}
+[data-grammar*="gfm"] .syntax--markup.syntax--strike {
+  position: relative;
+  color: rgba(96, 125, 139, 0.5);
+}
+[data-grammar*="gfm"] .syntax--markup.syntax--strike::after {
+  content: "";
+  position: absolute;
+  top: calc(54%);
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: rgba(96, 125, 139, 0.2);
+}
+[data-grammar*="gfm"] .syntax--table .syntax--border {
+  color: rgba(96, 125, 139, 0.5);
+}
+[data-grammar*="gfm"] .syntax--markup.syntax--heading {
+  color: #82b1ff;
+}
+[data-grammar*="gfm"] .syntax--punctuation.syntax--definition.syntax--begin,
+[data-grammar*="gfm"] .syntax--punctuation.syntax--definition.syntax--end {
+  color: #82b1ff;
+}
+[data-grammar*="gfm"] .syntax--punctuation.syntax--definition.syntax--begin + span:not(.syntax--function.syntax--parameter) {
+  color: #9cc1ff;
+}
+.bracket-matcher .region {
+  border-bottom: 1px solid #009688;
+  box-sizing: border-box;
+  text-align: center;
+  background-color: rgba(96, 125, 139, 0.1);
+  box-shadow: inset 0 -1px 0 #009688;
+  z-index: 100;
+}
+pre.editor-colors.is-focused .selection .region {
+  background-color: #D6EDEA;
+  border-radius: 0.125rem;
+}
+.syntax--variable.syntax--instance,
+.syntax--variable.syntax--instance > * {
+  color: #E53935;
+}
+.syntax--meta.syntax--delimiter.syntax--period {
+  color: #945eb8;
+}
+.syntax--meta.syntax--brace {
+  color: #8796B0;
+}
+.syntax--meta.syntax--tag.syntax--doctype {
+  color: #945eb8;
+}
+.syntax--meta .syntax--string.syntax--quoted {
+  color: #91b859;
+}
+.syntax--meta.syntax--array.syntax--json .syntax--string.syntax--quoted {
+  color: #80CBC4;
+}
+.syntax--meta.syntax--array.syntax--json .syntax--string.syntax--quoted > * {
+  color: currentColor;
+}
+.syntax--meta .syntax--punctuation.syntax--separator.syntax--key-value + .syntax--string.syntax--quoted {
+  color: #80CBC4;
+}
+.syntax--meta .syntax--punctuation.syntax--separator.syntax--key-value + .syntax--string.syntax--quoted * {
+  color: currentColor;
+}
+.syntax--meta.syntax--structure.syntax--dictionary .syntax--string.syntax--quoted {
+  color: #91b859;
+}
+.syntax--meta.syntax--structure.syntax--dictionary .syntax--string.syntax--quoted .syntax--punctuation.syntax--string {
+  color: currentColor;
+}
+.syntax--support.syntax--constant {
+  color: #8796B0;
+}
+.syntax--keyword.syntax--operator.syntax--logical,
+.syntax--keyword.syntax--operator.syntax--comparison,
+.syntax--keyword.syntax--operator.syntax--assignment {
+  color: #3fb3a8;
+}
+.syntax--punctuation.syntax--section.syntax--embedded .syntax--source.syntax--php,
+.syntax--variable.syntax--interpolation .syntax--source.syntax--php {
+  color: currentColor;
+}
+</style>
+  </head>
+  <body class='markdown-preview'><h1>GPGChat</h1>
+<p>GPGChat is an E-mail and GPG based Secured Instant Message Application. It implements a desktop IM application via IMAP using the existing email services.</p>
+<p>In GPGChat, we do our best to ensure the safety of your instant communication.</p>
+<p>Concretely, your email password as well as your message records in the local database will be safely stored <code>PBKDF2</code> as key derivation function and <code>AES</code> in <code>CBC</code> mode with a 128-bit key for encryption.</p>
+<p>As our name imply, all your messages sent to and from you will be encrypted in the GPG fashion.</p>
+<h2>Features</h2>
+<ul>
+<li>Creates a pair of GPG keys and upload the public key to the public GPG server under the user’s name for encrypting instant communication.</li>
+<li>Provides GUI for instant messaging.</li>
+<li>Provides contacts system based on GPG.
+<ul>
+<li>Add contact</li>
+<li>Delete contact</li>
+<li>Block contact</li>
+</ul>
+</li>
+<li>Instant text messaging secured by GPG.</li>
+<li>Offers IM protocol in <code>HTTP</code> and <code>UUID</code> fashion.</li>
+<li>Local database for storing messaging records and contacts.</li>
+<li>Local storage of user’s information and encryption of email’s password using <code>PBKDF2</code> and <code>AES-128</code>.</li>
+</ul>
+<h2>Getting Started</h2>
+<p>These instructions will guide you through setting up the necessary environments for GPGChat.</p>
+<h3>Prerequisites</h3>
+<p>Since GPGChat is based on GnuPG and Python 3, you need to install the latest versions of them correctly following the instructions on <a href="https://www.gnupg.org/download/index.html">GnuPG Download</a> and <a href="https://www.python.org">Python.org</a>. The installing steps may vary across different platforms.</p>
+<p>Also, make sure you have installed <code>wxPython</code> , <code>cryptography</code> and <code>python-gnupg</code> before running.</p>
+<p>If not, install the missing packages by the following commands.</p>
+<pre class="editor-colors"><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>pip&nbsp;install&nbsp;-U&nbsp;wxPython</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>pip&nbsp;install&nbsp;cryptography&nbsp;python-gnupg</span></span>
+</div></pre>
+<h3>Setting up the GPG environment</h3>
+<p>To set up the GPG environment for GPGChat, you may need to modify the <code>gpgchat.py</code>.</p>
+<p>Since the GPG environment vary across different platforms, you need to set <code>gpgbinary='gpg2'</code> on MacOS while on others (such as Windows) set <code>gpgbinary='gpg'</code>.</p>
+<p>If both of these settings don’t work for your system, please start a pull request.</p>
+<h3>Running GPGChat</h3>
+<ul>
+<li>In you command line, change your directory to this project and run the following commands.</li>
+</ul>
+<pre class="editor-colors"><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>python&nbsp;gpgchat.py</span></span>
+</div></pre>
+<ul>
+<li>If you are new to GPGChat, you will be asked to complete the sign up step. The password here is used to connect to your mail server.</li>
+</ul>
+<p><img src="/Users/dahao/pmlb/computer-networks/GPGChat/img/signUp.png?v=1515236218304" alt=""></p>
+<ul>
+<li>Then set a lock which is used to sign in this application. Once complated, a pair of GPG keys under your name will be generated and the public key will be uploaded to the server.</li>
+</ul>
+<p><img src="/Users/dahao/pmlb/computer-networks/GPGChat/img/lock.png?v=1515236218304" alt=""></p>
+<p><strong>Note:</strong> All your personal information is now stored in a file, named <code>info.txt</code>, where your email password will be safely encrypted.</p>
+<p><img src="/Users/dahao/pmlb/computer-networks/GPGChat/img/infoPath.png?v=1515236218304" alt=""></p>
+<ul>
+<li>After inistailizing the signup and application lock, you will be prompted to enter your password again and unlock the application.</li>
+</ul>
+<blockquote>
+<p>Notice that, once your email and lock are set, you cannot change it unless you remove <code>info.txt</code> from the program’s directory, but you may lose all your records in this application.</p>
+</blockquote>
+<ul>
+<li>Congratulations! You are officially in the GPGChat world now.</li>
+<li>There are 3 buttons on the left: <code>Contact</code>, <code>Most Recent</code> and <code>Blacklist</code>, which correspond to displaying contact list in alphabetical order, in most recent contact order and displaying the blacklist.</li>
+<li>On the bottom, there are 3 buttons offering adding, deleting and blocking operations to manage the list.</li>
+</ul>
+<p><img src="/Users/dahao/pmlb/computer-networks/GPGChat/img/send.png?v=1515236218305" alt=""></p>
+<ul>
+<li>
+<p>Again, all your communication will be encrypted using GPG during transmission.</p>
+</li>
+<li>
+<p>Before you start chatting, you need to add your friends in the contact list (identity verfication is very important in GPGChat’s world).</p>
+</li>
+<li>
+<p>Once you have added each other as contact, you can send text whatever you want without worrying about someone may sneak into your mailbox and stole all your messages.</p>
+</li>
+<li>
+<p>Even if someone has gotten your email password, he will never know your private key and thus is unable to decrypt your messages.</p>
+</li>
+<li>
+<p>On exit, the local database (in the <code>data</code> directory) is encrypted. On the next time you sign in, it will be decrypted.</p>
+</li>
+</ul>
+<h2>Configuration</h2>
+<p>If you want to modify some parameters in GPGChat, here is a list of parameters you can modify in the head of <code>gpgchat.py</code>.</p>
+<pre class="editor-colors"><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>#&nbsp;Local&nbsp;database&nbsp;directory</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>dbdir&nbsp;=&nbsp;"data/"</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>#&nbsp;GPG&nbsp;data&nbsp;directory</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>gpgdir&nbsp;=&nbsp;"data/gnupg"</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>#&nbsp;GPG&nbsp;binary</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>gpgbinary&nbsp;=&nbsp;"gpg2"</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>#&nbsp;Local&nbsp;database&nbsp;file&nbsp;extension</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>dbext&nbsp;=&nbsp;".db.sqlite"</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>#&nbsp;The&nbsp;user&nbsp;information&nbsp;file</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>infopath&nbsp;=&nbsp;"info.txt"</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>#&nbsp;Wating&nbsp;time&nbsp;for&nbsp;receiving&nbsp;email&nbsp;thread</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>waiting_time&nbsp;=&nbsp;5</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>#&nbsp;Verbose&nbsp;option&nbsp;of&nbsp;GPG</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>#&nbsp;You&nbsp;may&nbsp;find&nbsp;it&nbsp;quite&nbsp;useful,&nbsp;when&nbsp;your&nbsp;GPG</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>#&nbsp;doesn't&nbsp;work&nbsp;correctly</span></span>
+</div><div class="line"><span class="syntax--text syntax--plain syntax--null-grammar"><span>gpgverbose&nbsp;=&nbsp;False</span></span>
+</div></pre>
+<h2>Implementation</h2>
+<p>The GPGChat can be divided into 5 modules:<code>ui</code>, <code>mail</code>, <code>encrypt</code>, <code>database</code> and <code>util</code>.</p>
+<h3><code>ui</code></h3>
+<p>In this module, we use <code>wxPython</code>, a cross-platform GUI toolkit for the Python language.</p>
+<ul>
+<li><code>ui.py</code> is the skeleton file for UI and is generated by <code>wxFormBuilder</code> automatically.</li>
+<li><code>starter.py</code> derives all the UI classes (including frames and dialog) from <code>ui.py</code> and provides the basic interactions for UI.</li>
+</ul>
+<h3><code>mail</code></h3>
+<p>In this module, <code>smtplib</code> and <code>imaplib</code> are heavily used.</p>
+<ul>
+<li>
+<p><code>mail.py</code>
+Mail services. Messages are pushed by SMTP protocol and pulled by IMAP protocol. It also offers mail information checking and message parsing functions.</p>
+</li>
+<li>
+<p><code>packet.py</code>
+Encapsulation of a message packet, including attributes like <code>uuid</code>, <code>sender</code>, <code>receiver</code>, <code>sequence</code>, <code>message</code>, <code>signed_keyid</code>.</p>
+</li>
+</ul>
+<h3><code>encrypt</code></h3>
+<p><code>gnupg</code> and <code>cryptography</code> is imported.</p>
+<ul>
+<li>
+<p><code>fernet.py</code>
+Symmetry cipher. It is used to encrypt local data, such as the mail password. String and byte encryption and decryption services are offered.</p>
+</li>
+<li>
+<p><code>gpg.py</code>
+Unsymmetry cipher. It is used to encrypt message content during transmission. It generates a key from an encrypted string which is processed by hash algorithm 10000 times to guarantee the security. Both encryption and decryption services are offered.</p>
+</li>
+</ul>
+<h3><code>database</code></h3>
+<p><code>sqlite3</code> is imported.</p>
+<blockquote>
+<p>The local database is encrypted and stored in the <code>data</code> directory. It will only be decrypted in runtime.</p>
+</blockquote>
+<ul>
+<li>
+<p><code>init_db.py</code>
+Create or connect a local database. Initialize it by creating 2 tables, <code>contact</code> and <code>message</code>.</p>
+</li>
+<li>
+<p><code>db.py</code>
+Database services. It offers adding, deleting, altering and searching operations on <code>contact</code> and <code>message</code> tables.</p>
+</li>
+</ul>
+<h3><code>util</code></h3>
+<p>This module provides <code>rm_file</code> and <code>write_file</code> functions for removing and writing bytes data to files.</p>
+<p>In the main directory, <code>info.py</code> for encapsulation of user information and <code>gpgchat.py</code> for wrapping everything together are located.</p>
+<h2>More Details</h2>
+<p>More details are offered in the <code>report</code> file.</p>
+<h2>Authors</h2>
+<ul>
+<li><strong>Zhihao Dai</strong> - <em>UI &amp; Merge</em> - <a href="https://github.com/daidahao">daidahao</a></li>
+<li><strong>Changchao Sun</strong> - <em>GPG &amp; IM Protocol</em> - <a href="https://github.com/sunc2">sunc2</a></li>
+<li><strong>Xiaowen Zhang</strong> - <em>Mail &amp; Database</em> - <a href="https://github.com/11510746">11510746</a></li>
+<li><strong>Zijing Zou</strong> - <em>UI &amp; Fernet</em>
+<a href="https://github.com/zouzijing">zouzijing</a></li>
+</ul></body>
+</html>

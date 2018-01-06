@@ -164,4 +164,4 @@ More details are offered in the `report` file.
 * **Changchao Sun** - *GPG & IM Protocol* - [sunc2](https://github.com/sunc2)
 * **Xiaowen Zhang** - *Mail & Database* - [11510746](https://github.com/11510746)
 * **Zijing Zou** - *UI & Fernet*
-[zouzj](https://github.com/zouzijing)
+[zouzijing](https://github.com/zouzijing)
