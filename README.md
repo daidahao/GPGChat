@@ -163,4 +163,5 @@ More details are offered in the `report` file.
 * **Zhihao Dai** - *UI & Merge* - [daidahao](https://github.com/daidahao)
 * **Changchao Sun** - *GPG & IM Protocol* - [sunc2](https://github.com/sunc2)
 * **Xiaowen Zhang** - *Mail & Database* - [11510746](https://github.com/11510746)
-* **Zijing Zou** - *UI & Fernet* - [zouzj](emm...)
+* **Zijing Zou** - *UI & Fernet*
+[zouzj](https://github.com/zouzijing)
