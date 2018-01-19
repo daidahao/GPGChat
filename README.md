@@ -87,7 +87,7 @@ python gpgchat.py
 
 If you want to modify some parameters in GPGChat, here is a list of parameters you can modify in the head of `gpgchat.py`.
 
-```
+```python
 # Local database directory
 dbdir = "data/"
 # GPG data directory
